@@ -12,9 +12,15 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   final _serverUrlController = TextEditingController();
+  final _databaseUsernameController = TextEditingController();
+  final _databasePasswordController = TextEditingController();
+  final _databaseNameController = TextEditingController();
+  
   bool _isDarkMode = false;
   bool _notificationsEnabled = true;
   String _updateInterval = '5';
+  bool _showDatabaseSettings = false;
+  bool _obscurePassword = true;
   
   @override
   void initState() {
@@ -28,6 +34,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     
     setState(() {
       _serverUrlController.text = prefs.getString('server_url') ?? provider.serverUrl;
+      _databaseUsernameController.text = prefs.getString('db_username') ?? 'root';
+      _databasePasswordController.text = prefs.getString('db_password') ?? '';
+      _databaseNameController.text = prefs.getString('db_name') ?? 'solar_panel_db';
       _isDarkMode = prefs.getBool('dark_mode') ?? false;
       _notificationsEnabled = prefs.getBool('notifications_enabled') ?? true;
       _updateInterval = prefs.getString('update_interval') ?? '5';
@@ -44,6 +53,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
       await prefs.setString('server_url', newServerUrl);
       provider.updateServerUrl(newServerUrl);
     }
+    
+    // Save database settings
+    await prefs.setString('db_username', _databaseUsernameController.text.trim());
+    await prefs.setString('db_password', _databasePasswordController.text);
+    await prefs.setString('db_name', _databaseNameController.text.trim());
     
     // Save other settings
     await prefs.setBool('dark_mode', _isDarkMode);
@@ -85,6 +99,96 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 keyboardType: TextInputType.url,
               ),
+              const SizedBox(height: 16),
+              
+              // MySQL Database Settings
+              ExpansionTile(
+                title: const Text(
+                  'MySQL Database Settings',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                leading: const Icon(Icons.storage),
+                initiallyExpanded: _showDatabaseSettings,
+                onExpansionChanged: (expanded) {
+                  setState(() {
+                    _showDatabaseSettings = expanded;
+                  });
+                },
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: _databaseUsernameController,
+                          decoration: const InputDecoration(
+                            labelText: 'Database Username',
+                            hintText: 'root',
+                            border: OutlineInputBorder(),
+                            prefixIcon: Icon(Icons.person),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: _databasePasswordController,
+                          obscureText: _obscurePassword,
+                          decoration: InputDecoration(
+                            labelText: 'Database Password',
+                            border: const OutlineInputBorder(),
+                            prefixIcon: const Icon(Icons.lock),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _obscurePassword = !_obscurePassword;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: _databaseNameController,
+                          decoration: const InputDecoration(
+                            labelText: 'Database Name',
+                            hintText: 'solar_panel_db',
+                            border: OutlineInputBorder(),
+                            prefixIcon: Icon(Icons.database),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        ElevatedButton.icon(
+                          onPressed: () async {
+                            final provider = Provider.of<SolarDataProvider>(context, listen: false);
+                            final isConnected = await provider.checkDatabaseConnection();
+                            
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  isConnected
+                                      ? 'Database connection successful!'
+                                      : 'Failed to connect to database. Check settings.',
+                                ),
+                                backgroundColor: isConnected ? Colors.green : Colors.red,
+                              ),
+                            );
+                          },
+                          icon: const Icon(Icons.check_circle),
+                          label: const Text('Test Connection'),
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(double.infinity, 48),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              
               const SizedBox(height: 24),
               const Text(
                 'App Settings',
@@ -106,7 +210,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               SwitchListTile(
                 title: const Text('Notifications'),
-                subtitle: const Text('Enable alert notifications'),
+                subtitle: const Text('Enable alerts and notifications'),
                 value: _notificationsEnabled,
                 onChanged: (value) {
                   setState(() {
@@ -116,52 +220,61 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               ListTile(
                 title: const Text('Update Interval'),
-                subtitle: const Text('How often to fetch new data'),
+                subtitle: const Text('How often to update data (seconds)'),
                 trailing: DropdownButton<String>(
                   value: _updateInterval,
-                  onChanged: (String? newValue) {
-                    if (newValue != null) {
+                  onChanged: (value) {
+                    if (value != null) {
                       setState(() {
-                        _updateInterval = newValue;
+                        _updateInterval = value;
                       });
                     }
                   },
-                  items: <String>['1', '5', '10', '30', '60']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text('$value seconds'),
-                    );
-                  }).toList(),
+                  items: const [
+                    DropdownMenuItem(value: '1', child: Text('1 second')),
+                    DropdownMenuItem(value: '5', child: Text('5 seconds')),
+                    DropdownMenuItem(value: '10', child: Text('10 seconds')),
+                    DropdownMenuItem(value: '30', child: Text('30 seconds')),
+                    DropdownMenuItem(value: '60', child: Text('1 minute')),
+                  ],
                 ),
               ),
               const SizedBox(height: 24),
-              const Text(
-                'About',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+              ElevatedButton(
+                onPressed: _saveSettings,
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 48),
                 ),
+                child: const Text('Save Settings'),
               ),
               const SizedBox(height: 16),
-              const ListTile(
-                leading: Icon(Icons.info),
-                title: Text('Solar Panel Monitor'),
-                subtitle: Text('Version 1.0.0'),
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _saveSettings,
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12.0),
-                    child: Text(
-                      'Save Settings',
-                      style: TextStyle(fontSize: 16),
+              TextButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text('About'),
+                      content: const Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Solar Panel Monitor App'),
+                          SizedBox(height: 8),
+                          Text('Version: 1.1.0 (MySQL Edition)'),
+                          SizedBox(height: 8),
+                          Text('This app monitors solar panel performance and detects faults using machine learning.'),
+                        ],
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('Close'),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
+                  );
+                },
+                child: const Text('About'),
               ),
             ],
           ),
@@ -173,6 +286,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void dispose() {
     _serverUrlController.dispose();
+    _databaseUsernameController.dispose();
+    _databasePasswordController.dispose();
+    _databaseNameController.dispose();
     super.dispose();
   }
 }

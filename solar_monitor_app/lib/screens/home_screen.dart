@@ -15,12 +15,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool _databaseConnected = false;
+
   @override
   void initState() {
     super.initState();
     // Fetch initial data when screen loads
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       final provider = Provider.of<SolarDataProvider>(context, listen: false);
+      // Check database connection
+      _databaseConnected = await provider.checkDatabaseConnection();
+      setState(() {});
+      
       provider.fetchLatestData();
       provider.fetchAlerts();
     });
@@ -42,6 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, provider, child) {
           return RefreshIndicator(
             onRefresh: () async {
+              // Check database connection on refresh
+              _databaseConnected = await provider.checkDatabaseConnection();
+              setState(() {});
+              
               await provider.fetchLatestData();
               await provider.fetchAlerts();
             },
@@ -53,10 +63,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildConnectionStatus(provider),
+                    const SizedBox(height: 8),
+                    _buildDatabaseStatus(),
                     const SizedBox(height: 16),
                     _buildCurrentStatus(provider),
                     const SizedBox(height: 24),
                     _buildRealtimeChart(provider),
+                    const SizedBox(height: 24),
+                    _buildPredictionInfo(provider),
                     const SizedBox(height: 24),
                     _buildAlerts(provider),
                   ],
@@ -99,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Icon(
             provider.isConnected ? Icons.check_circle : Icons.error,
-            color: provider.isConnected ? Colors.green : Colors.red,
+            color: provider.isConnected ? Colors.green.shade800 : Colors.red.shade800,
           ),
           const SizedBox(width: 8),
           Text(
@@ -116,19 +130,38 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget _buildDatabaseStatus() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      decoration: BoxDecoration(
+        color: _databaseConnected ? Colors.green.shade100 : Colors.orange.shade100,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            _databaseConnected ? Icons.storage : Icons.storage_outlined,
+            color: _databaseConnected ? Colors.green.shade800 : Colors.orange.shade800,
+          ),
+          const SizedBox(width: 8),
+          Text(
+            _databaseConnected
+                ? 'MySQL Database Connected'
+                : 'Database Connection Issue',
+            style: TextStyle(
+              color: _databaseConnected ? Colors.green.shade800 : Colors.orange.shade800,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildCurrentStatus(SolarDataProvider provider) {
-    final prediction = provider.currentPrediction;
     final latestData = provider.realtimeData.isNotEmpty
         ? provider.realtimeData.last
-        : provider.historicalData.isNotEmpty
-            ? provider.historicalData.first
-            : null;
-
-    if (latestData == null) {
-      return const Center(
-        child: Text('No data available'),
-      );
-    }
+        : null;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,156 +173,118 @@ class _HomeScreenState extends State<HomeScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 16),
-        Row(
-          children: [
-            Expanded(
-              child: StatusCard(
-                title: 'Voltage',
-                value: '${latestData.voltage.toStringAsFixed(2)} V',
-                icon: Icons.bolt,
-                color: Colors.blue,
-              ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: StatusCard(
-                title: 'Current',
-                value: '${latestData.current.toStringAsFixed(2)} A',
-                icon: Icons.electric_bolt,
-                color: Colors.amber,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        Row(
-          children: [
-            Expanded(
-              child: StatusCard(
-                title: 'Power',
-                value: '${latestData.power.toStringAsFixed(2)} W',
-                icon: Icons.power,
-                color: Colors.green,
-              ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: StatusCard(
-                title: 'Temperature',
-                value: '${latestData.temperature.toStringAsFixed(1)} °C',
-                icon: Icons.thermostat,
-                color: Colors.red,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        if (prediction != null)
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: prediction.prediction == 0
-                  ? AppTheme.healthyColor.withOpacity(0.1)
-                  : AppTheme.dangerColor.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: prediction.prediction == 0
-                    ? AppTheme.healthyColor
-                    : AppTheme.dangerColor,
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(
-                      prediction.prediction == 0
-                          ? Icons.check_circle
-                          : Icons.warning,
-                      color: prediction.prediction == 0
-                          ? AppTheme.healthyColor
-                          : AppTheme.dangerColor,
-                      size: 24,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      prediction.faultType,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Spacer(),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: prediction.prediction == 0
-                            ? AppTheme.healthyColor
-                            : AppTheme.dangerColor,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Text(
-                        '${prediction.confidence.toStringAsFixed(1)}%',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
+        const SizedBox(height: 8),
+        if (latestData == null)
+          const Text('No data available')
+        else
+          Row(
+            children: [
+              Expanded(
+                child: StatusCard(
+                  title: 'Voltage',
+                  value: '${latestData.voltage.toStringAsFixed(2)} V',
+                  icon: Icons.bolt,
+                  color: Colors.blue,
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  prediction.prediction == 0
-                      ? 'The solar panel is operating normally.'
-                      : 'Fault detected! Maintenance may be required.',
-                  style: const TextStyle(fontSize: 16),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: StatusCard(
+                  title: 'Current',
+                  value: '${latestData.current.toStringAsFixed(2)} A',
+                  icon: Icons.electric_bolt,
+                  color: Colors.amber,
                 ),
-              ],
-            ),
+              ),
+            ],
+          ),
+        const SizedBox(height: 8),
+        if (latestData != null)
+          Row(
+            children: [
+              Expanded(
+                child: StatusCard(
+                  title: 'Power',
+                  value: '${latestData.power.toStringAsFixed(2)} W',
+                  icon: Icons.power,
+                  color: Colors.red,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: StatusCard(
+                  title: 'Temperature',
+                  value: '${latestData.temperature.toStringAsFixed(1)} °C',
+                  icon: Icons.thermostat,
+                  color: Colors.orange,
+                ),
+              ),
+            ],
+          ),
+        const SizedBox(height: 8),
+        if (latestData != null)
+          Row(
+            children: [
+              Expanded(
+                child: StatusCard(
+                  title: 'Irradiance',
+                  value: '${latestData.irradiance.toStringAsFixed(1)} W/m²',
+                  icon: Icons.wb_sunny,
+                  color: Colors.amber,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: StatusCard(
+                  title: 'Last Update',
+                  value: _formatTimestamp(latestData.timestamp),
+                  icon: Icons.access_time,
+                  color: Colors.teal,
+                ),
+              ),
+            ],
           ),
       ],
     );
   }
 
   Widget _buildRealtimeChart(SolarDataProvider provider) {
-    final data = provider.realtimeData.isEmpty
-        ? provider.historicalData
-        : provider.realtimeData;
-
-    if (data.isEmpty) {
-      return const SizedBox(
-        height: 200,
-        child: Center(
-          child: Text('No data available for chart'),
-        ),
-      );
+    if (provider.realtimeData.isEmpty) {
+      return const SizedBox.shrink();
     }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Real-time Monitoring',
+          'Realtime Monitoring',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 16),
-        SizedBox(
-          height: 250,
+        const SizedBox(height: 8),
+        Container(
+          height: 200,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.1),
+                spreadRadius: 1,
+                blurRadius: 4,
+                offset: const Offset(0, 1),
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.all(16),
           child: LineChart(
             LineChartData(
               gridData: FlGridData(
                 show: true,
                 drawVerticalLine: true,
-                horizontalInterval: 10,
+                horizontalInterval: 1,
                 verticalInterval: 1,
               ),
               titlesData: FlTitlesData(
@@ -302,39 +297,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 bottomTitles: AxisTitles(
                   sideTitles: SideTitles(
-                    showTitles: true,
-                    reservedSize: 30,
-                    interval: 1,
-                    getTitlesWidget: (value, meta) {
-                      if (value.toInt() % 5 != 0) {
-                        return const SizedBox();
-                      }
-                      return Text(
-                        value.toInt().toString(),
-                        style: const TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                        ),
-                      );
-                    },
+                    showTitles: false,
                   ),
                 ),
                 leftTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
-                    interval: 10,
-                    getTitlesWidget: (value, meta) {
-                      return Text(
-                        value.toInt().toString(),
-                        style: const TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                        ),
-                      );
-                    },
-                    reservedSize: 42,
+                    reservedSize: 40,
                   ),
                 ),
               ),
@@ -343,45 +312,39 @@ class _HomeScreenState extends State<HomeScreen> {
                 border: Border.all(color: const Color(0xff37434d), width: 1),
               ),
               minX: 0,
-              maxX: data.length.toDouble() - 1,
+              maxX: (provider.realtimeData.length - 1).toDouble(),
               minY: 0,
-              maxY: 60,
+              maxY: _getMaxValue(provider),
               lineBarsData: [
-                // Voltage Line
+                // Voltage line
                 LineChartBarData(
-                  spots: List.generate(data.length, (index) {
-                    return FlSpot(
-                      index.toDouble(),
-                      data[index].voltage,
-                    );
-                  }),
+                  spots: _getSpots(provider, (data) => data.voltage),
                   isCurved: true,
                   color: Colors.blue,
-                  barWidth: 3,
+                  barWidth: 2,
                   isStrokeCapRound: true,
                   dotData: FlDotData(show: false),
-                  belowBarData: BarAreaData(
-                    show: true,
-                    color: Colors.blue.withOpacity(0.1),
-                  ),
+                  belowBarData: BarAreaData(show: false),
                 ),
-                // Current Line
+                // Current line
                 LineChartBarData(
-                  spots: List.generate(data.length, (index) {
-                    return FlSpot(
-                      index.toDouble(),
-                      data[index].current,
-                    );
-                  }),
+                  spots: _getSpots(provider, (data) => data.current * 10), // Scale for visibility
                   isCurved: true,
                   color: Colors.amber,
-                  barWidth: 3,
+                  barWidth: 2,
                   isStrokeCapRound: true,
                   dotData: FlDotData(show: false),
-                  belowBarData: BarAreaData(
-                    show: true,
-                    color: Colors.amber.withOpacity(0.1),
-                  ),
+                  belowBarData: BarAreaData(show: false),
+                ),
+                // Power line
+                LineChartBarData(
+                  spots: _getSpots(provider, (data) => data.power / 10), // Scale for visibility
+                  isCurved: true,
+                  color: Colors.red,
+                  barWidth: 2,
+                  isStrokeCapRound: true,
+                  dotData: FlDotData(show: false),
+                  belowBarData: BarAreaData(show: false),
                 ),
               ],
             ),
@@ -391,35 +354,118 @@ class _HomeScreenState extends State<HomeScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildChartLegend(Colors.blue, 'Voltage (V)'),
-            const SizedBox(width: 24),
-            _buildChartLegend(Colors.amber, 'Current (A)'),
+            _buildChartLegend('Voltage (V)', Colors.blue),
+            const SizedBox(width: 16),
+            _buildChartLegend('Current (A × 10)', Colors.amber),
+            const SizedBox(width: 16),
+            _buildChartLegend('Power (W ÷ 10)', Colors.red),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildChartLegend(Color color, String label) {
-    return Row(
+  Widget _buildPredictionInfo(SolarDataProvider provider) {
+    final prediction = provider.currentPrediction;
+    
+    if (prediction == null) {
+      return const SizedBox.shrink();
+    }
+
+    Color statusColor;
+    IconData statusIcon;
+    
+    switch (prediction.faultType.toLowerCase()) {
+      case 'normal':
+      case 'no fault':
+        statusColor = Colors.green;
+        statusIcon = Icons.check_circle;
+        break;
+      case 'warning':
+        statusColor = Colors.orange;
+        statusIcon = Icons.warning;
+        break;
+      default:
+        statusColor = Colors.red;
+        statusIcon = Icons.error;
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 16,
-          height: 16,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(4),
+        const Text(
+          'Fault Detection',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(width: 8),
-        Text(label),
+        const SizedBox(height: 8),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: statusColor.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: statusColor.withOpacity(0.5)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(statusIcon, color: statusColor, size: 24),
+                  const SizedBox(width: 8),
+                  Text(
+                    prediction.faultType,
+                    style: TextStyle(
+                      color: statusColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    'Confidence: ${(prediction.confidence * 100).toStringAsFixed(1)}%',
+                    style: TextStyle(
+                      color: statusColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+              if (prediction.description.isNotEmpty) ...[
+                const SizedBox(height: 16),
+                Text(
+                  'Description:',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey.shade800,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(prediction.description),
+              ],
+              if (prediction.recommendedAction.isNotEmpty) ...[
+                const SizedBox(height: 16),
+                Text(
+                  'Recommended Action:',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey.shade800,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(prediction.recommendedAction),
+              ],
+            ],
+          ),
+        ),
       ],
     );
   }
 
   Widget _buildAlerts(SolarDataProvider provider) {
-    final alerts = provider.alerts;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -430,28 +476,86 @@ class _HomeScreenState extends State<HomeScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 16),
-        if (alerts.isEmpty)
-          const Center(
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text('No alerts'),
-            ),
-          )
+        const SizedBox(height: 8),
+        if (provider.alerts.isEmpty)
+          const Text('No recent alerts')
         else
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: alerts.length,
+            itemCount: provider.alerts.length,
             itemBuilder: (context, index) {
-              final alert = alerts[index];
+              final alert = provider.alerts[index];
               return AlertCard(
                 alert: alert,
-                onAcknowledge: () => provider.acknowledgeAlert(alert.id),
+                onAcknowledge: () {
+                  provider.acknowledgeAlert(alert.id);
+                },
               );
             },
           ),
       ],
     );
+  }
+
+  Widget _buildChartLegend(String label, Color color) {
+    return Row(
+      children: [
+        Container(
+          width: 12,
+          height: 12,
+          color: color,
+        ),
+        const SizedBox(width: 4),
+        Text(
+          label,
+          style: const TextStyle(fontSize: 12),
+        ),
+      ],
+    );
+  }
+
+  List<FlSpot> _getSpots(
+    SolarDataProvider provider,
+    double Function(SolarPanelData) getValue,
+  ) {
+    return List.generate(
+      provider.realtimeData.length,
+      (index) => FlSpot(
+        index.toDouble(),
+        getValue(provider.realtimeData[index]),
+      ),
+    );
+  }
+
+  double _getMaxValue(SolarDataProvider provider) {
+    double maxVoltage = 0;
+    double maxScaledCurrent = 0;
+    double maxScaledPower = 0;
+
+    for (final data in provider.realtimeData) {
+      if (data.voltage > maxVoltage) {
+        maxVoltage = data.voltage;
+      }
+      if (data.current * 10 > maxScaledCurrent) {
+        maxScaledCurrent = data.current * 10;
+      }
+      if (data.power / 10 > maxScaledPower) {
+        maxScaledPower = data.power / 10;
+      }
+    }
+
+    return [maxVoltage, maxScaledCurrent, maxScaledPower].reduce(
+      (a, b) => a > b ? a : b,
+    );
+  }
+
+  String _formatTimestamp(String timestamp) {
+    try {
+      final dateTime = DateTime.parse(timestamp);
+      return DateFormat('HH:mm:ss').format(dateTime);
+    } catch (e) {
+      return timestamp;
+    }
   }
 }

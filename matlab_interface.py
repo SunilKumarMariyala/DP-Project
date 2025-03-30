@@ -26,23 +26,23 @@ class MatlabInterface:
     """
     Interface to connect the MATLAB GridConnectedPVFarm model with the solar fault detection system
     """
-    def __init__(self, matlab_path=None, model_path=None, db_path='solar_panel.db'):
+    def __init__(self, matlab_path=None, model_path=None, db_connection_str=None):
         """
         Initialize the MATLAB interface
         
         Args:
             matlab_path: Path to MATLAB executable
             model_path: Path to the MATLAB model file
-            db_path: Path to the SQLite database
+            db_connection_str: Database connection string for MySQL
         """
         self.matlab_path = matlab_path or r"C:\Program Files\MATLAB\R2023b\bin\matlab.exe"
         self.model_path = model_path or r"C:\Users\Sunil Kumar\OneDrive\Documents\MATLAB\GridConnectedPVFarmExample\GridConnectedPVFarmExample"
-        self.db_path = db_path
+        self.db_connection_str = db_connection_str
         
         # Setup database connection
         try:
-            self.engine, self.Session = setup_database(db_path)
-            logger.info(f"Database connection established: {db_path}")
+            self.engine, self.Session = setup_database(self.db_connection_str)
+            logger.info(f"Database connection established: {self.db_connection_str}")
         except Exception as e:
             logger.error(f"Database connection error: {e}")
             raise
@@ -744,7 +744,7 @@ class MatlabInterface:
 # If running as a script
 if __name__ == "__main__":
     # Create MATLAB interface
-    interface = MatlabInterface()
+    interface = MatlabInterface(db_connection_str="mysql+pymysql://solar_user:your_secure_password@localhost/solar_panel_db")
     
     # Check if MATLAB is available
     if interface.matlab_available and interface.eng is not None:

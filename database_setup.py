@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
-import sqlite3
 import os
+import sys
 from sqlalchemy import create_engine, Column, Integer, Float, DateTime, String, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -16,7 +16,7 @@ class SolarPanelData(Base):
     """
     __tablename__ = 'solar_panel_data'
     
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     timestamp = Column(DateTime, default=datetime.now)
     
     # Regular panel readings
@@ -60,21 +60,30 @@ class SolarPanelData(Base):
     def __repr__(self):
         return f"<SolarPanelData(id={self.id}, timestamp={self.timestamp}, prediction={self.prediction_label})>"
 
-def setup_database(db_path='solar_panel.db'):
+def setup_database(db_connection_str=None):
     """
     Setup the database for storing solar panel data
     
     Args:
-        db_path: Path to the SQLite database file
+        db_connection_str: SQLAlchemy connection string for the database
         
     Returns:
         Tuple of (engine, Session)
     """
-    # For multi-computer setup, you can use a shared database path like:
-    # db_path = '\\\\SHARED_LOCATION\\solar_panel.db'
+    # Default MySQL connection string if none provided
+    if db_connection_str is None:
+        DB_HOST = 'localhost'
+        DB_USER = 'root'
+        DB_PASSWORD = 'password'
+        DB_NAME = 'solar_panel_db'
+        db_connection_str = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}'
+    
+    # For backward compatibility with SQLite
+    if db_connection_str.endswith('.db'):
+        db_connection_str = f'sqlite:///{db_connection_str}'
     
     # Create engine
-    engine = create_engine(f'sqlite:///{db_path}')
+    engine = create_engine(db_connection_str)
     
     # Create tables
     Base.metadata.create_all(engine)
@@ -84,12 +93,12 @@ def setup_database(db_path='solar_panel.db'):
     
     return engine, Session
 
-def load_sample_data_to_db(excel_path='final_dataset.xlsx', db_path='solar_panel.db'):
+def load_sample_data_to_db(excel_path='final_dataset.xlsx', db_connection_str=None):
     """
     Load sample data from Excel to database
     """
     # Connect to database
-    engine, Session = setup_database(db_path)
+    engine, Session = setup_database(db_connection_str)
     session = Session()
     
     try:
@@ -169,12 +178,12 @@ def load_sample_data_to_db(excel_path='final_dataset.xlsx', db_path='solar_panel
     finally:
         session.close()
 
-def get_latest_data(n=10, db_path='solar_panel.db'):
+def get_latest_data(n=10, db_connection_str=None):
     """
     Get the latest n records from the database
     """
     # Connect to database
-    engine, Session = setup_database(db_path)
+    engine, Session = setup_database(db_connection_str)
     session = Session()
     
     try:
@@ -187,12 +196,12 @@ def get_latest_data(n=10, db_path='solar_panel.db'):
     finally:
         session.close()
 
-def get_matlab_simulation_data(n=10, db_path='solar_panel.db'):
+def get_matlab_simulation_data(n=10, db_connection_str=None):
     """
     Get the latest n records from MATLAB simulations
     """
     # Connect to database
-    engine, Session = setup_database(db_path)
+    engine, Session = setup_database(db_connection_str)
     session = Session()
     
     try:
@@ -212,13 +221,7 @@ if __name__ == "__main__":
     print("Setting up database...")
     engine, Session = setup_database()
     
-    # Load sample data if Excel file exists
-    if os.path.exists('final_dataset.xlsx'):
-        print("Loading sample data from Excel...")
-        load_sample_data_to_db()
-    
-    # Test retrieving data
-    latest_records = get_latest_data(5)
-    print("\nLatest 5 records:")
-    for record in latest_records:
-        print(record)
+    # Check if sample data should be loaded
+    if len(sys.argv) > 1 and sys.argv[1] == '--load-sample-data':
+        excel_path = sys.argv[2] if len(sys.argv) > 2 else 'final_dataset.xlsx'
+        load_sample_data_to_db(excel_path)

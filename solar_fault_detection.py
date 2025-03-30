@@ -8,7 +8,6 @@ import sys
 import time
 import json
 import logging
-import sqlite3
 import argparse
 import threading
 import numpy as np
@@ -18,6 +17,8 @@ import torch
 from flask import Flask, render_template, jsonify, request, send_from_directory
 from flask_socketio import SocketIO
 import joblib
+import pymysql
+from sqlalchemy import create_engine
 
 # Import MATLAB interface
 try:
@@ -47,7 +48,16 @@ monitoring_active = False
 monitoring_thread = None
 model = None
 scaler = None
-db_path = 'solar_panel.db'
+
+# Database configuration
+DB_HOST = 'localhost'
+DB_USER = 'root'  # Replace with your MySQL username
+DB_PASSWORD = 'password'  # Replace with your MySQL password
+DB_NAME = 'solar_panel_db'
+db_connection_str = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}'
+
+# For backward compatibility
+db_path = 'solar_panel.db'  # Kept for command-line argument compatibility
 matlab_interface = None
 fault_types = {
     0: "Healthy",
@@ -157,10 +167,11 @@ class SolarFaultDetectionSystem:
 class DataProcessor:
     """Process data and make predictions"""
     
-    def __init__(self, db_path=None):
+    def __init__(self, db_connection_str=None):
         """Initialize the data processor"""
-        self.db_path = db_path or 'solar_panel.db'
+        self.db_connection_str = db_connection_str or db_connection_str
         self.detector = SolarFaultDetectionSystem()
+        self.engine = create_engine(self.db_connection_str)
         self.conn = None
         self.cursor = None
         self.connect_db()
@@ -168,9 +179,9 @@ class DataProcessor:
     def connect_db(self):
         """Connect to the database"""
         try:
-            self.conn = sqlite3.connect(self.db_path, check_same_thread=False)
-            self.cursor = self.conn.cursor()
-            logger.info(f"Connected to database: {self.db_path}")
+            self.conn = self.engine.connect()
+            self.cursor = self.conn
+            logger.info(f"Connected to database: {self.db_connection_str}")
             return True
         except Exception as e:
             logger.error(f"Error connecting to database: {e}")
@@ -186,8 +197,8 @@ class DataProcessor:
                 ORDER BY id DESC
                 LIMIT 1
             """
-            self.cursor.execute(query)
-            row = self.cursor.fetchone()
+            result = self.cursor.execute(query)
+            row = result.fetchone()
             
             if row:
                 data = {
@@ -234,7 +245,7 @@ class DataProcessor:
         try:
             query = """
                 INSERT INTO predictions (data_id, prediction, confidence, timestamp)
-                VALUES (?, ?, ?, datetime('now', 'localtime'))
+                VALUES (%s, %s, %s, NOW())
             """
             self.cursor.execute(query, (data_id, prediction, confidence))
             self.conn.commit()
@@ -261,7 +272,7 @@ class DataProcessor:
             # Insert alert into database
             query = """
                 INSERT INTO alerts (data_id, fault_type, confidence, message, severity, timestamp)
-                VALUES (?, ?, ?, ?, ?, datetime('now', 'localtime'))
+                VALUES (%s, %s, %s, %s, %s, NOW())
             """
             self.cursor.execute(query, (
                 result['id'],
@@ -292,10 +303,10 @@ class DataProcessor:
                 SELECT id, data_id, fault_type, confidence, message, severity, timestamp
                 FROM alerts
                 ORDER BY id DESC
-                LIMIT ?
+                LIMIT %s
             """
-            self.cursor.execute(query, (limit,))
-            rows = self.cursor.fetchall()
+            result = self.cursor.execute(query, (limit,))
+            rows = result.fetchall()
             
             alerts = []
             for row in rows:
@@ -319,8 +330,9 @@ class DataProcessor:
         """Get performance statistics"""
         try:
             # Get total predictions
-            self.cursor.execute("SELECT COUNT(*) FROM predictions")
-            total_predictions = self.cursor.fetchone()[0]
+            query = "SELECT COUNT(*) FROM predictions"
+            result = self.cursor.execute(query)
+            total_predictions = result.fetchone()[0]
             
             # Get fault distribution
             query = """
@@ -329,8 +341,8 @@ class DataProcessor:
                 GROUP BY prediction
                 ORDER BY prediction
             """
-            self.cursor.execute(query)
-            rows = self.cursor.fetchall()
+            result = self.cursor.execute(query)
+            rows = result.fetchall()
             
             distribution = {}
             for row in rows:
@@ -338,8 +350,9 @@ class DataProcessor:
                 distribution[fault_type] = row[1]
             
             # Get average confidence
-            self.cursor.execute("SELECT AVG(confidence) FROM predictions")
-            avg_confidence = self.cursor.fetchone()[0] or 0
+            query = "SELECT AVG(confidence) FROM predictions"
+            result = self.cursor.execute(query)
+            avg_confidence = result.fetchone()[0] or 0
             
             # Get recent accuracy (if actual values are available)
             recent_accuracy = 95.64  # Default to training accuracy
@@ -358,12 +371,12 @@ def monitoring_loop():
     """Main monitoring loop"""
     global monitoring_active, matlab_interface
     
-    processor = DataProcessor(db_path)
+    processor = DataProcessor(db_connection_str)
     
     # Initialize MATLAB interface if available
     if matlab_available:
         try:
-            matlab_interface = MatlabInterface(db_path=db_path)
+            matlab_interface = MatlabInterface(db_connection_str=db_connection_str)
             logger.info("MATLAB interface initialized successfully")
         except Exception as e:
             logger.error(f"Error initializing MATLAB interface: {e}")
@@ -498,7 +511,7 @@ def api_status():
 @app.route('/api/data', methods=['GET'])
 def api_data():
     """Get latest data"""
-    processor = DataProcessor(db_path)
+    processor = DataProcessor(db_connection_str)
     data = processor.get_latest_data()
     if data:
         return jsonify(data)
@@ -508,14 +521,14 @@ def api_data():
 @app.route('/api/alerts', methods=['GET'])
 def api_alerts():
     """Get latest alerts"""
-    processor = DataProcessor(db_path)
+    processor = DataProcessor(db_connection_str)
     alerts = processor.get_latest_alerts()
     return jsonify(alerts)
 
 @app.route('/api/stats', methods=['GET'])
 def api_stats():
     """Get performance statistics"""
-    processor = DataProcessor(db_path)
+    processor = DataProcessor(db_connection_str)
     stats = processor.get_performance_stats()
     return jsonify(stats)
 
@@ -622,85 +635,106 @@ def socket_stop_monitoring():
     socketio.emit('monitoring_status', {'active': monitoring_active})
     return {'success': success}
 
-def setup_database():
+def initialize_database(db_connection_str):
     """Set up the database if it doesn't exist"""
     try:
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
+        engine = create_engine(db_connection_str)
         
-        # Create solar_data table if it doesn't exist
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS solar_data (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                timestamp TEXT,
-                voltage REAL,
-                current REAL,
-                power REAL,
-                temperature REAL,
-                irradiance REAL,
-                v_deviation REAL,
-                i_deviation REAL,
-                p_deviation REAL
-            )
-        """)
+        # Create tables
+        from sqlalchemy import MetaData, Table, Column, Integer, Float, DateTime, String
+        metadata = MetaData()
         
-        # Create predictions table if it doesn't exist
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS predictions (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                data_id INTEGER,
-                prediction INTEGER,
-                confidence REAL,
-                timestamp TEXT,
-                FOREIGN KEY (data_id) REFERENCES solar_data (id)
-            )
-        """)
+        # Solar data table
+        solar_data = Table('solar_data', metadata,
+            Column('id', Integer, primary_key=True),
+            Column('timestamp', DateTime),
+            Column('voltage', Float),
+            Column('current', Float),
+            Column('power', Float),
+            Column('temperature', Float),
+            Column('irradiance', Float),
+            Column('v_deviation', Float),
+            Column('i_deviation', Float),
+            Column('p_deviation', Float)
+        )
         
-        # Create alerts table if it doesn't exist
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS alerts (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                data_id INTEGER,
-                fault_type INTEGER,
-                confidence REAL,
-                message TEXT,
-                severity TEXT,
-                timestamp TEXT,
-                acknowledged INTEGER DEFAULT 0,
-                FOREIGN KEY (data_id) REFERENCES solar_data (id)
-            )
-        """)
+        # Predictions table
+        predictions = Table('predictions', metadata,
+            Column('id', Integer, primary_key=True),
+            Column('timestamp', DateTime),
+            Column('data_id', Integer),
+            Column('prediction', Integer),
+            Column('confidence', Float),
+            Column('label', String(50))
+        )
         
-        conn.commit()
+        # Alerts table
+        alerts = Table('alerts', metadata,
+            Column('id', Integer, primary_key=True),
+            Column('timestamp', DateTime),
+            Column('prediction_id', Integer),
+            Column('message', String(255)),
+            Column('severity', String(20)),
+            Column('acknowledged', Integer, default=0)
+        )
+        
+        # Create tables
+        metadata.create_all(engine)
+        logger.info(f"Database initialized: {db_connection_str}")
+        return True
+    except Exception as e:
+        logger.error(f"Error initializing database: {e}")
+        return False
+
+def test_db_connection():
+    """Test connection to MySQL and create database if it doesn't exist"""
+    try:
+        # First try to connect to the MySQL server without specifying a database
+        root_connection_str = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/'
+        engine = create_engine(root_connection_str)
+        conn = engine.connect()
+        
+        # Check if database exists
+        result = conn.execute(f"SHOW DATABASES LIKE '{DB_NAME}'")
+        if not result.fetchone():
+            # Create database if it doesn't exist
+            conn.execute(f"CREATE DATABASE {DB_NAME}")
+            logger.info(f"Created database: {DB_NAME}")
+        
         conn.close()
         
-        logger.info("Database setup complete")
+        # Now connect to the specific database
+        engine = create_engine(db_connection_str)
+        conn = engine.connect()
+        conn.close()
+        
+        logger.info("Successfully connected to MySQL database")
         return True
-    
     except Exception as e:
-        logger.error(f"Error setting up database: {e}")
+        logger.error(f"Failed to connect to MySQL database: {e}")
         return False
 
 def generate_test_data(scenario='random', count=1):
     """Generate test data for the specified scenario"""
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
+    engine = create_engine(db_connection_str)
+    conn = engine.connect()
     
     # Create table if it doesn't exist
-    cursor.execute("""
+    query = """
         CREATE TABLE IF NOT EXISTS solar_data (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            timestamp TEXT,
-            voltage REAL,
-            current REAL,
-            power REAL,
-            temperature REAL,
-            irradiance REAL,
-            v_deviation REAL,
-            i_deviation REAL,
-            p_deviation REAL
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            timestamp DATETIME,
+            voltage FLOAT,
+            current FLOAT,
+            power FLOAT,
+            temperature FLOAT,
+            irradiance FLOAT,
+            v_deviation FLOAT,
+            i_deviation FLOAT,
+            p_deviation FLOAT
         )
-    """)
+    """
+    conn.execute(query)
     
     # Base values
     base_voltage = 48.0
@@ -760,19 +794,19 @@ def generate_test_data(scenario='random', count=1):
         p_deviation = (power - base_power) / base_power * 100
         
         # Insert into database
-        cursor.execute("""
+        query = """
             INSERT INTO solar_data (
                 timestamp, voltage, current, power, temperature, irradiance,
                 v_deviation, i_deviation, p_deviation
             ) VALUES (
-                datetime('now', 'localtime'), ?, ?, ?, ?, ?, ?, ?, ?
+                NOW(), %s, %s, %s, %s, %s, %s, %s, %s
             )
-        """, (
+        """
+        conn.execute(query, (
             voltage, current, power, temperature, irradiance,
             v_deviation, i_deviation, p_deviation
         ))
     
-    conn.commit()
     conn.close()
     
     logger.info(f"Generated {count} test data points for scenario: {scenario}")
@@ -780,7 +814,7 @@ def generate_test_data(scenario='random', count=1):
 
 def main():
     """Main function"""
-    global monitoring_active, db_path
+    global monitoring_active, db_connection_str
     
     # Parse command line arguments
     parser = argparse.ArgumentParser(description='Solar Panel Fault Detection System')
@@ -793,27 +827,53 @@ def main():
                         help='Scenario for test data generation')
     parser.add_argument('--count', type=int, default=10, help='Number of test data records to generate')
     parser.add_argument('--reset-db', action='store_true', help='Reset the database')
-    parser.add_argument('--db-path', type=str, default='solar_panel.db', help='Path to the database')
+    parser.add_argument('--db-host', type=str, default='localhost', help='MySQL database host')
+    parser.add_argument('--db-user', type=str, default='root', help='MySQL database user')
+    parser.add_argument('--db-password', type=str, default='password', help='MySQL database password')
+    parser.add_argument('--db-name', type=str, default='solar_panel_db', help='MySQL database name')
     parser.add_argument('--matlab', action='store_true', help='Enable MATLAB integration')
     
     args = parser.parse_args()
     
-    # Set database path
-    db_path = args.db_path
+    # Set database connection string
+    global DB_HOST, DB_USER, DB_PASSWORD, DB_NAME
+    DB_HOST = args.db_host
+    DB_USER = args.db_user
+    DB_PASSWORD = args.db_password
+    DB_NAME = args.db_name
+    db_connection_str = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}'
+    
+    # For backward compatibility
+    global db_path
+    db_path = 'solar_panel.db'  # Kept for command-line argument compatibility
+    
+    # Test database connection and create database if needed
+    if not test_db_connection():
+        logger.error("Failed to connect to MySQL database. Exiting.")
+        return
     
     # Reset database if requested
     if args.reset_db:
         try:
-            if os.path.exists(db_path):
-                os.remove(db_path)
-                logger.info(f"Database reset: {db_path}")
-            else:
-                logger.info(f"Database does not exist: {db_path}")
+            engine = create_engine(db_connection_str)
+            conn = engine.connect()
+            
+            # Drop tables if they exist
+            conn.execute("DROP TABLE IF EXISTS alerts")
+            conn.execute("DROP TABLE IF EXISTS predictions")
+            conn.execute("DROP TABLE IF EXISTS solar_data")
+            
+            conn.close()
+            logger.info(f"Database reset: {DB_NAME}")
         except Exception as e:
             logger.error(f"Error resetting database: {e}")
     
     # Setup database
-    setup_database()
+    from database_setup import setup_database
+    setup_database(db_connection_str)
+    
+    # Also initialize the local tables for the web application
+    initialize_database(db_connection_str)
     
     # Generate test data if requested
     if args.generate_data:
@@ -824,7 +884,7 @@ def main():
     if args.matlab and matlab_available:
         global matlab_interface
         try:
-            matlab_interface = MatlabInterface(db_path=db_path)
+            matlab_interface = MatlabInterface(db_connection_str=db_connection_str)
             logger.info("MATLAB interface initialized for command line")
         except Exception as e:
             logger.error(f"Error initializing MATLAB interface: {e}")
