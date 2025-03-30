@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Solar Panel Fault Detection System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        body {
+            padding-top: 2rem;
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark-color);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--light-color);
+        }
+        
+        .card {
+            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+            border: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            background-color: var(--light-color);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-weight: 600;
+            padding: 1rem 1.25rem;
+            border-radius: 0.5rem 0.5rem 0 0 !important;
+        }
+        
+        .card-header h5 {
+            margin-bottom: 0;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .status-indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+            position: relative;
+        }
+        
+        .status-running {
+            background-color: var(--success-color);
+            box-shadow: 0 0 10px var(--success-color);
+            animation: pulse 2s infinite;
+        }
+        
+        .status-stopped {
+            background-color: var(--danger-color);
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(39, 174, 96, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(39, 174, 96, 0);
+            }
+        }
+        
+        .fault-0 {
+            background-color: var(--success-color);
+        }
+        
+        .fault-1 {
+            background-color: var(--warning-color);
+        }
+        
+        .fault-2 {
+            background-color: var(--info-color);
+        }
+        
+        .fault-3 {
+            background-color: var(--danger-color);
+        }
+        
+        .fault-4 {
+            background-color: #8e44ad;
+        }
+        
+        .fault-badge {
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.25rem;
+            color: white;
+            font-weight: 600;
+            display: inline-block;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .chart-container {
+            height: 300px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn {
+            border-radius: 0.25rem;
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+        }
+        
+        .btn-success:hover {
+            background-color: #219a52;
+            border-color: #219a52;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+            border-color: #c0392b;
+        }
+        
+        .table {
+            margin-bottom: 0;
+        }
+        
+        .table th {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .prediction-result-card {
+            border-left: 5px solid;
+            transition: all 0.3s ease;
+        }
+        
+        .prediction-result-card.healthy {
+            border-left-color: var(--success-color);
+        }
+        
+        .prediction-result-card.fault-1 {
+            border-left-color: var(--warning-color);
+        }
+        
+        .prediction-result-card.fault-2 {
+            border-left-color: var(--info-color);
+        }
+        
+        .prediction-result-card.fault-3 {
+            border-left-color: var(--danger-color);
+        }
+        
+        .prediction-result-card.fault-4 {
+            border-left-color: #8e44ad;
+        }
+        
+        .confidence-meter {
+            height: 10px;
+            border-radius: 5px;
+            background-color: #e9ecef;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        
+        .confidence-value {
+            height: 100%;
+            border-radius: 5px;
+            background-color: var(--secondary-color);
+        }
+        
+        .dashboard-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+        }
+        
+        .dashboard-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .dashboard-subtitle {
+            font-weight: 400;
+            opacity: 0.8;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #6c757d;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 1.5rem;
+            height: 1.5rem;
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--secondary-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .system-metrics {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .metric-item {
+            text-align: center;
+            flex: 1;
+            padding: 0.5rem;
+            border-right: 1px solid #e9ecef;
+        }
+        
+        .metric-item:last-child {
+            border-right: none;
+        }
+        
+        .metric-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+        
+        .metric-label {
+            font-size: 0.75rem;
+            color: #6c757d;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-solar-panel me-2"></i>
+                Advanced Solar Fault Detection
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#predictions">Predictions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#statistics">Statistics</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5 pt-3" id="dashboard">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header text-center">
+            <h1 class="dashboard-title">Advanced Solar Panel Fault Detection System</h1>
+            <p class="dashboard-subtitle">Real-time monitoring and fault prediction with deep learning</p>
+        </div>
+        
+        <!-- Status Overview -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card stat-card">
+                    <div class="stat-value" id="total-panels">0</div>
+                    <div class="stat-label">Total Panels</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card">
+                    <div class="stat-value text-success" id="healthy-panels">0</div>
+                    <div class="stat-label">Healthy Panels</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card">
+                    <div class="stat-value text-warning" id="fault-panels">0</div>
+                    <div class="stat-label">Faulty Panels</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card">
+                    <div class="stat-value text-info" id="detection-accuracy">0%</div>
+                    <div class="stat-label">Detection Accuracy</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <!-- System Status Card -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5><i class="fas fa-server me-2"></i>System Status</h5>
+                        <span id="status-badge" class="badge bg-danger">Offline</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="system-metrics">
+                            <div class="metric-item">
+                                <div class="metric-value" id="processed-count">0</div>
+                                <div class="metric-label">Processed</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value" id="model-accuracy">96.25%</div>
+                                <div class="metric-label">Accuracy</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value" id="response-time">0ms</div>
+                                <div class="metric-label">Response</div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 mt-3">
+                            <button id="start-btn" class="btn btn-success">
+                                <i class="fas fa-play me-2"></i>Start Monitoring
+                            </button>
+                            <button id="stop-btn" class="btn btn-danger" disabled>
+                                <i class="fas fa-stop me-2"></i>Stop Monitoring
+                            </button>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h6 class="fw-bold">Model Performance</h6>
+                            <div class="small text-muted mb-2">Class-specific accuracy:</div>
+                            <div class="mb-2">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span>Healthy (Class 0)</span>
+                                    <span>98.77%</span>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 98.77%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span>Fault 1</span>
+                                    <span>95.06%</span>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 95.06%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span>Fault 2</span>
+                                    <span>95.00%</span>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 95.00%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span>Fault 3</span>
+                                    <span>97.50%</span>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 97.50%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span>Fault 4</span>
+                                    <span>94.87%</span>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar" role="progressbar" style="width: 94.87%; background-color: #8e44ad;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Statistics Card -->
+                <div class="card" id="statistics">
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-pie me-2"></i>Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container" id="chart-container"></div>
+                        <div id="stats-container">
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <h6 class="fw-bold" id="total-count">0</h6>
+                                    <p class="small text-muted">Total Records</p>
+                                </div>
+                                <div class="col-6">
+                                    <h6 class="fw-bold" id="stats-processed">0</h6>
+                                    <p class="small text-muted">Processed</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div id="type-stats" class="mt-3"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Fault Description Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-info-circle me-2"></i>Fault Types Reference</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="accordion" id="faultAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHealthy">
+                                        <span class="fault-badge bg-success me-2">Healthy</span> Normal Operation
+                                    </button>
+                                </h2>
+                                <div id="collapseHealthy" class="accordion-collapse collapse" data-bs-parent="#faultAccordion">
+                                    <div class="accordion-body">
+                                        <p>The solar panel is operating within normal parameters. Current and voltage readings are within expected ranges based on environmental conditions.</p>
+                                        <p><strong>Characteristics:</strong> Stable voltage output, current proportional to irradiance, normal power production.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFault1">
+                                        <span class="fault-badge bg-warning me-2">Fault 1</span> Line-Line Fault
+                                    </button>
+                                </h2>
+                                <div id="collapseFault1" class="accordion-collapse collapse" data-bs-parent="#faultAccordion">
+                                    <div class="accordion-body">
+                                        <p>A line-line fault occurs when there is an unintended connection between two points in the circuit, creating a short circuit.</p>
+                                        <p><strong>Characteristics:</strong> Significant voltage drop, increased current flow, reduced power output.</p>
+                                        <p><strong>Recommended Action:</strong> Inspect wiring connections, check for damaged insulation, and verify junction box integrity.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFault2">
+                                        <span class="fault-badge bg-info me-2">Fault 2</span> Open Circuit Fault
+                                    </button>
+                                </h2>
+                                <div id="collapseFault2" class="accordion-collapse collapse" data-bs-parent="#faultAccordion">
+                                    <div class="accordion-body">
+                                        <p>An open circuit fault occurs when there is a break in the electrical path, preventing current flow in part or all of the panel.</p>
+                                        <p><strong>Characteristics:</strong> Abnormally high voltage, significantly reduced or zero current, minimal power output.</p>
+                                        <p><strong>Recommended Action:</strong> Check for broken connections, inspect for cell cracks, and test for continuity across the panel.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFault3">
+                                        <span class="fault-badge bg-danger me-2">Fault 3</span> Partial Shading
+                                    </button>
+                                </h2>
+                                <div id="collapseFault3" class="accordion-collapse collapse" data-bs-parent="#faultAccordion">
+                                    <div class="accordion-body">
+                                        <p>Partial shading occurs when a portion of the panel is blocked from sunlight, creating hotspots and reducing efficiency.</p>
+                                        <p><strong>Characteristics:</strong> Multiple power peaks, reduced current, uneven voltage distribution across cells.</p>
+                                        <p><strong>Recommended Action:</strong> Remove physical obstructions, clean panel surface, and consider repositioning to avoid regular shading patterns.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFault4">
+                                        <span class="fault-badge" style="background-color: #8e44ad;" me-2">Fault 4</span> Degradation
+                                    </button>
+                                </h2>
+                                <div id="collapseFault4" class="accordion-collapse collapse" data-bs-parent="#faultAccordion">
+                                    <div class="accordion-body">
+                                        <p>Panel degradation is the gradual reduction in performance over time due to environmental factors, material breakdown, or manufacturing defects.</p>
+                                        <p><strong>Characteristics:</strong> Consistently lower power output than rated, gradual decline in efficiency, normal voltage but reduced current.</p>
+                                        <p><strong>Recommended Action:</strong> Perform detailed I-V curve analysis, check for discoloration or delamination, and consider replacement if efficiency drops below acceptable levels.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Latest Data Card -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5><i class="fas fa-table me-2"></i>Latest Readings</h5>
+                        <button id="refresh-btn" class="btn btn-sm btn-primary">
+                            <i class="fas fa-sync-alt me-1"></i>Refresh
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Timestamp</th>
+                                        <th>Current (A)</th>
+                                        <th>Voltage (V)</th>
+                                        <th>Status</th>
+                                        <th>Confidence</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="data-table-body">
+                                    <tr>
+                                        <td colspan="6" class="text-center">No data available</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Manual Prediction Card -->
+                <div class="card" id="predictions">
+                    <div class="card-header">
+                        <h5><i class="fas fa-bolt me-2"></i>Manual Prediction</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="prediction-form">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="pv_current" class="form-label">PV Current (A)</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="pv_current" step="0.01" required>
+                                        <span class="input-group-text"><i class="fas fa-bolt"></i></span>
+                                    </div>
+                                    <div class="form-text">Enter the measured current from the solar panel</div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="pv_voltage" class="form-label">PV Voltage (V)</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="pv_voltage" step="0.01" required>
+                                        <span class="input-group-text"><i class="fas fa-plug"></i></span>
+                                    </div>
+                                    <div class="form-text">Enter the measured voltage from the solar panel</div>
+                                </div>
+                            </div>
+                            
+                            <div class="d-grid mt-3">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search me-2"></i>Analyze & Predict
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div id="prediction-result" class="mt-4" style="display: none;">
+                            <div class="card prediction-result-card">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-3">Prediction Result</h5>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="mb-1"><strong>Fault Type:</strong></p>
+                                            <div id="result-label-container" class="mb-3">
+                                                <span id="result-label" class="fault-badge bg-success">Healthy</span>
+                                            </div>
+                                            <p class="mb-1"><strong>Timestamp:</strong></p>
+                                            <p id="result-timestamp" class="text-muted">-</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="mb-1"><strong>Confidence:</strong> <span id="result-confidence">0</span>%</p>
+                                            <div class="confidence-meter">
+                                                <div class="confidence-value" id="confidence-bar" style="width: 0%"></div>
+                                            </div>
+                                            <div class="mt-3">
+                                                <p class="mb-1"><strong>Recommended Action:</strong></p>
+                                                <p id="recommended-action" class="small">-</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // DOM elements
+        const statusIndicator = document.getElementById('status-badge');
+        const processedCount = document.getElementById('processed-count');
+        const startBtn = document.getElementById('start-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        const refreshBtn = document.getElementById('refresh-btn');
+        const dataTableBody = document.getElementById('data-table-body');
+        const predictionForm = document.getElementById('prediction-form');
+        const predictionResult = document.getElementById('prediction-result');
+        const resultLabel = document.getElementById('result-label');
+        const resultConfidence = document.getElementById('result-confidence');
+        const resultTimestamp = document.getElementById('result-timestamp');
+        const totalCount = document.getElementById('total-count');
+        const statsProcessed = document.getElementById('stats-processed');
+        const statsUnprocessed = document.getElementById('stats-unprocessed');
+        const typeStats = document.getElementById('type-stats');
+        const totalPanels = document.getElementById('total-panels');
+        const healthyPanels = document.getElementById('healthy-panels');
+        const faultPanels = document.getElementById('fault-panels');
+        const detectionAccuracy = document.getElementById('detection-accuracy');
+        const responseTime = document.getElementById('response-time');
+        const recommendedAction = document.getElementById('recommended-action');
+        
+        // Chart
+        let statsChart = null;
+        
+        // Update status
+        function updateStatus() {
+            fetch('/api/status')
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Status data:", data);
+                    if (data.running) {
+                        statusIndicator.className = 'badge bg-success';
+                        statusIndicator.textContent = 'Online';
+                        startBtn.disabled = true;
+                        stopBtn.disabled = false;
+                    } else {
+                        statusIndicator.className = 'badge bg-danger';
+                        statusIndicator.textContent = 'Offline';
+                        startBtn.disabled = false;
+                        stopBtn.disabled = true;
+                    }
+                    
+                    // Update processed count if available
+                    if (processedCount && data.processed_count !== undefined) {
+                        processedCount.textContent = data.processed_count;
+                    }
+                    
+                    // Update accuracy if available
+                    if (detectionAccuracy && data.accuracy !== undefined) {
+                        detectionAccuracy.textContent = (data.accuracy * 100).toFixed(2) + '%';
+                    }
+                    
+                    // Update response time if available
+                    if (responseTime && data.avg_prediction_time !== undefined) {
+                        responseTime.textContent = data.avg_prediction_time.toFixed(3) + ' s';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching status:', error);
+                    statusIndicator.className = 'badge bg-warning';
+                    statusIndicator.textContent = 'Error';
+                });
+        }
+        
+        // Update latest data
+        function updateLatestData() {
+            fetch('/api/latest_data')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        dataTableBody.innerHTML = '<tr><td colspan="6" class="text-center">No data available</td></tr>';
+                        return;
+                    }
+                    
+                    dataTableBody.innerHTML = '';
+                    data.forEach(record => {
+                        const row = document.createElement('tr');
+                        
+                        // Add appropriate class based on prediction
+                        if (record.prediction !== undefined) {
+                            row.className = `fault-${record.prediction}`;
+                        }
+                        
+                        row.innerHTML = `
+                            <td>${record.id}</td>
+                            <td>${new Date(record.timestamp).toLocaleString()}</td>
+                            <td>${record.pv_current.toFixed(2)}</td>
+                            <td>${record.pv_voltage.toFixed(2)}</td>
+                            <td>
+                                <span class="fault-badge bg-${getFaultColorClass(record.prediction)}">
+                                    ${record.prediction_label || 'Not processed'}
+                                </span>
+                            </td>
+                            <td>${record.confidence ? (record.confidence * 100).toFixed(2) : 0}%</td>
+                        `;
+                        dataTableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching latest data:', error));
+        }
+        
+        // Get fault color class
+        function getFaultColorClass(prediction) {
+            switch(prediction) {
+                case 0: return 'success';
+                case 1: return 'warning';
+                case 2: return 'info';
+                case 3: return 'danger';
+                case 4: return 'secondary';
+                default: return 'secondary';
+            }
+        }
+        
+        // Get fault description
+        function getFaultDescription(prediction) {
+            switch(prediction) {
+                case 0: return 'Healthy';
+                case 1: return 'Line-Line Fault';
+                case 2: return 'Open Circuit Fault';
+                case 3: return 'Partial Shading';
+                case 4: return 'Degradation';
+                default: return 'Unknown';
+            }
+        }
+        
+        // Get recommended action
+        function getRecommendedAction(prediction) {
+            switch(prediction) {
+                case 0: 
+                    return 'No action required. The solar panel is operating within normal parameters.';
+                case 1: 
+                    return 'Inspect wiring connections, check for damaged insulation, and verify junction box integrity.';
+                case 2: 
+                    return 'Check for broken connections, inspect for cell cracks, and test for continuity across the panel.';
+                case 3: 
+                    return 'Remove physical obstructions, clean panel surface, and consider repositioning to avoid regular shading patterns.';
+                case 4: 
+                    return 'Perform detailed I-V curve analysis, check for discoloration or delamination, and consider replacement if efficiency drops below acceptable levels.';
+                default: 
+                    return 'Conduct a thorough inspection of the panel and its connections.';
+            }
+        }
+        
+        // Update statistics
+        function updateStats() {
+            fetch('/api/statistics')
+                .then(response => response.json())
+                .then(data => {
+                    totalCount.textContent = data.total_count;
+                    statsProcessed.textContent = data.processed_count;
+                    
+                    // Type statistics
+                    typeStats.innerHTML = '';
+                    if (data.type_counts) {
+                        const types = Object.keys(data.type_counts);
+                        types.forEach(type => {
+                            const typeCount = data.type_counts[type];
+                            const percentage = (typeCount / data.total_count * 100).toFixed(1);
+                            
+                            const typeDiv = document.createElement('div');
+                            typeDiv.className = 'mb-2';
+                            typeDiv.innerHTML = `
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span>${getFaultDescription(parseInt(type))}</span>
+                                    <span>${typeCount} (${percentage}%)</span>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-${getFaultColorClass(parseInt(type))}" 
+                                         role="progressbar" 
+                                         style="width: ${percentage}%"></div>
+                                </div>
+                            `;
+                            typeStats.appendChild(typeDiv);
+                        });
+                    }
+                    
+                    // Chart
+                    const chartData = {
+                        labels: Object.keys(data.type_counts).map(type => getFaultDescription(parseInt(type))),
+                        datasets: [{
+                            label: 'Fault Distribution',
+                            data: Object.values(data.type_counts),
+                            backgroundColor: Object.keys(data.type_counts).map(type => {
+                                switch(parseInt(type)) {
+                                    case 0: return '#27ae60';
+                                    case 1: return '#f39c12';
+                                    case 2: return '#2980b9';
+                                    case 3: return '#e74c3c';
+                                    case 4: return '#8e44ad';
+                                    default: return '#95a5a6';
+                                }
+                            })
+                        }]
+                    };
+                    
+                    if (statsChart) {
+                        statsChart.data = chartData;
+                        statsChart.update();
+                    } else {
+                        const ctx = document.getElementById('chart-container').getContext('2d');
+                        statsChart = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: chartData,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: {
+                                        position: 'bottom'
+                                    }
+                                }
+                            }
+                        });
+                    }
+                })
+                .catch(error => console.error('Error fetching statistics:', error));
+        }
+        
+        // Start monitoring
+        startBtn.addEventListener('click', () => {
+            fetch('/api/start', {
+                method: 'POST',
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        updateStatus();
+                    }
+                })
+                .catch(error => console.error('Error starting monitoring:', error));
+        });
+        
+        // Stop monitoring
+        stopBtn.addEventListener('click', () => {
+            fetch('/api/stop', {
+                method: 'POST',
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        updateStatus();
+                    }
+                })
+                .catch(error => console.error('Error stopping monitoring:', error));
+        });
+        
+        // Refresh latest data
+        refreshBtn.addEventListener('click', () => {
+            updateLatestData();
+        });
+        
+        // Handle prediction form submission
+        predictionForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const pv_current = parseFloat(document.getElementById('pv_current').value);
+            const pv_voltage = parseFloat(document.getElementById('pv_voltage').value);
+            
+            // Show loading state
+            const submitBtn = predictionForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="loading-spinner"></span> Processing...';
+            submitBtn.disabled = true;
+            
+            fetch('/api/simple_predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    pv_current,
+                    pv_voltage
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Reset button
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                    
+                    // Show prediction result
+                    predictionResult.style.display = 'block';
+                    
+                    // Update result content
+                    resultLabel.textContent = data.prediction_label;
+                    resultLabel.className = `fault-badge bg-${getFaultColorClass(data.prediction)}`;
+                    resultConfidence.textContent = (data.confidence * 100).toFixed(2);
+                    resultTimestamp.textContent = new Date().toLocaleString();
+                    
+                    // Update confidence bar
+                    const confidenceBar = document.getElementById('confidence-bar');
+                    confidenceBar.style.width = `${data.confidence * 100}%`;
+                    
+                    // Update recommended action
+                    recommendedAction.textContent = getRecommendedAction(data.prediction);
+                    
+                    // Update result card class
+                    const resultCard = document.querySelector('.prediction-result-card');
+                    resultCard.className = 'card prediction-result-card';
+                    
+                    // Add appropriate class based on prediction
+                    switch(data.prediction) {
+                        case 0:
+                            resultCard.classList.add('healthy');
+                            break;
+                        case 1:
+                            resultCard.classList.add('fault-1');
+                            break;
+                        case 2:
+                            resultCard.classList.add('fault-2');
+                            break;
+                        case 3:
+                            resultCard.classList.add('fault-3');
+                            break;
+                        case 4:
+                            resultCard.classList.add('fault-4');
+                            break;
+                        default:
+                            resultCard.classList.add('healthy');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error making prediction:', error);
+                    // Reset button
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                });
+        });
+        
+        // Initialize
+        updateStatus();
+        updateLatestData();
+        updateStats();
+        
+        // Refresh data periodically
+        setInterval(updateStatus, 5000);
+        setInterval(updateLatestData, 10000);
+        setInterval(updateStats, 15000);
+    </script>
+</body>
+</html>

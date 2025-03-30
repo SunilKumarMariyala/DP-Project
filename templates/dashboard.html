@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar Fault Detection - Advanced Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        .navbar {
+            background-color: #0d6efd;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-header {
+            border-radius: 10px 10px 0 0 !important;
+            font-weight: bold;
+        }
+        .status-healthy {
+            color: #198754;
+        }
+        .status-fault {
+            color: #dc3545;
+        }
+        .alert-high {
+            background-color: #f8d7da;
+            border-color: #f5c2c7;
+            color: #842029;
+        }
+        .alert-medium {
+            background-color: #fff3cd;
+            border-color: #ffecb5;
+            color: #664d03;
+        }
+        .alert-low {
+            background-color: #d1e7dd;
+            border-color: #badbcc;
+            color: #0f5132;
+        }
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .metric-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        #live-status {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-solar-panel"></i> Solar Fault Detection System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#alerts">Alerts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#history">History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#analytics">Analytics</a>
+                    </li>
+                </ul>
+                <span class="navbar-text">
+                    <span id="live-status" class="badge bg-success">LIVE</span>
+                    <span id="connection-status">Connected</span>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <!-- Current Status Card -->
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                Current System Status
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h3 id="current-status" class="status-healthy">Healthy</h3>
+                                        <p id="status-description">Solar panel is operating normally.</p>
+                                        <p><strong>Confidence:</strong> <span id="status-confidence">98.5%</span></p>
+                                        <p><strong>Last Updated:</strong> <span id="status-timestamp">2025-03-29 23:58:36</span></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <div>
+                                                <span class="metric-value" id="current-voltage">30.5</span>
+                                                <span class="metric-label">V</span>
+                                            </div>
+                                            <div>
+                                                <span class="metric-value" id="current-current">8.2</span>
+                                                <span class="metric-label">A</span>
+                                            </div>
+                                            <div>
+                                                <span class="metric-value" id="current-power">250.1</span>
+                                                <span class="metric-label">W</span>
+                                            </div>
+                                        </div>
+                                        <div class="alert alert-info" id="recommended-action">
+                                            No action required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Real-time Chart -->
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                Real-time Monitoring
+                            </div>
+                            <div class="card-body">
+                                <canvas id="real-time-chart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fault Distribution -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                Fault Distribution
+                            </div>
+                            <div class="card-body">
+                                <canvas id="fault-distribution-chart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Confidence Metrics -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                Model Confidence by Fault Type
+                            </div>
+                            <div class="card-body">
+                                <canvas id="confidence-chart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <!-- Active Alerts -->
+                <div class="card">
+                    <div class="card-header bg-danger text-white">
+                        Active Alerts
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="list-group" id="alerts-list">
+                            <!-- Alerts will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Predictions -->
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        Recent Predictions
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="list-group" id="predictions-list">
+                            <!-- Predictions will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Performance -->
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        System Performance
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <div class="metric-value" id="system-uptime">99.8%</div>
+                                <div class="metric-label">Uptime</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="metric-value" id="system-accuracy">96.25%</div>
+                                <div class="metric-label">Accuracy</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="metric-value" id="system-efficiency">92.3%</div>
+                                <div class="metric-label">Efficiency</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Control Panel -->
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        Control Panel
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-success" id="start-processing">Start Processing</button>
+                            <button class="btn btn-danger" id="stop-processing">Stop Processing</button>
+                            <button class="btn btn-primary" id="refresh-data">Refresh Data</button>
+                            <button class="btn btn-warning" id="acknowledge-all">Acknowledge All Alerts</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prediction History Section -->
+        <div class="row mt-4" id="history">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        Prediction History
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Timestamp</th>
+                                        <th>Current (A)</th>
+                                        <th>Voltage (V)</th>
+                                        <th>Prediction</th>
+                                        <th>Confidence</th>
+                                        <th>Description</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="history-table-body">
+                                    <!-- History data will be dynamically added here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
+    <script>
+        // Socket.IO connection
+        const socket = io();
+        
+        // Connection status handling
+        socket.on('connect', () => {
+            document.getElementById('connection-status').textContent = 'Connected';
+            document.getElementById('live-status').classList.remove('bg-danger');
+            document.getElementById('live-status').classList.add('bg-success');
+        });
+        
+        socket.on('disconnect', () => {
+            document.getElementById('connection-status').textContent = 'Disconnected';
+            document.getElementById('live-status').classList.remove('bg-success');
+            document.getElementById('live-status').classList.add('bg-danger');
+        });
+        
+        // Charts initialization
+        let realTimeChart, faultDistributionChart, confidenceChart;
+        
+        // Initialize charts
+        function initCharts() {
+            // Real-time monitoring chart
+            const rtcCtx = document.getElementById('real-time-chart').getContext('2d');
+            realTimeChart = new Chart(rtcCtx, {
+                type: 'line',
+                data: {
+                    labels: Array(20).fill('').map((_, i) => i.toString()),
+                    datasets: [
+                        {
+                            label: 'Current (A)',
+                            data: Array(20).fill(null),
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            tension: 0.4,
+                            fill: false
+                        },
+                        {
+                            label: 'Voltage (V)',
+                            data: Array(20).fill(null),
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            tension: 0.4,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    },
+                    animation: {
+                        duration: 0
+                    }
+                }
+            });
+            
+            // Fault distribution chart
+            const fdcCtx = document.getElementById('fault-distribution-chart').getContext('2d');
+            faultDistributionChart = new Chart(fdcCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Healthy', 'Fault 1', 'Fault 2', 'Fault 3', 'Fault 4'],
+                    datasets: [{
+                        data: [70, 10, 8, 7, 5],
+                        backgroundColor: [
+                            'rgba(40, 167, 69, 0.7)',
+                            'rgba(220, 53, 69, 0.7)',
+                            'rgba(255, 193, 7, 0.7)',
+                            'rgba(23, 162, 184, 0.7)',
+                            'rgba(108, 117, 125, 0.7)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            
+            // Confidence metrics chart
+            const cmcCtx = document.getElementById('confidence-chart').getContext('2d');
+            confidenceChart = new Chart(cmcCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Healthy', 'Fault 1', 'Fault 2', 'Fault 3', 'Fault 4'],
+                    datasets: [{
+                        label: 'Confidence (%)',
+                        data: [98.77, 95.06, 95.00, 97.50, 94.87],
+                        backgroundColor: [
+                            'rgba(40, 167, 69, 0.7)',
+                            'rgba(220, 53, 69, 0.7)',
+                            'rgba(255, 193, 7, 0.7)',
+                            'rgba(23, 162, 184, 0.7)',
+                            'rgba(108, 117, 125, 0.7)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Load initial data
+        function loadInitialData() {
+            // Load latest data
+            fetch('/api/data/latest?limit=10')
+                .then(response => response.json())
+                .then(data => {
+                    updateCurrentStatus(data[0]);
+                    updatePredictionsList(data);
+                    updateHistoryTable(data);
+                })
+                .catch(error => console.error('Error loading data:', error));
+            
+            // Load latest alerts
+            fetch('/api/alerts/latest?limit=5')
+                .then(response => response.json())
+                .then(alerts => updateAlertsList(alerts))
+                .catch(error => console.error('Error loading alerts:', error));
+            
+            // Load statistics
+            fetch('/api/stats/summary')
+                .then(response => response.json())
+                .then(stats => updateStatistics(stats))
+                .catch(error => console.error('Error loading statistics:', error));
+        }
+        
+        // Update current status
+        function updateCurrentStatus(data) {
+            if (!data) return;
+            
+            const statusElement = document.getElementById('current-status');
+            const descriptionElement = document.getElementById('status-description');
+            const confidenceElement = document.getElementById('status-confidence');
+            const timestampElement = document.getElementById('status-timestamp');
+            const voltageElement = document.getElementById('current-voltage');
+            const currentElement = document.getElementById('current-current');
+            const powerElement = document.getElementById('current-power');
+            const actionElement = document.getElementById('recommended-action');
+            
+            statusElement.textContent = data.prediction;
+            descriptionElement.textContent = data.description;
+            confidenceElement.textContent = `${data.confidence.toFixed(2)}%`;
+            timestampElement.textContent = data.timestamp;
+            voltageElement.textContent = data.pv_voltage.toFixed(2);
+            currentElement.textContent = data.pv_current.toFixed(2);
+            powerElement.textContent = (data.pv_current * data.pv_voltage).toFixed(2);
+            actionElement.textContent = data.recommended_action;
+            
+            // Update status color
+            if (data.prediction === 'Healthy') {
+                statusElement.className = 'status-healthy';
+                actionElement.className = 'alert alert-success';
+            } else {
+                statusElement.className = 'status-fault';
+                actionElement.className = 'alert alert-danger';
+            }
+            
+            // Update real-time chart
+            if (realTimeChart) {
+                realTimeChart.data.datasets[0].data.shift();
+                realTimeChart.data.datasets[0].data.push(data.pv_current);
+                
+                realTimeChart.data.datasets[1].data.shift();
+                realTimeChart.data.datasets[1].data.push(data.pv_voltage);
+                
+                realTimeChart.update();
+            }
+        }
+        
+        // Update predictions list
+        function updatePredictionsList(data) {
+            const listElement = document.getElementById('predictions-list');
+            listElement.innerHTML = '';
+            
+            data.forEach(item => {
+                const listItem = document.createElement('a');
+                listItem.href = '#';
+                listItem.className = 'list-group-item list-group-item-action';
+                
+                if (item.prediction !== 'Healthy') {
+                    listItem.classList.add('list-group-item-danger');
+                }
+                
+                listItem.innerHTML = `
+                    <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-1">${item.prediction}</h6>
+                        <small>${item.confidence.toFixed(2)}%</small>
+                    </div>
+                    <p class="mb-1">Current: ${item.pv_current.toFixed(2)}A, Voltage: ${item.pv_voltage.toFixed(2)}V</p>
+                    <small>${item.timestamp}</small>
+                `;
+                
+                listElement.appendChild(listItem);
+            });
+        }
+        
+        // Update alerts list
+        function updateAlertsList(alerts) {
+            const listElement = document.getElementById('alerts-list');
+            listElement.innerHTML = '';
+            
+            if (alerts.length === 0) {
+                const listItem = document.createElement('div');
+                listItem.className = 'list-group-item';
+                listItem.textContent = 'No active alerts';
+                listElement.appendChild(listItem);
+                return;
+            }
+            
+            alerts.forEach(alert => {
+                const listItem = document.createElement('div');
+                listItem.className = 'list-group-item';
+                
+                // Add severity class
+                if (alert.severity === 'High') {
+                    listItem.classList.add('alert-high');
+                } else if (alert.severity === 'Medium') {
+                    listItem.classList.add('alert-medium');
+                } else {
+                    listItem.classList.add('alert-low');
+                }
+                
+                listItem.innerHTML = `
+                    <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-1">${alert.alert_type}</h6>
+                        <span class="badge bg-${alert.severity === 'High' ? 'danger' : alert.severity === 'Medium' ? 'warning' : 'success'}">${alert.severity}</span>
+                    </div>
+                    <p class="mb-1">${alert.message}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small>${alert.timestamp}</small>
+                        <button class="btn btn-sm btn-outline-secondary acknowledge-btn" data-id="${alert.id}">Acknowledge</button>
+                    </div>
+                `;
+                
+                listElement.appendChild(listItem);
+            });
+            
+            // Add event listeners to acknowledge buttons
+            document.querySelectorAll('.acknowledge-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    acknowledgeAlert(this.dataset.id);
+                });
+            });
+        }
+        
+        // Update history table
+        function updateHistoryTable(data) {
+            const tableBody = document.getElementById('history-table-body');
+            tableBody.innerHTML = '';
+            
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                
+                if (item.prediction !== 'Healthy') {
+                    row.className = 'table-danger';
+                }
+                
+                row.innerHTML = `
+                    <td>${item.id}</td>
+                    <td>${item.timestamp}</td>
+                    <td>${item.pv_current.toFixed(2)}</td>
+                    <td>${item.pv_voltage.toFixed(2)}</td>
+                    <td>${item.prediction}</td>
+                    <td>${item.confidence.toFixed(2)}%</td>
+                    <td>${item.description}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary log-maintenance-btn" data-id="${item.id}">Log Maintenance</button>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+            
+            // Add event listeners to maintenance buttons
+            document.querySelectorAll('.log-maintenance-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    showMaintenanceModal(this.dataset.id);
+                });
+            });
+        }
+        
+        // Update statistics
+        function updateStatistics(stats) {
+            // Update fault distribution chart
+            if (faultDistributionChart && stats.prediction_counts) {
+                const labels = Object.keys(stats.prediction_counts);
+                const data = Object.values(stats.prediction_counts);
+                
+                faultDistributionChart.data.labels = labels;
+                faultDistributionChart.data.datasets[0].data = data;
+                faultDistributionChart.update();
+            }
+            
+            // Update confidence chart
+            if (confidenceChart && stats.avg_confidence) {
+                const labels = Object.keys(stats.avg_confidence);
+                const data = Object.values(stats.avg_confidence);
+                
+                confidenceChart.data.labels = labels;
+                confidenceChart.data.datasets[0].data = data;
+                confidenceChart.update();
+            }
+            
+            // Update system metrics
+            document.getElementById('system-accuracy').textContent = '96.25%'; // From memory
+        }
+        
+        // Acknowledge alert
+        function acknowledgeAlert(alertId) {
+            fetch('/api/alerts/acknowledge', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ alert_id: alertId })
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        // Reload alerts
+                        fetch('/api/alerts/latest?limit=5')
+                            .then(response => response.json())
+                            .then(alerts => updateAlertsList(alerts))
+                            .catch(error => console.error('Error loading alerts:', error));
+                    }
+                })
+                .catch(error => console.error('Error acknowledging alert:', error));
+        }
+        
+        // Show maintenance modal
+        function showMaintenanceModal(dataId) {
+            // Implementation would go here
+            alert(`Log maintenance for data ID: ${dataId}`);
+        }
+        
+        // Socket.IO event handlers
+        socket.on('data_processed', data => {
+            // Reload latest data
+            fetch('/api/data/latest?limit=10')
+                .then(response => response.json())
+                .then(data => {
+                    updateCurrentStatus(data[0]);
+                    updatePredictionsList(data);
+                    updateHistoryTable(data);
+                })
+                .catch(error => console.error('Error loading data:', error));
+        });
+        
+        socket.on('new_alert', alert => {
+            // Reload alerts
+            fetch('/api/alerts/latest?limit=5')
+                .then(response => response.json())
+                .then(alerts => updateAlertsList(alerts))
+                .catch(error => console.error('Error loading alerts:', error));
+        });
+        
+        socket.on('alert_acknowledged', data => {
+            // Reload alerts
+            fetch('/api/alerts/latest?limit=5')
+                .then(response => response.json())
+                .then(alerts => updateAlertsList(alerts))
+                .catch(error => console.error('Error loading alerts:', error));
+        });
+        
+        // Control panel button handlers
+        document.getElementById('start-processing').addEventListener('click', function() {
+            fetch('/api/start', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ interval: 2, batch_size: 5 })
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        alert('Processing started successfully');
+                    } else {
+                        alert('Failed to start processing: ' + result.message);
+                    }
+                })
+                .catch(error => console.error('Error starting processing:', error));
+        });
+        
+        document.getElementById('stop-processing').addEventListener('click', function() {
+            fetch('/api/stop', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        alert('Processing stopped successfully');
+                    } else {
+                        alert('Failed to stop processing: ' + result.message);
+                    }
+                })
+                .catch(error => console.error('Error stopping processing:', error));
+        });
+        
+        document.getElementById('refresh-data').addEventListener('click', function() {
+            loadInitialData();
+        });
+        
+        document.getElementById('acknowledge-all').addEventListener('click', function() {
+            // Implementation would go here
+            alert('Acknowledge all alerts functionality would go here');
+        });
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();
+            loadInitialData();
+        });
+    </script>
+</body>
+</html>

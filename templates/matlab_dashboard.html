@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MATLAB Integration - Solar Fault Detection</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar {
+            background-color: #343a40;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-header {
+            border-radius: 10px 10px 0 0;
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #0d6efd;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        .status-available {
+            background-color: #28a745;
+        }
+        .status-unavailable {
+            background-color: #dc3545;
+        }
+        .simulation-result {
+            background-color: #f1f8ff;
+            border-left: 4px solid #0d6efd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        .fault-indicator {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        .fault-healthy {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .fault-line-line {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .fault-open-circuit {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .fault-partial-shading {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        .fault-degradation {
+            background-color: #e2e3e5;
+            color: #383d41;
+        }
+        .loading-spinner {
+            display: none;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-sun"></i> Solar Fault Detection System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="bi bi-house"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/manual_prediction"><i class="bi bi-lightning"></i> Manual Prediction</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/matlab_dashboard"><i class="bi bi-cpu"></i> MATLAB Integration</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- MATLAB Status -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-dark text-white">
+                        <i class="bi bi-cpu"></i> MATLAB Integration Status
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="status-indicator {% if matlab_available %}status-available{% else %}status-unavailable{% endif %}"></div>
+                            <h5 class="mb-0">MATLAB Integration: {% if matlab_available %}Available{% else %}Not Available{% endif %}</h5>
+                        </div>
+                        {% if not matlab_available %}
+                        <div class="alert alert-warning mt-3">
+                            <i class="bi bi-exclamation-triangle"></i> MATLAB integration is not available. Please make sure MATLAB is installed and the MATLAB Engine for Python is properly configured.
+                            <p class="mt-2 mb-0">To install the MATLAB Engine for Python, run the following command in the MATLAB Command Window:</p>
+                            <code>cd "matlabroot\extern\engines\python" && python setup.py install</code>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if matlab_available %}
+        <!-- MATLAB Simulation Controls -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <i class="bi bi-play-circle"></i> Run MATLAB Simulation
+                    </div>
+                    <div class="card-body">
+                        <form id="simulation-form">
+                            <div class="mb-3">
+                                <label for="irradiance" class="form-label">Solar Irradiance (W/m²)</label>
+                                <input type="range" class="form-range" id="irradiance" min="200" max="1200" step="50" value="1000">
+                                <div class="d-flex justify-content-between">
+                                    <span>200 W/m²</span>
+                                    <span id="irradiance-value">1000 W/m²</span>
+                                    <span>1200 W/m²</span>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="temperature" class="form-label">Cell Temperature (°C)</label>
+                                <input type="range" class="form-range" id="temperature" min="10" max="60" step="1" value="25">
+                                <div class="d-flex justify-content-between">
+                                    <span>10 °C</span>
+                                    <span id="temperature-value">25 °C</span>
+                                    <span>60 °C</span>
+                                </div>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">
+                                    <span class="spinner-border spinner-border-sm loading-spinner" id="simulation-spinner"></span>
+                                    Run Simulation
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <i class="bi bi-database"></i> Generate Dataset
+                    </div>
+                    <div class="card-body">
+                        <form id="dataset-form">
+                            <div class="mb-3">
+                                <label for="num-samples" class="form-label">Number of Samples per Fault Type</label>
+                                <input type="range" class="form-range" id="num-samples" min="5" max="50" step="5" value="10">
+                                <div class="d-flex justify-content-between">
+                                    <span>5 samples</span>
+                                    <span id="num-samples-value">10 samples</span>
+                                    <span>50 samples</span>
+                                </div>
+                            </div>
+                            <div class="alert alert-info">
+                                <i class="bi bi-info-circle"></i> This will generate a dataset with the specified number of samples for each fault type (Healthy, Line-Line Fault, Open Circuit, Partial Shading, Degradation).
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-success">
+                                    <span class="spinner-border spinner-border-sm loading-spinner" id="dataset-spinner"></span>
+                                    Generate Dataset
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Simulation Results -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <i class="bi bi-graph-up"></i> Latest Simulation Results
+                    </div>
+                    <div class="card-body">
+                        <div id="simulation-results">
+                            <div class="text-center py-4" id="no-results-message">
+                                <i class="bi bi-info-circle fs-1"></i>
+                                <p class="mt-2">No simulation results available. Run a simulation to see results here.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visualization -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-dark text-white">
+                        <i class="bi bi-bar-chart"></i> Fault Distribution
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="fault-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-dark text-white">
+                        <i class="bi bi-graph-up"></i> Performance Metrics
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="performance-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Real-time MATLAB Data Processing -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <i class="bi bi-cloud-upload"></i> Real-time MATLAB Data Processing
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Upload MATLAB Data</h5>
+                                <form id="upload-form" enctype="multipart/form-data">
+                                    <div class="mb-3">
+                                        <label for="matlab-file" class="form-label">MATLAB Data File (.csv or .mat)</label>
+                                        <input class="form-control" type="file" id="matlab-file" accept=".csv,.mat">
+                                        <div class="form-text">Upload a CSV or MAT file containing real-time data from your MATLAB simulation.</div>
+                                    </div>
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-primary">
+                                            <span class="spinner-border spinner-border-sm loading-spinner" id="upload-spinner"></span>
+                                            Upload and Process
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Setup Automatic Watch</h5>
+                                <form id="watch-form">
+                                    <div class="mb-3">
+                                        <label for="watch-directory" class="form-label">Watch Directory (optional)</label>
+                                        <input type="text" class="form-control" id="watch-directory" placeholder="Leave empty for default directory">
+                                        <div class="form-text">Directory to watch for new MATLAB data files.</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="file-pattern" class="form-label">File Pattern</label>
+                                        <input type="text" class="form-control" id="file-pattern" value="*.csv" placeholder="*.csv">
+                                        <div class="form-text">Pattern to match files (e.g., *.csv, *.mat).</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="check-interval" class="form-label">Check Interval (seconds)</label>
+                                        <input type="range" class="form-range" id="check-interval" min="1" max="30" step="1" value="5">
+                                        <div class="d-flex justify-content-between">
+                                            <span>1s</span>
+                                            <span id="interval-value">5s</span>
+                                            <span>30s</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-success">
+                                            <span class="spinner-border spinner-border-sm loading-spinner" id="watch-spinner"></span>
+                                            Setup Watch
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <hr>
+                        <div id="processing-results" class="mt-3">
+                            <div class="text-center py-4" id="no-processing-results">
+                                <i class="bi bi-info-circle fs-1"></i>
+                                <p class="mt-2">No processing results available. Upload a MATLAB data file to see results here.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">Solar Fault Detection System &copy; 2025 | MATLAB Integration</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Hide loading spinners initially
+            $('.loading-spinner').hide();
+            
+            {% if matlab_available %}
+            // Update range input values
+            document.getElementById('irradiance').addEventListener('input', function() {
+                document.getElementById('irradiance-value').textContent = this.value + ' W/m²';
+            });
+            
+            document.getElementById('temperature').addEventListener('input', function() {
+                document.getElementById('temperature-value').textContent = this.value + ' °C';
+            });
+            
+            document.getElementById('num-samples').addEventListener('input', function() {
+                document.getElementById('num-samples-value').textContent = this.value + ' samples';
+            });
+            
+            document.getElementById('check-interval').addEventListener('input', function() {
+                document.getElementById('interval-value').textContent = this.value + 's';
+            });
+            
+            // Run Simulation Form
+            document.getElementById('simulation-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Show loading spinner
+                const spinner = document.getElementById('simulation-spinner');
+                spinner.style.display = 'inline-block';
+                
+                // Get form values
+                const irradiance = document.getElementById('irradiance').value;
+                const temperature = document.getElementById('temperature').value;
+                
+                // Run simulation
+                fetch('/api/matlab/run_simulation', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        irradiance: irradiance,
+                        temperature: temperature
+                    })
+                })
+                .then(function(response) { 
+                    return response.json(); 
+                })
+                .then(function(data) {
+                    // Hide loading spinner
+                    spinner.style.display = 'none';
+                    
+                    // Display results
+                    displaySimulationResult(data);
+                    
+                    // Update charts
+                    fetchAndUpdateCharts();
+                })
+                .catch(function(error) {
+                    // Hide loading spinner
+                    spinner.style.display = 'none';
+                    
+                    // Display error
+                    alert('Error running simulation: ' + error);
+                });
+            });
+            
+            // Generate Dataset Form
+            document.getElementById('dataset-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Show loading spinner
+                const spinner = document.getElementById('dataset-spinner');
+                spinner.style.display = 'inline-block';
+                
+                // Get form values
+                const numSamples = document.getElementById('num-samples').value;
+                
+                // Generate dataset
+                fetch('/api/matlab/generate_dataset', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        num_samples: numSamples
+                    })
+                })
+                .then(function(response) { 
+                    return response.json(); 
+                })
+                .then(function(data) {
+                    // Hide loading spinner
+                    spinner.style.display = 'none';
+                    
+                    // Display results
+                    alert('Dataset generated successfully!\n\nTotal samples: ' + data.total_samples + '\n\nFault distribution:\n' + 
+                          Object.entries(data.fault_distribution).map(function(entry) {
+                              return entry[0] + ': ' + entry[1];
+                          }).join('\n'));
+                    
+                    // Update charts
+                    fetchAndUpdateCharts();
+                })
+                .catch(function(error) {
+                    // Hide loading spinner
+                    spinner.style.display = 'none';
+                    
+                    // Display error
+                    alert('Error generating dataset: ' + error);
+                });
+            });
+            
+            // Upload form
+            document.getElementById('upload-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Check if file is selected
+                const fileInput = document.getElementById('matlab-file');
+                if (!fileInput.files.length) {
+                    alert('Please select a file to upload');
+                    return;
+                }
+                
+                // Show loading spinner
+                const spinner = document.getElementById('upload-spinner');
+                spinner.style.display = 'inline-block';
+                
+                // Create form data
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+                
+                // Upload file
+                fetch('/api/matlab/process_realtime_data', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    // Hide loading spinner
+                    spinner.style.display = 'none';
+                    
+                    // Display results
+                    displayProcessingResult(data);
+                    
+                    // Update charts
+                    fetchAndUpdateCharts();
+                })
+                .catch(function(error) {
+                    // Hide loading spinner
+                    spinner.style.display = 'none';
+                    
+                    // Display error
+                    alert('Error processing file: ' + error);
+                });
+            });
+            
+            // Watch form
+            document.getElementById('watch-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Show loading spinner
+                const spinner = document.getElementById('watch-spinner');
+                spinner.style.display = 'inline-block';
+                
+                // Get form values
+                const watchDirectory = document.getElementById('watch-directory').value;
+                const filePattern = document.getElementById('file-pattern').value;
+                const checkInterval = document.getElementById('check-interval').value;
+                
+                // Setup watch
+                fetch('/api/matlab/setup_watch', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        watch_directory: watchDirectory,
+                        file_pattern: filePattern,
+                        check_interval: parseInt(checkInterval)
+                    })
+                })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    // Hide loading spinner
+                    spinner.style.display = 'none';
+                    
+                    // Display success message
+                    if (data.success) {
+                        alert('Watch setup successfully!\n\nWatching directory: ' + data.watch_directory + '\nFile pattern: ' + data.file_pattern + '\nCheck interval: ' + data.check_interval + 's');
+                    } else {
+                        alert('Error setting up watch: ' + data.error);
+                    }
+                })
+                .catch(function(error) {
+                    // Hide loading spinner
+                    spinner.style.display = 'none';
+                    
+                    // Display error
+                    alert('Error setting up watch: ' + error);
+                });
+            });
+            
+            // Function to display simulation result
+            function displaySimulationResult(data) {
+                const resultsContainer = document.getElementById('simulation-results');
+                const noResultsMessage = document.getElementById('no-results-message');
+                
+                // Hide no results message
+                noResultsMessage.style.display = 'none';
+                
+                // Create result element
+                const resultElement = document.createElement('div');
+                resultElement.className = 'simulation-result';
+                
+                // Get fault class for styling
+                let faultClass = 'fault-healthy';
+                if (data.prediction.label === 'Line-Line Fault') {
+                    faultClass = 'fault-line-line';
+                } else if (data.prediction.label === 'Open Circuit Fault') {
+                    faultClass = 'fault-open-circuit';
+                } else if (data.prediction.label === 'Partial Shading') {
+                    faultClass = 'fault-partial-shading';
+                } else if (data.prediction.label === 'Degradation') {
+                    faultClass = 'fault-degradation';
+                }
+                
+                // Format HTML
+                resultElement.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">Simulation #${data.record_id}</h5>
+                        <span class="fault-indicator ${faultClass}">${data.prediction.label}</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Simulation Parameters</h6>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Irradiance:</span>
+                                    <span>${data.simulation.normal.irradiance.toFixed(2)} W/m²</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Temperature:</span>
+                                    <span>${data.simulation.normal.temperature.toFixed(2)} °C</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>PV Current:</span>
+                                    <span>${data.simulation.normal.pv_current.toFixed(2)} A</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>PV Voltage:</span>
+                                    <span>${data.simulation.normal.pv_voltage.toFixed(2)} V</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>PV Power:</span>
+                                    <span>${data.simulation.normal.pv_power.toFixed(2)} W</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Efficiency:</span>
+                                    <span>${(data.simulation.normal.efficiency * 100).toFixed(2)}%</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Fault Prediction</h6>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Fault Type:</span>
+                                    <span>${data.prediction.label}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Confidence:</span>
+                                    <span>${(data.prediction.confidence * 100).toFixed(2)}%</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span>Description:</span>
+                                    <p class="mt-1 mb-0 small">${data.prediction.description}</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <span>Recommended Action:</span>
+                                    <p class="mt-1 mb-0 small">${data.prediction.recommended_action}</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="text-end mt-2">
+                        <small class="text-muted">Timestamp: ${data.timestamp}</small>
+                    </div>
+                `;
+                
+                // Add to container
+                resultsContainer.insertBefore(resultElement, resultsContainer.firstChild);
+                
+                // Limit to 5 results
+                while (resultsContainer.children.length > 6) {
+                    resultsContainer.removeChild(resultsContainer.lastChild);
+                }
+            }
+            
+            // Function to display processing result
+            function displayProcessingResult(data) {
+                const resultsContainer = document.getElementById('processing-results');
+                const noResultsMessage = document.getElementById('no-processing-results');
+                
+                // Hide no results message
+                noResultsMessage.style.display = 'none';
+                
+                // Create result element
+                const resultElement = document.createElement('div');
+                resultElement.className = 'alert alert-success';
+                
+                // Format HTML
+                resultElement.innerHTML = `
+                    <h5><i class="bi bi-check-circle"></i> Processing Completed</h5>
+                    <p>Successfully processed ${data.processed_count} records from MATLAB data.</p>
+                    <p class="mb-0"><small class="text-muted">Timestamp: ${data.timestamp}</small></p>
+                `;
+                
+                // Add to container
+                resultsContainer.insertBefore(resultElement, resultsContainer.firstChild);
+                
+                // Limit to 5 results
+                while (resultsContainer.children.length > 6) {
+                    resultsContainer.removeChild(resultsContainer.lastChild);
+                }
+            }
+            
+            // Function to fetch and update charts
+            function fetchAndUpdateCharts() {
+                fetch('/api/matlab/get_simulations')
+                    .then(function(response) {
+                        return response.json();
+                    })
+                    .then(function(data) {
+                        // Update fault distribution chart
+                        updateFaultChart(data);
+                        
+                        // Update performance metrics chart
+                        updatePerformanceChart(data);
+                    })
+                    .catch(function(error) {
+                        console.error('Error fetching simulation data:', error);
+                    });
+            }
+            
+            // Function to update fault distribution chart
+            function updateFaultChart(data) {
+                // Count faults
+                const faultCounts = {
+                    'Healthy': 0,
+                    'Line-Line Fault': 0,
+                    'Open Circuit Fault': 0,
+                    'Partial Shading': 0,
+                    'Degradation': 0
+                };
+                
+                data.forEach(function(record) {
+                    if (record.prediction_label in faultCounts) {
+                        faultCounts[record.prediction_label]++;
+                    }
+                });
+                
+                // Create chart
+                const ctx = document.getElementById('fault-chart').getContext('2d');
+                
+                // Check if chart already exists
+                if (window.faultChart) {
+                    window.faultChart.data.datasets[0].data = Object.values(faultCounts);
+                    window.faultChart.update();
+                } else {
+                    window.faultChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: Object.keys(faultCounts),
+                            datasets: [{
+                                label: 'Fault Distribution',
+                                data: Object.values(faultCounts),
+                                backgroundColor: [
+                                    '#28a745',  // Healthy
+                                    '#dc3545',  // Line-Line Fault
+                                    '#ffc107',  // Open Circuit Fault
+                                    '#17a2b8',  // Partial Shading
+                                    '#6c757d'   // Degradation
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        precision: 0
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+            
+            // Function to update performance metrics chart
+            function updatePerformanceChart(data) {
+                // Calculate average values
+                const avgIrradiance = data.reduce(function(sum, record) { 
+                    return sum + (record.irradiance || 0); 
+                }, 0) / (data.length || 1);
+                
+                const avgTemperature = data.reduce(function(sum, record) { 
+                    return sum + (record.temperature || 0); 
+                }, 0) / (data.length || 1);
+                
+                const avgPvCurrent = data.reduce(function(sum, record) { 
+                    return sum + (record.pv_current || 0); 
+                }, 0) / (data.length || 1);
+                
+                const avgPvVoltage = data.reduce(function(sum, record) { 
+                    return sum + (record.pv_voltage || 0); 
+                }, 0) / (data.length || 1);
+                
+                const avgEfficiency = data.reduce(function(sum, record) { 
+                    return sum + (record.efficiency || 0); 
+                }, 0) / (data.length || 1);
+                
+                const avgConfidence = data.reduce(function(sum, record) { 
+                    return sum + (record.confidence || 0); 
+                }, 0) / (data.length || 1);
+                
+                // Create chart
+                const ctx = document.getElementById('performance-chart').getContext('2d');
+                
+                // Check if chart already exists
+                if (window.performanceChart) {
+                    window.performanceChart.data.datasets[0].data = [
+                        avgIrradiance / 1000,  // Scale down for better visualization
+                        avgTemperature / 50,   // Scale down for better visualization
+                        avgPvCurrent,
+                        avgPvVoltage / 50,     // Scale down for better visualization
+                        avgEfficiency,
+                        avgConfidence
+                    ];
+                    window.performanceChart.update();
+                } else {
+                    window.performanceChart = new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: [
+                                'Irradiance (kW/m²)',
+                                'Temperature (°C/50)',
+                                'PV Current (A)',
+                                'PV Voltage (V/50)',
+                                'Efficiency',
+                                'Prediction Confidence'
+                            ],
+                            datasets: [{
+                                label: 'Average Metrics',
+                                data: [
+                                    avgIrradiance / 1000,
+                                    avgTemperature / 50,
+                                    avgPvCurrent,
+                                    avgPvVoltage / 50,
+                                    avgEfficiency,
+                                    avgConfidence
+                                ],
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: 'rgb(54, 162, 235)',
+                                pointBackgroundColor: 'rgb(54, 162, 235)',
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: 'rgb(54, 162, 235)'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                r: {
+                                    angleLines: {
+                                        display: true
+                                    },
+                                    suggestedMin: 0,
+                                    suggestedMax: 1
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+            
+            // Initial chart update
+            fetchAndUpdateCharts();
+            {% endif %}
+        });
+    </script>
+</body>
+</html>
