@@ -62,9 +62,18 @@ class SolarPanelData(Base):
 
 def setup_database(db_path='solar_panel.db'):
     """
-    Set up the SQLite database
+    Setup the database for storing solar panel data
+    
+    Args:
+        db_path: Path to the SQLite database file
+        
+    Returns:
+        Tuple of (engine, Session)
     """
-    # Create database engine
+    # For multi-computer setup, you can use a shared database path like:
+    # db_path = '\\\\SHARED_LOCATION\\solar_panel.db'
+    
+    # Create engine
     engine = create_engine(f'sqlite:///{db_path}')
     
     # Create tables

@@ -2162,3 +2162,8 @@ Feature names unseen at fit time:
 - power_ratio_4
 
 2025-03-30 01:43:21,049 - MatlabIntegration - INFO - Sleeping for 30.0 seconds
+2025-03-30 17:24:19,548 - solar_fault_detection - INFO - Database setup complete
+2025-03-30 17:24:19,548 - solar_fault_detection - INFO - Starting server on 127.0.0.1:8080
+2025-03-30 17:24:19,558 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+2025-03-30 17:24:19,558 - werkzeug - INFO - [33mPress CTRL+C to quit[0m

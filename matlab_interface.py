@@ -707,6 +707,40 @@ class MatlabInterface:
         
         logger.info("MATLAB data watch thread started")
 
+    def get_latest_data_from_db(self):
+        """
+        Retrieve the latest data from the database
+        
+        Returns:
+            Dictionary containing the latest solar panel data
+        """
+        session = self.Session()
+        try:
+            # Get the latest record from the database
+            latest_data = session.query(SolarPanelData).order_by(desc(SolarPanelData.timestamp)).first()
+            
+            if latest_data is None:
+                logger.warning("No data found in the database")
+                return None
+            
+            # Create result dictionary
+            result = {
+                'pv_current': float(latest_data.pv_current),
+                'pv_voltage': float(latest_data.pv_voltage),
+                'pv_power': float(latest_data.pv_current * latest_data.pv_voltage),
+                'timestamp': latest_data.timestamp.strftime('%Y-%m-%d %H:%M:%S') if latest_data.timestamp else datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            }
+            
+            logger.info(f"Retrieved latest data from database: PV Current={result['pv_current']:.2f}A, PV Voltage={result['pv_voltage']:.2f}V")
+            
+            return result
+            
+        except Exception as e:
+            logger.error(f"Error retrieving data from database: {e}")
+            return None
+        finally:
+            session.close()
+
 # If running as a script
 if __name__ == "__main__":
     # Create MATLAB interface

@@ -660,3 +660,285 @@ Overall, the model performs exceptionally well across various test scenarios, wi
 - Fault 4 (Degradation): 94.87%
 
 This balanced performance across all classes indicates a robust model that can reliably detect various fault conditions in solar panels.
+
+# Coding Guide for Solar Panel Fault Detection System
+
+This guide explains the programming concepts, patterns, and practices used in the Solar Panel Fault Detection System. It's designed for those who want to understand the code structure or contribute to the project.
+
+## Table of Contents
+1. [Programming Paradigms](#programming-paradigms)
+2. [Code Organization](#code-organization)
+3. [Key Libraries](#key-libraries)
+4. [Design Patterns](#design-patterns)
+5. [Database Access](#database-access)
+6. [MATLAB Integration](#matlab-integration)
+7. [Web Application Structure](#web-application-structure)
+8. [Machine Learning Implementation](#machine-learning-implementation)
+
+## Programming Paradigms
+
+The project uses multiple programming paradigms:
+
+### Object-Oriented Programming (OOP)
+- **Classes**: Used to encapsulate related data and functions
+- **Inheritance**: Used to extend functionality of base classes
+- **Encapsulation**: Data and methods are bundled together
+
+Example from `matlab_interface.py`:
+```python
+class MatlabInterface:
+    def __init__(self, matlab_path=None, model_path=None, db_path='solar_panel.db'):
+        self.matlab_path = matlab_path or r"C:\Program Files\MATLAB\R2023b\bin\matlab.exe"
+        self.model_path = model_path or r"C:\Users\Sunil Kumar\OneDrive\Documents\MATLAB\GridConnectedPVFarmExample\GridConnectedPVFarmExample"
+        self.db_path = db_path
+```
+
+### Functional Programming
+- **Pure Functions**: Functions that don't modify state
+- **Higher-Order Functions**: Functions that take other functions as arguments
+
+Example from `solar_fault_detector.py`:
+```python
+def predict_fault(pv_current, pv_voltage):
+    # Calculate power
+    pv_power = pv_current * pv_voltage
+    
+    # Make prediction
+    return model.predict([[pv_current, pv_voltage, pv_power]])[0]
+```
+
+## Code Organization
+
+The project is organized into several modules:
+
+1. **Web Application Layer**:
+   - `solar_fault_detection.py`: Main Flask application
+   - Templates in the `templates/` directory
+   - Static files (CSS, JS) in the `static/` directory
+
+2. **Business Logic Layer**:
+   - `solar_fault_detector.py`: Prediction logic
+   - `matlab_interface.py`: MATLAB integration
+
+3. **Data Access Layer**:
+   - `database_setup.py`: Database configuration
+   - SQLAlchemy models for data entities
+
+4. **Utility Layer**:
+   - Logging utilities
+   - Helper functions
+
+## Key Libraries
+
+### Flask
+Flask is a micro web framework for Python. We use it to:
+- Create web routes (`@app.route('/path')`)
+- Render HTML templates (`render_template('template.html')`)
+- Handle HTTP requests (`request.get_json()`)
+- Return JSON responses (`jsonify(result)`)
+
+### SQLAlchemy
+SQLAlchemy is an Object-Relational Mapping (ORM) library. We use it to:
+- Define database models (`class SolarPanelData(Base)`)
+- Create database sessions (`Session()`)
+- Query data (`session.query(SolarPanelData).all()`)
+- Insert/update records (`session.add(new_data)`)
+
+### NumPy and Pandas
+These libraries are used for data manipulation:
+- NumPy for numerical operations
+- Pandas for data analysis and manipulation
+
+### Scikit-learn
+Used for machine learning:
+- Loading the trained model
+- Making predictions
+- Calculating prediction probabilities
+
+### MATLAB Engine API for Python
+Used to connect Python with MATLAB:
+- Starting MATLAB engine (`matlab.engine.start_matlab()`)
+- Running MATLAB functions (`eng.function_name()`)
+- Converting between MATLAB and Python data types
+
+## Design Patterns
+
+### Factory Pattern
+Used to create objects without specifying the exact class:
+```python
+def setup_database(db_path='solar_panel.db'):
+    engine = create_engine(f'sqlite:///{db_path}')
+    Base.metadata.create_all(engine)
+    Session = sessionmaker(bind=engine)
+    return engine, Session
+```
+
+### Strategy Pattern
+Used to select an algorithm at runtime:
+```python
+def run_simulation(self, irradiance=1000, temperature=25):
+    if self.matlab_available:
+        # Use MATLAB strategy
+        return self._run_matlab_simulation(irradiance, temperature)
+    else:
+        # Use simulator strategy
+        return self.simulator.generate_data(irradiance, temperature)
+```
+
+### Observer Pattern
+Used for event handling in the web interface:
+```javascript
+// In static/js/app.js
+$('#predict-button').click(function() {
+    // This function observes the button click event
+    const pv_current = $('#pv-current').val();
+    const pv_voltage = $('#pv-voltage').val();
+    
+    // Make API call
+    $.ajax({
+        url: '/api/predict',
+        // ...
+    });
+});
+```
+
+## Database Access
+
+The project uses SQLAlchemy to interact with the SQLite database:
+
+### Defining Models
+```python
+class SolarPanelData(Base):
+    __tablename__ = 'solar_panel_data'
+    
+    id = Column(Integer, primary_key=True)
+    pv_current = Column(Float)
+    pv_voltage = Column(Float)
+    # ...
+```
+
+### Creating Records
+```python
+def save_data_to_db(self, data):
+    session = self.Session()
+    try:
+        new_data = SolarPanelData(
+            pv_current=data['pv_current'],
+            pv_voltage=data['pv_voltage'],
+            pv_power=data['pv_power'],
+            # ...
+        )
+        session.add(new_data)
+        session.commit()
+    finally:
+        session.close()
+```
+
+### Querying Data
+```python
+def get_recent_data(limit=100):
+    session = Session()
+    try:
+        data = session.query(SolarPanelData).order_by(
+            desc(SolarPanelData.timestamp)
+        ).limit(limit).all()
+        return data
+    finally:
+        session.close()
+```
+
+## MATLAB Integration
+
+The project integrates with MATLAB in two ways:
+
+### Direct Integration
+Using MATLAB Engine for Python:
+```python
+def initialize_matlab(self):
+    try:
+        import matlab.engine
+        self.eng = matlab.engine.start_matlab()
+        self.matlab_available = True
+        logger.info("MATLAB engine started successfully")
+    except Exception as e:
+        logger.warning(f"Failed to initialize MATLAB engine: {e}")
+        self.matlab_available = False
+```
+
+### Fallback Simulator
+When MATLAB is not available:
+```python
+class MatlabSimulator:
+    def generate_data(self, irradiance=1000, temperature=25):
+        # Generate synthetic data based on irradiance and temperature
+        # ...
+        return result
+```
+
+## Web Application Structure
+
+The web application follows the Model-View-Controller (MVC) pattern:
+
+### Model
+Database models in `database_setup.py`:
+```python
+class SolarPanelData(Base):
+    # ...
+```
+
+### View
+HTML templates in the `templates/` directory:
+- `index.html`: Main dashboard
+- `monitoring.html`: Real-time monitoring page
+- `prediction.html`: Manual prediction page
+
+### Controller
+Route handlers in `solar_fault_detection.py`:
+```python
+@app.route('/api/predict', methods=['POST'])
+def predict():
+    # Handle prediction request
+    # ...
+```
+
+## Machine Learning Implementation
+
+The system uses a Random Forest Classifier for fault detection:
+
+### Model Loading
+```python
+def load_model():
+    model_path = 'models/solar_fault_model.pkl'
+    with open(model_path, 'rb') as f:
+        model = pickle.load(f)
+    return model
+```
+
+### Feature Engineering
+```python
+def prepare_features(pv_current, pv_voltage):
+    # Calculate derived features
+    pv_power = pv_current * pv_voltage
+    
+    # Normalize features if needed
+    # ...
+    
+    return [pv_current, pv_voltage, pv_power]
+```
+
+### Making Predictions
+```python
+def predict_fault(pv_current, pv_voltage):
+    features = prepare_features(pv_current, pv_voltage)
+    prediction = model.predict([features])[0]
+    probabilities = model.predict_proba([features])[0]
+    confidence = float(max(probabilities) * 100)
+    
+    return int(prediction), confidence
+```
+
+## Conclusion
+
+This coding guide provides an overview of the programming concepts and patterns used in the Solar Panel Fault Detection System. By understanding these concepts, you can more easily navigate, modify, and extend the codebase.
+
+For more detailed information about specific components, refer to the inline documentation in each file.

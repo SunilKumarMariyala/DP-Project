@@ -318,3 +318,1356 @@
 2025-03-30 01:58:13,987 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 01:58:13] "GET /socket.io/?EIO=4&transport=polling&t=PNZbpi7&sid=n_78rv8hSjH5mAmRAAAF HTTP/1.1" 200 -
 2025-03-30 01:58:13,992 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 01:58:13] "GET /socket.io/?EIO=4&transport=polling&t=PNZbpiF&sid=dmwIQGhO3uT46h--AAAG HTTP/1.1" 200 -
 2025-03-30 01:58:14,017 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 01:58:14] "GET /socket.io/?EIO=4&transport=polling&t=PNZbpiq&sid=dmwIQGhO3uT46h--AAAG HTTP/1.1" 200 -
+2025-03-30 15:56:36,588 - solar_fault_detection - INFO - Database setup complete
+2025-03-30 15:56:36,599 - solar_fault_detection - INFO - Starting server on 0.0.0.0:5000
+2025-03-30 15:56:36,606 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.8.44:5000
+2025-03-30 15:56:36,606 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-30 16:05:15,835 - solar_fault_detection - INFO - Database setup complete
+2025-03-30 16:05:15,835 - solar_fault_detection - INFO - Starting server on 127.0.0.1:8080
+2025-03-30 16:05:15,847 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+2025-03-30 16:05:15,847 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-30 16:05:26,585 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:26] "GET / HTTP/1.1" 200 -
+2025-03-30 16:05:45,776 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:45] "GET / HTTP/1.1" 200 -
+2025-03-30 16:05:45,974 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:45] "GET /socket.io/?EIO=4&transport=polling&t=PNcdokk HTTP/1.1" 200 -
+2025-03-30 16:05:46,094 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:46] "[33mGET /api/alerts/latest?limit=5 HTTP/1.1[0m" 404 -
+2025-03-30 16:05:46,096 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:46] "[33mGET /api/data/latest?limit=10 HTTP/1.1[0m" 404 -
+2025-03-30 16:05:46,098 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:46] "[33mGET /api/stats/summary HTTP/1.1[0m" 404 -
+2025-03-30 16:05:46,127 - solar_fault_detection - INFO - Client connected: _bijfka5gyJv9o8BAAAB
+2025-03-30 16:05:46,129 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:46] "POST /socket.io/?EIO=4&transport=polling&t=PNcdon9&sid=39Mk8bPE13UrDUp0AAAA HTTP/1.1" 200 -
+2025-03-30 16:05:46,132 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:46] "GET /socket.io/?EIO=4&transport=polling&t=PNcdonD&sid=39Mk8bPE13UrDUp0AAAA HTTP/1.1" 200 -
+2025-03-30 16:05:46,148 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:46] "GET /socket.io/?EIO=4&transport=polling&t=PNcdonX&sid=39Mk8bPE13UrDUp0AAAA HTTP/1.1" 200 -
+2025-03-30 16:05:46,159 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:46] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-03-30 16:05:46,160 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:46] "GET /socket.io/?EIO=4&transport=polling&t=PNcdonh&sid=39Mk8bPE13UrDUp0AAAA HTTP/1.1" 200 -
+2025-03-30 16:05:49,310 - solar_fault_detection - INFO - Client disconnected: _bijfka5gyJv9o8BAAAB
+2025-03-30 16:05:49,311 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:49] "GET /socket.io/?EIO=4&transport=websocket&sid=39Mk8bPE13UrDUp0AAAA HTTP/1.1" 200 -
+2025-03-30 16:05:49,315 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:49] "GET / HTTP/1.1" 200 -
+2025-03-30 16:05:49,406 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:49] "GET /socket.io/?EIO=4&transport=polling&t=PNcdpaQ HTTP/1.1" 200 -
+2025-03-30 16:05:49,462 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:49] "[33mGET /api/data/latest?limit=10 HTTP/1.1[0m" 404 -
+2025-03-30 16:05:49,468 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:49] "[33mGET /api/alerts/latest?limit=5 HTTP/1.1[0m" 404 -
+2025-03-30 16:05:49,471 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:49] "[33mGET /api/stats/summary HTTP/1.1[0m" 404 -
+2025-03-30 16:05:49,474 - solar_fault_detection - INFO - Client connected: o5-C7RydFq65XVOwAAAD
+2025-03-30 16:05:49,475 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:49] "POST /socket.io/?EIO=4&transport=polling&t=PNcdpbI&sid=IObb0oNazm1PJp73AAAC HTTP/1.1" 200 -
+2025-03-30 16:05:49,476 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:49] "GET /socket.io/?EIO=4&transport=polling&t=PNcdpbJ&sid=IObb0oNazm1PJp73AAAC HTTP/1.1" 200 -
+2025-03-30 16:05:49,490 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:05:49] "GET /socket.io/?EIO=4&transport=polling&t=PNcdpbl&sid=IObb0oNazm1PJp73AAAC HTTP/1.1" 200 -
+2025-03-30 16:06:34,644 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:06:34] "GET / HTTP/1.1" 200 -
+2025-03-30 16:06:34,705 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:06:34] "GET /socket.io/?EIO=4&transport=polling&t=PNcd-eO HTTP/1.1" 200 -
+2025-03-30 16:06:34,779 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:06:34] "[33mGET /api/data/latest?limit=10 HTTP/1.1[0m" 404 -
+2025-03-30 16:06:34,781 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:06:34] "[33mGET /api/alerts/latest?limit=5 HTTP/1.1[0m" 404 -
+2025-03-30 16:06:34,783 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:06:34] "[33mGET /api/stats/summary HTTP/1.1[0m" 404 -
+2025-03-30 16:06:34,797 - solar_fault_detection - INFO - Client connected: 6efK8vVi47F2MB6xAAAF
+2025-03-30 16:06:34,797 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:06:34] "POST /socket.io/?EIO=4&transport=polling&t=PNcd-fe&sid=9f2K4zeYAdIDKRTvAAAE HTTP/1.1" 200 -
+2025-03-30 16:06:34,800 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:06:34] "GET /socket.io/?EIO=4&transport=polling&t=PNcd-fh&sid=9f2K4zeYAdIDKRTvAAAE HTTP/1.1" 200 -
+2025-03-30 16:06:34,805 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:06:34] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-03-30 16:34:01,601 - solar_fault_detection - INFO - Database setup complete
+2025-03-30 16:34:01,601 - solar_fault_detection - INFO - Starting server on 127.0.0.1:8080
+2025-03-30 16:34:01,610 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+2025-03-30 16:34:01,610 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-30 16:34:17,311 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:34:17] "GET / HTTP/1.1" 200 -
+2025-03-30 16:34:17,555 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:34:17] "GET /socket.io/?EIO=4&transport=polling&t=PNckKcE HTTP/1.1" 200 -
+2025-03-30 16:34:17,605 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:34:17] "[33mGET /api/data/latest?limit=10 HTTP/1.1[0m" 404 -
+2025-03-30 16:34:17,606 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:34:17] "[33mGET /api/alerts/latest?limit=5 HTTP/1.1[0m" 404 -
+2025-03-30 16:34:17,608 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:34:17] "[33mGET /api/stats/summary HTTP/1.1[0m" 404 -
+2025-03-30 16:34:17,623 - solar_fault_detection - INFO - Client connected: zBj_kXcS1u1AE7beAAAH
+2025-03-30 16:34:17,624 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:34:17] "POST /socket.io/?EIO=4&transport=polling&t=PNckKdL&sid=yj4fg0HnNreA5eInAAAG HTTP/1.1" 200 -
+2025-03-30 16:34:17,630 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:34:17] "GET /socket.io/?EIO=4&transport=polling&t=PNckKdP&sid=yj4fg0HnNreA5eInAAAG HTTP/1.1" 200 -
+2025-03-30 16:34:17,639 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:34:17] "GET /socket.io/?EIO=4&transport=polling&t=PNckKdW&sid=yj4fg0HnNreA5eInAAAG HTTP/1.1" 200 -
+2025-03-30 16:54:20,235 - solar_fault_detection - INFO - Client disconnected: o5-C7RydFq65XVOwAAAD
+2025-03-30 16:54:20,235 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:54:20] "GET /socket.io/?EIO=4&transport=websocket&sid=IObb0oNazm1PJp73AAAC HTTP/1.1" 200 -
+2025-03-30 16:54:21,285 - solar_fault_detection - INFO - Client disconnected: 6efK8vVi47F2MB6xAAAF
+2025-03-30 16:54:21,285 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 16:54:21] "GET /socket.io/?EIO=4&transport=websocket&sid=9f2K4zeYAdIDKRTvAAAE HTTP/1.1" 200 -
+2025-03-30 17:08:04,603 - solar_fault_detection - INFO - Database setup complete
+2025-03-30 17:08:04,603 - solar_fault_detection - INFO - Starting server on 127.0.0.1:8080
+2025-03-30 17:08:04,613 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+2025-03-30 17:08:04,613 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-30 17:08:19,381 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:08:19] "GET / HTTP/1.1" 200 -
+2025-03-30 17:08:19,676 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:08:19] "GET /socket.io/?EIO=4&transport=polling&t=PNcs7AQ HTTP/1.1" 200 -
+2025-03-30 17:08:19,739 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:08:19] "[33mGET /api/alerts/latest?limit=5 HTTP/1.1[0m" 404 -
+2025-03-30 17:08:19,741 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:08:19] "[33mGET /api/data/latest?limit=10 HTTP/1.1[0m" 404 -
+2025-03-30 17:08:19,742 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:08:19] "[33mGET /api/stats/summary HTTP/1.1[0m" 404 -
+2025-03-30 17:08:19,756 - solar_fault_detection - INFO - Client connected: WV0MqN-j6KIk8Gt-AAAJ
+2025-03-30 17:08:19,757 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:08:19] "POST /socket.io/?EIO=4&transport=polling&t=PNcs7Bg&sid=5Dsr0aE-P4znEzSDAAAI HTTP/1.1" 200 -
+2025-03-30 17:08:19,762 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:08:19] "GET /socket.io/?EIO=4&transport=polling&t=PNcs7Bh&sid=5Dsr0aE-P4znEzSDAAAI HTTP/1.1" 200 -
+2025-03-30 17:08:40,427 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:08:40] "[33mGET /api/monitoring/start HTTP/1.1[0m" 404 -
+2025-03-30 17:09:03,887 - solar_fault_detection - INFO - Monitoring started
+2025-03-30 17:09:03,887 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:09:03] "POST /api/start HTTP/1.1" 200 -
+2025-03-30 17:09:04,421 - solar_fault_detection - ERROR - Error loading model or scaler: PytorchStreamReader failed locating file constants.pkl: file not found
+2025-03-30 17:09:04,426 - solar_fault_detection - INFO - Connected to database: solar_panel.db
+2025-03-30 17:09:04,426 - solar_fault_detection - INFO - Starting monitoring loop
+2025-03-30 17:09:04,427 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:06,428 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:08,429 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:10,430 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:12,431 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:14,432 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:16,433 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:18,435 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:20,435 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:22,436 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:24,438 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:26,439 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:26,804 - solar_fault_detection - ERROR - Error loading model or scaler: PytorchStreamReader failed locating file constants.pkl: file not found
+2025-03-30 17:09:26,805 - solar_fault_detection - INFO - Connected to database: solar_panel.db
+2025-03-30 17:09:26,806 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:09:26] "GET /api/data HTTP/1.1" 200 -
+2025-03-30 17:09:28,440 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:30,441 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:32,442 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:33,564 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:09:33] "GET /api/status HTTP/1.1" 200 -
+2025-03-30 17:09:34,443 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:36,444 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:38,445 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:39,408 - solar_fault_detection - ERROR - Error loading model or scaler: PytorchStreamReader failed locating file constants.pkl: file not found
+2025-03-30 17:09:39,408 - solar_fault_detection - INFO - Connected to database: solar_panel.db
+2025-03-30 17:09:39,409 - solar_fault_detection - ERROR - Error getting latest alerts: no such column: fault_type
+2025-03-30 17:09:39,409 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:09:39] "GET /api/alerts HTTP/1.1" 200 -
+2025-03-30 17:09:40,446 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:42,447 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:44,448 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:46,449 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:48,450 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:50,451 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:50,600 - solar_fault_detection - ERROR - Error loading model or scaler: PytorchStreamReader failed locating file constants.pkl: file not found
+2025-03-30 17:09:50,603 - solar_fault_detection - INFO - Connected to database: solar_panel.db
+2025-03-30 17:09:50,603 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:09:50] "GET /api/data HTTP/1.1" 200 -
+2025-03-30 17:09:52,452 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:54,453 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:56,453 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:09:58,454 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:00,455 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:02,316 - solar_fault_detection - INFO - Client disconnected: WV0MqN-j6KIk8Gt-AAAJ
+2025-03-30 17:10:02,316 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:02] "GET /socket.io/?EIO=4&transport=websocket&sid=5Dsr0aE-P4znEzSDAAAI HTTP/1.1" 200 -
+2025-03-30 17:10:02,318 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:02] "GET / HTTP/1.1" 200 -
+2025-03-30 17:10:02,363 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:02] "GET /socket.io/?EIO=4&transport=polling&t=PNcsWEu HTTP/1.1" 200 -
+2025-03-30 17:10:02,382 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:02] "[33mGET /api/data/latest?limit=10 HTTP/1.1[0m" 404 -
+2025-03-30 17:10:02,384 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:02] "[33mGET /api/stats/summary HTTP/1.1[0m" 404 -
+2025-03-30 17:10:02,389 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:02] "[33mGET /api/alerts/latest?limit=5 HTTP/1.1[0m" 404 -
+2025-03-30 17:10:02,393 - solar_fault_detection - INFO - Client connected: ej61_35Ttoka-uv4AAAL
+2025-03-30 17:10:02,395 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:02] "POST /socket.io/?EIO=4&transport=polling&t=PNcsWFG&sid=mFCB2KUw8yZtdFQAAAAK HTTP/1.1" 200 -
+2025-03-30 17:10:02,395 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:02] "GET /socket.io/?EIO=4&transport=polling&t=PNcsWFH&sid=mFCB2KUw8yZtdFQAAAAK HTTP/1.1" 200 -
+2025-03-30 17:10:02,404 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:02] "GET /socket.io/?EIO=4&transport=polling&t=PNcsWFX&sid=mFCB2KUw8yZtdFQAAAAK HTTP/1.1" 200 -
+2025-03-30 17:10:02,455 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:03,904 - solar_fault_detection - INFO - Client disconnected: ej61_35Ttoka-uv4AAAL
+2025-03-30 17:10:03,905 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:03] "GET /socket.io/?EIO=4&transport=websocket&sid=mFCB2KUw8yZtdFQAAAAK HTTP/1.1" 200 -
+2025-03-30 17:10:03,907 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:03] "GET / HTTP/1.1" 200 -
+2025-03-30 17:10:03,949 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:03] "GET /socket.io/?EIO=4&transport=polling&t=PNcsWdh HTTP/1.1" 200 -
+2025-03-30 17:10:03,973 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:03] "[33mGET /api/alerts/latest?limit=5 HTTP/1.1[0m" 404 -
+2025-03-30 17:10:03,975 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:03] "[33mGET /api/stats/summary HTTP/1.1[0m" 404 -
+2025-03-30 17:10:03,978 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:03] "[33mGET /api/data/latest?limit=10 HTTP/1.1[0m" 404 -
+2025-03-30 17:10:03,982 - solar_fault_detection - INFO - Client connected: 8GxKHd_GEzBTUD3lAAAN
+2025-03-30 17:10:03,983 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:03] "POST /socket.io/?EIO=4&transport=polling&t=PNcsWe7&sid=d94K87HZB3KTBpZrAAAM HTTP/1.1" 200 -
+2025-03-30 17:10:03,989 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:03] "GET /socket.io/?EIO=4&transport=polling&t=PNcsWe7.0&sid=d94K87HZB3KTBpZrAAAM HTTP/1.1" 200 -
+2025-03-30 17:10:04,456 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:06,457 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:08,458 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:10,458 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:12,460 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:14,461 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:16,462 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:17,829 - solar_fault_detection - INFO - Client disconnected: 8GxKHd_GEzBTUD3lAAAN
+2025-03-30 17:10:17,830 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:17] "GET /socket.io/?EIO=4&transport=websocket&sid=d94K87HZB3KTBpZrAAAM HTTP/1.1" 200 -
+2025-03-30 17:10:17,834 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:17] "GET / HTTP/1.1" 200 -
+2025-03-30 17:10:17,878 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:17] "GET /socket.io/?EIO=4&transport=polling&t=PNcsa1I HTTP/1.1" 200 -
+2025-03-30 17:10:17,896 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:17] "[33mGET /api/data/latest?limit=10 HTTP/1.1[0m" 404 -
+2025-03-30 17:10:17,898 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:17] "[33mGET /api/stats/summary HTTP/1.1[0m" 404 -
+2025-03-30 17:10:17,900 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:17] "[33mGET /api/alerts/latest?limit=5 HTTP/1.1[0m" 404 -
+2025-03-30 17:10:17,905 - solar_fault_detection - INFO - Client connected: R-aGaFb3k0Qf87WgAAAP
+2025-03-30 17:10:17,906 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:17] "POST /socket.io/?EIO=4&transport=polling&t=PNcsa1h&sid=k92SjJjlXEM7BaoKAAAO HTTP/1.1" 200 -
+2025-03-30 17:10:17,907 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:17] "GET /socket.io/?EIO=4&transport=polling&t=PNcsa1i&sid=k92SjJjlXEM7BaoKAAAO HTTP/1.1" 200 -
+2025-03-30 17:10:17,917 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:17] "GET /socket.io/?EIO=4&transport=polling&t=PNcsa1w&sid=k92SjJjlXEM7BaoKAAAO HTTP/1.1" 200 -
+2025-03-30 17:10:18,463 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:18,882 - solar_fault_detection - INFO - Client disconnected: R-aGaFb3k0Qf87WgAAAP
+2025-03-30 17:10:18,882 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:18] "GET /socket.io/?EIO=4&transport=websocket&sid=k92SjJjlXEM7BaoKAAAO HTTP/1.1" 200 -
+2025-03-30 17:10:18,887 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:18] "GET / HTTP/1.1" 200 -
+2025-03-30 17:10:18,935 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:18] "GET /socket.io/?EIO=4&transport=polling&t=PNcsaHr HTTP/1.1" 200 -
+2025-03-30 17:10:18,955 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:18] "[33mGET /api/stats/summary HTTP/1.1[0m" 404 -
+2025-03-30 17:10:18,957 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:18] "[33mGET /api/alerts/latest?limit=5 HTTP/1.1[0m" 404 -
+2025-03-30 17:10:18,958 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:18] "[33mGET /api/data/latest?limit=10 HTTP/1.1[0m" 404 -
+2025-03-30 17:10:18,963 - solar_fault_detection - INFO - Client connected: xCunSoACfeL75Kb2AAAR
+2025-03-30 17:10:18,964 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:18] "POST /socket.io/?EIO=4&transport=polling&t=PNcsaIA&sid=KJiEaTa0KSHCPXScAAAQ HTTP/1.1" 200 -
+2025-03-30 17:10:18,967 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:18] "GET /socket.io/?EIO=4&transport=polling&t=PNcsaIB&sid=KJiEaTa0KSHCPXScAAAQ HTTP/1.1" 200 -
+2025-03-30 17:10:19,865 - solar_fault_detection - INFO - Client disconnected: xCunSoACfeL75Kb2AAAR
+2025-03-30 17:10:19,866 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:19] "GET /socket.io/?EIO=4&transport=websocket&sid=KJiEaTa0KSHCPXScAAAQ HTTP/1.1" 200 -
+2025-03-30 17:10:19,871 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:19] "GET / HTTP/1.1" 200 -
+2025-03-30 17:10:19,918 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:19] "GET /socket.io/?EIO=4&transport=polling&t=PNcsaXD HTTP/1.1" 200 -
+2025-03-30 17:10:19,940 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:19] "[33mGET /api/stats/summary HTTP/1.1[0m" 404 -
+2025-03-30 17:10:19,942 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:19] "[33mGET /api/data/latest?limit=10 HTTP/1.1[0m" 404 -
+2025-03-30 17:10:19,947 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:19] "[33mGET /api/alerts/latest?limit=5 HTTP/1.1[0m" 404 -
+2025-03-30 17:10:19,950 - solar_fault_detection - INFO - Client connected: yhlPsL6BLHLY2AmcAAAT
+2025-03-30 17:10:19,950 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:19] "POST /socket.io/?EIO=4&transport=polling&t=PNcsaXZ&sid=HsadQEWRYc9XuGZQAAAS HTTP/1.1" 200 -
+2025-03-30 17:10:19,961 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:10:19] "GET /socket.io/?EIO=4&transport=polling&t=PNcsaXa&sid=HsadQEWRYc9XuGZQAAAS HTTP/1.1" 200 -
+2025-03-30 17:10:20,464 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:22,465 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:24,467 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:26,468 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:28,469 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:30,470 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:32,471 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:34,472 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:36,473 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:38,474 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:40,475 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:42,477 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:44,477 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:46,478 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:48,479 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:50,480 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:52,481 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:54,482 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:56,483 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:10:58,485 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:00,486 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:02,487 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:04,488 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:06,489 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:08,491 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:10,492 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:12,493 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:14,493 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:16,494 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:18,496 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:20,497 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:22,497 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:24,499 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:26,500 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:28,501 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:30,502 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:32,503 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:34,505 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:36,505 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:38,507 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:40,508 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:42,509 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:44,510 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:46,511 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:48,512 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:50,512 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:52,514 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:54,514 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:56,515 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:11:58,515 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:00,516 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:02,517 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:04,518 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:06,519 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:08,520 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:10,521 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:12,522 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:14,523 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:16,523 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:18,524 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:20,526 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:22,527 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:24,528 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:26,529 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:28,530 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:30,532 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:32,533 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:34,533 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:36,535 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:38,536 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:40,536 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:42,537 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:44,538 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:46,538 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:48,539 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:50,541 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:52,542 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:54,543 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:56,543 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:12:58,544 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:00,545 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:02,546 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:04,547 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:06,547 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:08,549 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:10,549 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:12,550 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:14,551 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:16,551 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:18,552 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:20,553 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:22,554 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:24,555 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:26,557 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:28,558 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:30,559 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:32,560 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:34,561 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:36,561 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:38,562 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:40,563 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:42,564 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:44,565 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:46,566 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:48,568 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:50,569 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:52,570 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:54,571 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:56,572 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:13:58,573 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:00,574 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:02,576 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:04,576 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:06,577 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:08,578 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:10,579 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:12,580 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:14,581 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:16,581 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:18,582 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:20,583 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:22,584 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:24,584 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:26,585 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:28,586 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:30,587 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:32,587 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:34,589 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:36,590 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:38,590 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:40,591 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:42,592 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:44,593 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:46,594 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:48,594 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:50,595 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:52,596 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:54,597 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:56,597 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:14:58,598 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:00,599 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:02,600 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:04,601 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:06,602 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:08,602 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:10,603 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:12,604 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:14,606 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:16,606 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:18,607 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:20,609 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:22,609 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:24,610 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:26,611 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:28,612 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:30,612 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:32,613 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:34,614 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:36,615 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:38,616 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:40,616 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:42,617 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:44,617 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:46,619 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:48,619 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:50,620 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:52,621 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:54,563 - solar_fault_detection - INFO - Database setup complete
+2025-03-30 17:15:54,564 - solar_fault_detection - INFO - Starting server on 127.0.0.1:8080
+2025-03-30 17:15:54,571 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+2025-03-30 17:15:54,571 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-30 17:15:54,621 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:56,622 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:15:58,623 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:00,624 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:01,728 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:16:01] "GET / HTTP/1.1" 200 -
+2025-03-30 17:16:01,802 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:16:01] "GET /socket.io/?EIO=4&transport=polling&t=PNctt_7 HTTP/1.1" 200 -
+2025-03-30 17:16:01,848 - solar_fault_detection - INFO - Client connected: oSQT0Frc7T6n_G8wAAAV
+2025-03-30 17:16:01,849 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:16:01] "POST /socket.io/?EIO=4&transport=polling&t=PNctt_r&sid=6Jxr6nrE0ehqijulAAAU HTTP/1.1" 200 -
+2025-03-30 17:16:01,851 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:16:01] "GET /socket.io/?EIO=4&transport=polling&t=PNctt_s&sid=6Jxr6nrE0ehqijulAAAU HTTP/1.1" 200 -
+2025-03-30 17:16:01,910 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:16:01] "[33mGET /api/data/latest?limit=10 HTTP/1.1[0m" 404 -
+2025-03-30 17:16:01,915 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:16:01] "[33mGET /api/alerts/latest?limit=5 HTTP/1.1[0m" 404 -
+2025-03-30 17:16:01,916 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:16:01] "[33mGET /api/stats/summary HTTP/1.1[0m" 404 -
+2025-03-30 17:16:01,925 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:16:01] "GET /socket.io/?EIO=4&transport=polling&t=PNctu12&sid=6Jxr6nrE0ehqijulAAAU HTTP/1.1" 200 -
+2025-03-30 17:16:02,625 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:04,626 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:06,627 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:06,741 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:16:06] "POST /api/start HTTP/1.1" 200 -
+2025-03-30 17:16:08,628 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:10,629 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:12,630 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:14,631 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:16,632 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:18,633 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:20,633 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:22,634 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:24,635 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:26,636 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:28,637 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:30,637 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:32,638 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:34,639 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:36,639 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:38,640 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:40,641 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:42,642 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:44,643 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:46,644 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:48,645 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:50,646 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:52,647 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:54,648 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:56,648 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:16:58,649 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:00,650 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:02,651 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:04,652 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:06,652 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:08,653 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:10,654 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:12,527 - solar_fault_detection - INFO - Database setup complete
+2025-03-30 17:17:12,527 - solar_fault_detection - INFO - Starting server on 127.0.0.1:8080
+2025-03-30 17:17:12,537 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+2025-03-30 17:17:12,537 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-30 17:17:12,654 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:14,655 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:16,656 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:18,657 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:20,659 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:22,660 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:24,661 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:25,574 - solar_fault_detection - INFO - Client disconnected: oSQT0Frc7T6n_G8wAAAV
+2025-03-30 17:17:25,575 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:25] "GET /socket.io/?EIO=4&transport=websocket&sid=6Jxr6nrE0ehqijulAAAU HTTP/1.1" 200 -
+2025-03-30 17:17:25,580 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:25] "GET / HTTP/1.1" 200 -
+2025-03-30 17:17:25,679 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:25] "GET /socket.io/?EIO=4&transport=polling&t=PNcuCTk HTTP/1.1" 200 -
+2025-03-30 17:17:25,704 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:25] "[33mGET /api/data/latest?limit=10 HTTP/1.1[0m" 404 -
+2025-03-30 17:17:25,706 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:25] "[33mGET /api/alerts/latest?limit=5 HTTP/1.1[0m" 404 -
+2025-03-30 17:17:25,707 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:25] "[33mGET /api/stats/summary HTTP/1.1[0m" 404 -
+2025-03-30 17:17:25,711 - solar_fault_detection - INFO - Client connected: KUlz5C41lSCqDCOIAAAX
+2025-03-30 17:17:25,712 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:25] "POST /socket.io/?EIO=4&transport=polling&t=PNcuCUB&sid=EaEju5ZmQuBPIH3HAAAW HTTP/1.1" 200 -
+2025-03-30 17:17:25,714 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:25] "GET /socket.io/?EIO=4&transport=polling&t=PNcuCUB.0&sid=EaEju5ZmQuBPIH3HAAAW HTTP/1.1" 200 -
+2025-03-30 17:17:26,623 - solar_fault_detection - INFO - Client disconnected: KUlz5C41lSCqDCOIAAAX
+2025-03-30 17:17:26,624 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:26] "GET /socket.io/?EIO=4&transport=websocket&sid=EaEju5ZmQuBPIH3HAAAW HTTP/1.1" 200 -
+2025-03-30 17:17:26,629 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:26] "GET / HTTP/1.1" 200 -
+2025-03-30 17:17:26,662 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:26,677 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:26] "GET /socket.io/?EIO=4&transport=polling&t=PNcuCjI HTTP/1.1" 200 -
+2025-03-30 17:17:26,698 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:26] "[33mGET /api/data/latest?limit=10 HTTP/1.1[0m" 404 -
+2025-03-30 17:17:26,699 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:26] "[33mGET /api/alerts/latest?limit=5 HTTP/1.1[0m" 404 -
+2025-03-30 17:17:26,701 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:26] "[33mGET /api/stats/summary HTTP/1.1[0m" 404 -
+2025-03-30 17:17:26,708 - solar_fault_detection - INFO - Client connected: M3FVRqrJRtov7CJlAAAZ
+2025-03-30 17:17:26,709 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:26] "POST /socket.io/?EIO=4&transport=polling&t=PNcuCjf&sid=CQDkU1vSZOJi_cD3AAAY HTTP/1.1" 200 -
+2025-03-30 17:17:26,712 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:26] "GET /socket.io/?EIO=4&transport=polling&t=PNcuCjg&sid=CQDkU1vSZOJi_cD3AAAY HTTP/1.1" 200 -
+2025-03-30 17:17:27,642 - solar_fault_detection - INFO - Client disconnected: M3FVRqrJRtov7CJlAAAZ
+2025-03-30 17:17:27,642 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:27] "GET /socket.io/?EIO=4&transport=websocket&sid=CQDkU1vSZOJi_cD3AAAY HTTP/1.1" 200 -
+2025-03-30 17:17:27,645 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:27] "GET / HTTP/1.1" 200 -
+2025-03-30 17:17:27,689 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:27] "GET /socket.io/?EIO=4&transport=polling&t=PNcuCz5 HTTP/1.1" 200 -
+2025-03-30 17:17:27,714 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:27] "[33mGET /api/stats/summary HTTP/1.1[0m" 404 -
+2025-03-30 17:17:27,716 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:27] "[33mGET /api/data/latest?limit=10 HTTP/1.1[0m" 404 -
+2025-03-30 17:17:27,720 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:27] "[33mGET /api/alerts/latest?limit=5 HTTP/1.1[0m" 404 -
+2025-03-30 17:17:27,726 - solar_fault_detection - INFO - Client connected: PBjhAwe364-QN0usAAAb
+2025-03-30 17:17:27,727 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:27] "POST /socket.io/?EIO=4&transport=polling&t=PNcuCzW&sid=iwkPecqgLvGyyQVTAAAa HTTP/1.1" 200 -
+2025-03-30 17:17:27,730 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:27] "GET /socket.io/?EIO=4&transport=polling&t=PNcuCzX&sid=iwkPecqgLvGyyQVTAAAa HTTP/1.1" 200 -
+2025-03-30 17:17:27,794 - solar_fault_detection - INFO - Client disconnected: PBjhAwe364-QN0usAAAb
+2025-03-30 17:17:27,794 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:27] "GET /socket.io/?EIO=4&transport=websocket&sid=iwkPecqgLvGyyQVTAAAa HTTP/1.1" 200 -
+2025-03-30 17:17:27,796 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:27] "GET / HTTP/1.1" 200 -
+2025-03-30 17:17:27,847 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:27] "GET /socket.io/?EIO=4&transport=polling&t=PNcuC_Z HTTP/1.1" 200 -
+2025-03-30 17:17:27,873 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:27] "[33mGET /api/data/latest?limit=10 HTTP/1.1[0m" 404 -
+2025-03-30 17:17:27,874 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:27] "[33mGET /api/alerts/latest?limit=5 HTTP/1.1[0m" 404 -
+2025-03-30 17:17:27,876 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:27] "[33mGET /api/stats/summary HTTP/1.1[0m" 404 -
+2025-03-30 17:17:27,881 - solar_fault_detection - INFO - Client connected: EfuHFR4gT4MdC3rmAAAd
+2025-03-30 17:17:27,882 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:27] "POST /socket.io/?EIO=4&transport=polling&t=PNcuC__&sid=osuOPsGvl1Cee5GIAAAc HTTP/1.1" 200 -
+2025-03-30 17:17:27,884 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:27] "GET /socket.io/?EIO=4&transport=polling&t=PNcuD01&sid=osuOPsGvl1Cee5GIAAAc HTTP/1.1" 200 -
+2025-03-30 17:17:28,008 - solar_fault_detection - INFO - Client disconnected: EfuHFR4gT4MdC3rmAAAd
+2025-03-30 17:17:28,008 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:28] "GET /socket.io/?EIO=4&transport=websocket&sid=osuOPsGvl1Cee5GIAAAc HTTP/1.1" 200 -
+2025-03-30 17:17:28,012 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:28] "GET / HTTP/1.1" 200 -
+2025-03-30 17:17:28,061 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:28] "GET /socket.io/?EIO=4&transport=polling&t=PNcuD2x HTTP/1.1" 200 -
+2025-03-30 17:17:28,082 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:28] "[33mGET /api/stats/summary HTTP/1.1[0m" 404 -
+2025-03-30 17:17:28,084 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:28] "[33mGET /api/alerts/latest?limit=5 HTTP/1.1[0m" 404 -
+2025-03-30 17:17:28,091 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:28] "[33mGET /api/data/latest?limit=10 HTTP/1.1[0m" 404 -
+2025-03-30 17:17:28,095 - solar_fault_detection - INFO - Client connected: 5lP_sYMQWU5Coom2AAAf
+2025-03-30 17:17:28,096 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:28] "POST /socket.io/?EIO=4&transport=polling&t=PNcuD3I&sid=rMK10gpvPGmoC85cAAAe HTTP/1.1" 200 -
+2025-03-30 17:17:28,098 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:28] "GET /socket.io/?EIO=4&transport=polling&t=PNcuD3I.0&sid=rMK10gpvPGmoC85cAAAe HTTP/1.1" 200 -
+2025-03-30 17:17:28,107 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:17:28] "GET /socket.io/?EIO=4&transport=polling&t=PNcuD3a&sid=rMK10gpvPGmoC85cAAAe HTTP/1.1" 200 -
+2025-03-30 17:17:28,663 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:30,664 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:32,665 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:34,666 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:36,667 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:38,668 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:40,669 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:42,670 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:44,670 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:46,671 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:48,672 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:50,673 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:52,674 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:54,675 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:56,675 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:17:58,676 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:00,677 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:02,678 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:04,680 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:06,680 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:08,682 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:10,683 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:12,685 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:14,686 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:16,686 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:18,688 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:20,689 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:22,690 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:24,691 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:26,692 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:28,693 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:30,694 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:32,696 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:34,697 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:36,697 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:38,698 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:40,699 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:42,700 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:44,701 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:46,703 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:48,704 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:50,705 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:52,706 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:54,707 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:56,708 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:18:58,709 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:00,711 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:02,712 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:04,713 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:06,714 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:08,716 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:10,722 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:12,723 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:14,723 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:16,724 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:18,725 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:20,726 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:22,728 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:24,728 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:26,729 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:28,730 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:30,732 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:32,734 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:34,735 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:36,737 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:38,738 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:40,738 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:42,739 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:44,740 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:46,741 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:48,742 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:50,743 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:52,745 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:54,746 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:56,747 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:19:58,748 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:00,749 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:02,750 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:04,750 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:06,752 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:08,754 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:10,755 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:12,756 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:14,757 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:16,757 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:18,759 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:20,760 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:22,762 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:24,763 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:26,763 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:28,765 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:30,765 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:32,766 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:34,767 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:36,769 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:38,770 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:40,771 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:42,771 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:44,772 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:46,773 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:48,774 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:50,775 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:52,776 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:54,777 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:56,778 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:20:58,779 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:00,780 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:02,780 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:04,781 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:06,782 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:08,783 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:10,784 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:12,786 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:14,787 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:16,801 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:18,802 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:20,805 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:22,806 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:24,807 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:26,808 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:28,809 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:30,810 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:32,811 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:34,812 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:36,818 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:38,820 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:40,821 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:42,823 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:44,824 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:46,825 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:48,827 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:50,828 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:52,829 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:54,833 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:56,833 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:21:58,835 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:00,836 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:02,838 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:04,839 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:06,840 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:08,841 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:10,842 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:12,843 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:14,843 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:16,844 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:18,845 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:20,847 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:22,887 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:24,888 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:26,889 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:28,889 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:30,890 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:32,891 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:34,893 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:36,894 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:38,896 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:40,898 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:42,899 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:44,900 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:46,901 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:48,951 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:50,954 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:52,955 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:54,956 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:56,957 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:22:58,958 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:00,959 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:02,960 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:04,962 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:06,964 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:08,965 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:10,966 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:12,970 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:14,971 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:16,972 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:18,973 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:20,974 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:22,976 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:24,981 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:26,982 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:28,985 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:30,986 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:32,987 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:34,987 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:36,988 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:38,989 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:40,991 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:42,992 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:44,993 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:46,994 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:48,996 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:50,997 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:52,998 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:54,998 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:56,999 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:23:59,001 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:01,002 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:03,003 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:05,004 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:07,006 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:09,008 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:11,008 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:13,012 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:15,014 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:17,015 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:19,016 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:21,017 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:23,018 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:25,019 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:27,019 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:29,021 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:31,021 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:33,022 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:35,023 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:37,024 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:39,025 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:41,027 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:43,028 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:45,029 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:47,030 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:49,031 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:51,032 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:53,033 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:55,034 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:57,035 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:24:59,037 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:01,038 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:03,041 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:05,043 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:07,044 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:09,046 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:11,048 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:13,061 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:15,062 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:17,064 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:19,065 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:21,067 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:23,068 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:25,069 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:27,070 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:29,071 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:31,072 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:33,073 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:35,074 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:37,076 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:39,077 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:41,078 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:43,080 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:45,081 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:47,082 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:49,084 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:51,085 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:53,086 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:55,087 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:57,088 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:25:59,090 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:01,092 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:03,095 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:05,096 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:07,097 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:09,098 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:11,099 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:13,100 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:15,101 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:17,103 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:19,103 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:21,105 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:23,106 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:25,107 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:27,109 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:29,111 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:31,111 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:33,112 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:35,113 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:37,114 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:39,115 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:41,116 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:43,117 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:45,119 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:47,121 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:49,122 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:51,127 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:53,129 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:55,130 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:57,131 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:26:59,132 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:01,134 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:03,135 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:05,136 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:07,137 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:09,139 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:11,140 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:13,144 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:15,145 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:17,146 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:19,147 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:21,149 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:23,149 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:25,151 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:27,152 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:29,154 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:31,155 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:33,157 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:35,158 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:37,161 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:39,162 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:41,163 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:43,164 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:45,181 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:47,183 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:49,185 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:51,185 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:53,189 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:55,191 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:57,193 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:27:59,194 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:01,196 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:03,197 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:05,198 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:07,201 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:09,206 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:11,208 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:13,210 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:15,210 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:17,211 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:19,214 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:21,216 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:23,217 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:25,218 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:27,219 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:29,220 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:31,221 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:33,224 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:35,248 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:37,248 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:39,250 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:41,251 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:43,252 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:45,254 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:47,256 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:49,257 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:51,260 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:53,271 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:55,273 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:57,274 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:28:59,275 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:01,276 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:03,277 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:05,278 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:07,279 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:09,280 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:11,281 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:13,283 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:15,284 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:17,285 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:19,286 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:21,287 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:23,291 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:25,292 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:27,293 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:29,294 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:31,324 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:33,327 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:35,328 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:37,329 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:39,330 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:41,331 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:43,332 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:45,333 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:47,334 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:49,334 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:51,335 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:53,336 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:55,340 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:57,340 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:29:59,341 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:01,342 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:03,352 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:05,356 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:07,357 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:09,358 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:11,359 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:13,361 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:15,362 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:17,364 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:19,365 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:21,367 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:23,368 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:25,369 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:27,370 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:29,371 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:31,371 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:33,372 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:35,376 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:37,380 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:39,380 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:41,381 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:43,382 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:45,383 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:47,383 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:49,384 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:51,385 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:53,387 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:55,389 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:57,390 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:30:59,391 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:01,392 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:03,393 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:05,394 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:07,395 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:09,397 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:11,403 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:13,405 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:15,405 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:17,406 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:19,407 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:21,408 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:23,409 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:25,411 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:27,412 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:29,414 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:31,415 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:33,416 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:35,417 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:37,418 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:39,420 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:41,421 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:43,423 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:45,424 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:47,425 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:49,426 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:51,427 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:53,428 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:55,429 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:57,430 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:31:59,430 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:01,432 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:03,433 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:05,435 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:07,436 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:09,438 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:11,440 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:13,440 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:15,442 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:17,444 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:19,444 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:21,445 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:23,447 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:25,448 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:27,449 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:29,450 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:31,455 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:33,456 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:35,457 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:37,458 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:39,459 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:41,460 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:43,462 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:45,463 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:47,464 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:49,465 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:51,466 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:53,467 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:55,468 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:57,470 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:32:59,471 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:01,472 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:03,473 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:05,473 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:07,474 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:09,476 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:11,477 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:13,478 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:15,479 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:17,480 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:19,481 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:21,482 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:23,483 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:25,485 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:27,486 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:29,486 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:31,488 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:33,489 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:35,490 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:37,491 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:39,491 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:41,493 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:43,517 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:45,518 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:47,519 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:49,521 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:51,522 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:53,523 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:55,524 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:57,526 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:33:59,527 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:01,528 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:03,530 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:05,530 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:07,533 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:09,534 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:11,536 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:13,537 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:15,540 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:17,540 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:19,541 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:21,542 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:23,544 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:25,545 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:27,546 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:29,548 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:31,550 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:33,552 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:35,553 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:37,555 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:39,556 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:41,557 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:43,592 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:45,593 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:47,594 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:49,595 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:51,597 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:53,600 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:55,603 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:57,605 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:34:59,606 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:01,606 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:03,608 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:05,609 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:07,610 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:09,611 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:11,613 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:13,615 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:15,616 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:17,618 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:19,619 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:21,620 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:23,621 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:25,622 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:27,624 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:29,625 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:31,626 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:33,627 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:35,628 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:37,630 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:39,631 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:41,635 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:43,638 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:45,640 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:47,641 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:49,643 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:51,643 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:53,646 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:55,647 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:57,648 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:35:59,651 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:01,652 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:03,653 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:05,654 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:07,656 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:09,657 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:11,658 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:13,686 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:15,687 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:17,688 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:19,689 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:21,691 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:23,692 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:25,693 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:27,694 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:29,695 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:31,698 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:33,700 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:35,701 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:37,702 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:39,704 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:41,705 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:43,705 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:45,706 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:47,707 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:49,708 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:51,709 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:53,710 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:55,711 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:57,715 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:36:59,716 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:01,717 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:03,718 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:05,719 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:07,720 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:09,722 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:11,722 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:13,723 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:15,724 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:17,725 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:19,726 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:21,727 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:23,728 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:25,730 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:27,731 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:29,732 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:31,733 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:33,735 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:35,735 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:37,737 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:39,774 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:41,775 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:43,776 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:45,777 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:47,778 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:49,780 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:51,781 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:53,781 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:55,782 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:57,785 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:37:59,812 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:01,826 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:03,829 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:05,831 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:07,832 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:09,833 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:11,834 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:13,834 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:15,836 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:17,837 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:19,838 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:21,840 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:23,841 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:25,842 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:27,846 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:29,847 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:31,857 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:33,858 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:35,859 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:37,864 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:39,865 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:41,866 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:43,867 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:45,868 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:47,869 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:49,870 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:51,872 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:53,873 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:55,875 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:57,876 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:38:59,877 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:01,879 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:03,880 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:05,881 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:07,882 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:09,883 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:11,885 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:13,886 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:15,887 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:17,888 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:19,889 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:21,890 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:23,891 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:25,893 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:27,896 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:29,897 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:31,899 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:33,900 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:35,901 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:37,902 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:39,903 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:41,904 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:43,905 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:45,906 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:47,907 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:49,909 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:51,910 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:53,912 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:55,915 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:57,916 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:39:59,919 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:01,920 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:03,922 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:05,923 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:07,924 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:09,925 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:11,927 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:13,928 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:15,931 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:17,932 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:19,933 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:21,935 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:23,935 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:25,937 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:27,938 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:29,939 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:31,940 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:33,945 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:35,945 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:37,947 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:39,948 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:41,949 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:43,950 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:45,952 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:47,953 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:49,954 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:51,956 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:53,957 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:55,975 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:57,976 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:40:59,978 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:01,979 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:03,980 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:05,981 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:07,982 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:09,983 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:11,985 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:13,988 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:15,988 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:17,989 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:19,991 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:21,994 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:23,995 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:26,004 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:28,005 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:30,007 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:32,008 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:34,009 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:36,011 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:38,012 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:40,013 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:42,017 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:44,019 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:46,020 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:48,026 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:50,028 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:52,029 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:54,031 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:56,032 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:41:58,033 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:00,034 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:02,035 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:04,036 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:06,037 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:08,038 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:10,040 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:12,041 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:14,042 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:16,044 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:18,047 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:20,048 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:22,050 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:24,051 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:26,066 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:28,067 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:30,068 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:32,070 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:34,071 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:36,073 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:38,077 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:40,078 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:42,080 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:44,081 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:46,088 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:48,116 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:50,117 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:52,119 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:54,120 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:56,121 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:42:58,123 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:00,127 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:02,128 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:04,129 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:06,135 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:08,136 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:10,137 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:12,139 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:14,144 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:16,145 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:18,146 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:20,147 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:22,149 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:24,150 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:26,151 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:28,153 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:30,155 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:32,156 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:34,157 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:36,158 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:38,159 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:40,160 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:42,161 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:44,163 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:46,164 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:48,165 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:50,167 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:52,168 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:54,173 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:56,174 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:43:58,227 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:00,228 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:02,234 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:04,237 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:06,240 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:08,242 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:10,243 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:12,245 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:14,246 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:16,247 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:18,248 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:20,250 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:22,251 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:24,252 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:26,254 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:28,254 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:30,257 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:32,258 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:34,259 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:36,261 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:38,262 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:40,263 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:42,265 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:44,266 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:46,268 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:48,271 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:50,272 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:52,273 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:54,274 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:56,275 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:44:58,284 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:00,288 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:02,289 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:04,290 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:06,291 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:08,292 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:10,293 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:12,294 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:14,295 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:16,296 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:18,297 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:20,299 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:22,300 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:24,301 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:26,305 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:28,307 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:30,317 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:32,321 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:34,323 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:36,324 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:38,325 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:40,326 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:42,327 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:44,328 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:46,330 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:48,331 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:50,333 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:52,334 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:54,337 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:56,339 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:45:58,341 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:00,342 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:02,396 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:04,396 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:06,398 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:08,399 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:10,400 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:12,402 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:14,405 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:16,407 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:18,436 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:18,886 - solar_fault_detection - INFO - Client disconnected: yhlPsL6BLHLY2AmcAAAT
+2025-03-30 17:46:18,893 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:46:18] "GET /socket.io/?EIO=4&transport=websocket&sid=HsadQEWRYc9XuGZQAAAS HTTP/1.1" 200 -
+2025-03-30 17:46:18,893 - solar_fault_detection - INFO - Client disconnected: zBj_kXcS1u1AE7beAAAH
+2025-03-30 17:46:18,893 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:46:18] "GET /socket.io/?EIO=4&transport=websocket&sid=yj4fg0HnNreA5eInAAAG HTTP/1.1" 200 -
+2025-03-30 17:46:18,908 - solar_fault_detection - INFO - Client disconnected: 5lP_sYMQWU5Coom2AAAf
+2025-03-30 17:46:18,908 - werkzeug - INFO - 127.0.0.1 - - [30/Mar/2025 17:46:18] "GET /socket.io/?EIO=4&transport=websocket&sid=rMK10gpvPGmoC85cAAAe HTTP/1.1" 200 -
+2025-03-30 17:46:20,439 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:22,439 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:24,441 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:26,442 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:28,444 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:30,445 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:32,446 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:34,446 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:36,447 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:38,448 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:40,449 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:42,449 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:44,450 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:46,451 - solar_fault_detection - ERROR - Model not loaded
+2025-03-30 17:46:48,451 - solar_fault_detection - ERROR - Model not loaded

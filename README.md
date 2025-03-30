@@ -2,6 +2,83 @@
 
 A machine learning-based system for detecting faults in solar panels using electrical measurements. The system achieves 96.25% testing accuracy in identifying healthy panels and various fault conditions.
 
+## Quick Start Guide
+
+1. **Setup the Environment**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Setup the Database**:
+   ```bash
+   python database_setup.py
+   ```
+
+3. **Run the Application**:
+   ```bash
+   python solar_fault_detection.py --host 127.0.0.1 --port 8080
+   ```
+
+4. **Access the Dashboard**:
+   - Open a web browser and navigate to: `http://127.0.0.1:8080`
+
+5. **Start Monitoring**:
+   - Click the "Start Monitoring" button on the dashboard
+   - Or use the API: `Invoke-WebRequest -Uri "http://127.0.0.1:8080/api/start" -Method POST`
+
+## Documentation Guide
+
+This project includes several README files for different aspects of the system:
+
+1. **README_PERSONAL.md** - Beginner-friendly guide with step-by-step instructions for running the project
+2. **README_SYSTEM_ORGANIZATION.md** - Technical overview of system components and how they interact
+3. **README_CODING_GUIDE.md** - Programming concepts and coding practices used in the project
+4. **README_MATLAB_INTEGRATION.md** - How to integrate with MATLAB for real solar panel data
+5. **README_GITHUB.md** - Instructions for uploading the project to GitHub
+6. **README_ADVANCED_MONITORING.md** - Details about the advanced monitoring features
+7. **README_COMMANDS.md** - Comprehensive list of all commands to run the system
+
+## Mobile Application
+
+A cross-platform mobile application is available for monitoring your solar panels on the go. The app provides:
+
+- Real-time monitoring of solar panel data
+- Fault detection alerts and notifications
+- Historical data viewing and analysis
+- Alert management system
+
+To set up and use the mobile app:
+
+1. Navigate to the mobile app directory:
+   ```bash
+   cd solar_monitor_app
+   ```
+
+2. Follow the detailed instructions in the [mobile app README](./solar_monitor_app/README.md)
+
+3. Connect the app to your running Solar Panel Fault Detection System server
+
+See the [mobile app README](./solar_monitor_app/README.md) for comprehensive setup and usage instructions.
+
+## Running with MATLAB Integration
+
+To run the system with MATLAB integration:
+
+1. **Install MATLAB Engine for Python**:
+   ```bash
+   cd "C:\Program Files\MATLAB\R2023b\extern\engines\python"
+   python setup.py install
+   ```
+
+2. **Run with MATLAB Integration**:
+   ```bash
+   python solar_fault_detection.py --host 127.0.0.1 --port 8080 --matlab
+   ```
+
+3. **Verify Integration**:
+   - Check the console logs for "MATLAB interface initialized successfully"
+   - The real-time charts will update with data from MATLAB when available
+
 ## Features
 
 ### 1. Manual Prediction

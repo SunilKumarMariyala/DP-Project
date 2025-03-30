@@ -67,6 +67,110 @@ advanced_solar_fault_detection/
     └── dashboard.html       # Advanced dashboard template
 ```
 
+## Running the Project
+
+To run the Solar Fault Detection System, follow these steps:
+
+### Step 1: Set up the Database
+
+First, run the database setup script to create the database and load sample data:
+
+```bash
+python database_setup.py
+```
+
+This will:
+- Create the SQLite database file (solar_panel.db)
+- Define the database schema
+- Load sample data from the Excel file
+- Verify the data was loaded correctly
+
+### Step 2: Run the Application
+
+You have two options for running the application:
+
+#### Option 1: Run the Full Application
+
+```bash
+python app.py
+```
+
+This starts the full application with all features, including:
+- Advanced dashboard
+- MATLAB integration (if available)
+- Enhanced monitoring capabilities
+- Complete API endpoints
+
+#### Option 2: Run the Simplified Version
+
+```bash
+python solar_fault_detection.py
+```
+
+This starts a simplified version of the application with core functionality:
+- Basic dashboard
+- Core prediction capabilities
+- Essential monitoring features
+
+### Step 3: Access the Dashboard
+
+Open your web browser and navigate to:
+
+```
+http://localhost:5000
+```
+
+This will display the dashboard interface where you can:
+- Make manual predictions
+- View real-time monitoring data
+- Access historical data
+- See performance statistics
+
+## System Interactions
+
+The following diagram illustrates how the main components of the system interact:
+
+```
+┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
+│                 │      │                 │      │                 │
+│  Web Interface  │<─────│  Flask App      │<─────│  Database       │
+│  (Dashboard)    │─────>│  (app.py)       │─────>│  (SQLite)       │
+│                 │      │                 │      │                 │
+└─────────────────┘      └────────┬────────┘      └─────────────────┘
+                                  │
+                                  │
+                         ┌────────▼────────┐
+                         │                 │
+                         │  ML Model       │
+                         │  (PyTorch)      │
+                         │                 │
+                         └────────┬────────┘
+                                  │
+                                  │
+                         ┌────────▼────────┐
+                         │                 │
+                         │  MATLAB         │
+                         │  Integration    │
+                         │  (Optional)     │
+                         │                 │
+                         └─────────────────┘
+```
+
+### Key Interactions:
+
+1. **User → Web Interface**: User inputs data or requests information through the dashboard
+2. **Web Interface → Flask App**: Dashboard sends requests to the Flask application
+3. **Flask App → ML Model**: Application uses the ML model to make predictions
+4. **Flask App → Database**: Application stores and retrieves data from the SQLite database
+5. **Flask App → MATLAB Integration**: Application can optionally connect to MATLAB for simulations
+6. **Flask App → Web Interface**: Application sends results back to the dashboard for display
+
+This architecture ensures:
+- Clean separation of concerns
+- Modular design for easy maintenance
+- Scalability for future enhancements
+- Optional components that don't break core functionality
+
 ## Usage Guide
 
 ### Running the Basic System

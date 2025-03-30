@@ -19,6 +19,13 @@ from flask import Flask, render_template, jsonify, request, send_from_directory
 from flask_socketio import SocketIO
 import joblib
 
+# Import MATLAB interface
+try:
+    from matlab_interface import MatlabInterface
+    matlab_available = True
+except ImportError:
+    matlab_available = False
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -41,6 +48,7 @@ monitoring_thread = None
 model = None
 scaler = None
 db_path = 'solar_panel.db'
+matlab_interface = None
 fault_types = {
     0: "Healthy",
     1: "Line-Line Fault",
@@ -348,14 +356,57 @@ class DataProcessor:
 
 def monitoring_loop():
     """Main monitoring loop"""
-    global monitoring_active
+    global monitoring_active, matlab_interface
     
     processor = DataProcessor(db_path)
+    
+    # Initialize MATLAB interface if available
+    if matlab_available:
+        try:
+            matlab_interface = MatlabInterface(db_path=db_path)
+            logger.info("MATLAB interface initialized successfully")
+        except Exception as e:
+            logger.error(f"Error initializing MATLAB interface: {e}")
+            matlab_interface = None
     
     logger.info("Starting monitoring loop")
     
     while monitoring_active:
         try:
+            # Try to get data from MATLAB if available
+            matlab_data = None
+            if matlab_interface is not None and matlab_available:
+                try:
+                    # Run MATLAB simulation to get latest data
+                    matlab_data = matlab_interface.run_simulation()
+                    if matlab_data:
+                        logger.info("Received data from MATLAB")
+                        
+                        # Save MATLAB data to database
+                        session = matlab_interface.Session()
+                        new_data = SolarPanelData(
+                            timestamp=datetime.now(),
+                            voltage=matlab_data['pv_voltage'],
+                            current=matlab_data['pv_current'],
+                            power=matlab_data['pv_power'],
+                            temperature=25.0,  # Default temperature
+                            irradiance=1000.0,  # Default irradiance
+                            v_deviation=(matlab_data['pv_voltage'] - 48.0) / 48.0 * 100,
+                            i_deviation=(matlab_data['pv_current'] - 10.0) / 10.0 * 100,
+                            p_deviation=(matlab_data['pv_power'] - 480.0) / 480.0 * 100
+                        )
+                        session.add(new_data)
+                        session.commit()
+                        session.close()
+                        logger.info("Saved MATLAB data to database")
+                except Exception as e:
+                    logger.error(f"Error getting data from MATLAB: {e}")
+                    matlab_data = None
+            
+            # If MATLAB data is not available, generate test data
+            if matlab_data is None:
+                generate_test_data(scenario='random', count=1)
+            
             # Process data
             result = processor.process_data()
             
@@ -367,13 +418,13 @@ def monitoring_loop():
                     'power': result['power'],
                     'temperature': result['temperature'],
                     'irradiance': result['irradiance'],
-                    'timestamp': datetime.now().strftime('%H:%M:%S')
+                    'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 })
                 
                 # Emit prediction update
                 socketio.emit('prediction_update', {
                     'prediction': result['prediction'],
-                    'fault_type': result['fault_type'],
+                    'fault_type': fault_types.get(result['prediction'], "Unknown"),
                     'confidence': result['confidence'],
                     'probabilities': result['probabilities']
                 })
@@ -384,7 +435,7 @@ def monitoring_loop():
                     if alert:
                         socketio.emit('alert', alert)
                 
-                logger.info(f"Processed data: {result['id']}, Prediction: {result['fault_type']}")
+                logger.info(f"Processed data: {result['id']}, Prediction: {fault_types.get(result['prediction'], 'Unknown')}")
             
             # Wait for next iteration
             time.sleep(2)
@@ -632,109 +683,134 @@ def setup_database():
 
 def generate_test_data(scenario='random', count=1):
     """Generate test data for the specified scenario"""
-    try:
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
-        
-        records = []
-        
-        for _ in range(count):
-            # Base values
-            voltage = 48.0  # Nominal voltage
-            current = 10.0  # Nominal current
-            power = voltage * current
-            temperature = 25.0
-            irradiance = 1000.0
-            
-            # Add variations based on scenario
-            if scenario == 'healthy':
-                # Healthy panel with small variations
-                voltage += np.random.uniform(-0.5, 0.5)
-                current += np.random.uniform(-0.5, 0.5)
-                v_deviation = (voltage - 48.0) / 48.0 * 100
-                i_deviation = (current - 10.0) / 10.0 * 100
-            
-            elif scenario == 'fault_1':
-                # Line-Line Fault: Significant voltage drop, current increase
-                voltage -= np.random.uniform(5.0, 10.0)
-                current += np.random.uniform(5.0, 10.0)
-                v_deviation = (voltage - 48.0) / 48.0 * 100
-                i_deviation = (current - 10.0) / 10.0 * 100
-            
-            elif scenario == 'fault_2':
-                # Open Circuit: Voltage increase, severe current drop
-                voltage += np.random.uniform(5.0, 10.0)
-                current -= np.random.uniform(8.0, 10.0)
-                v_deviation = (voltage - 48.0) / 48.0 * 100
-                i_deviation = (current - 10.0) / 10.0 * 100
-            
-            elif scenario == 'fault_3':
-                # Partial Shading: Moderate voltage and current drop
-                voltage -= np.random.uniform(1.0, 3.0)
-                current -= np.random.uniform(2.0, 5.0)
-                v_deviation = (voltage - 48.0) / 48.0 * 100
-                i_deviation = (current - 10.0) / 10.0 * 100
-            
-            elif scenario == 'fault_4':
-                # Panel Degradation: Moderate voltage and current drop
-                voltage -= np.random.uniform(2.0, 4.0)
-                current -= np.random.uniform(2.0, 4.0)
-                v_deviation = (voltage - 48.0) / 48.0 * 100
-                i_deviation = (current - 10.0) / 10.0 * 100
-            
-            else:  # random
-                # Random scenario
-                scenarios = ['healthy', 'fault_1', 'fault_2', 'fault_3', 'fault_4']
-                return generate_test_data(np.random.choice(scenarios), count)
-            
-            # Calculate power and deviations
-            power = voltage * current
-            p_deviation = (power - 480.0) / 480.0 * 100
-            
-            # Add temperature and irradiance variations
-            temperature += np.random.uniform(-5.0, 5.0)
-            irradiance += np.random.uniform(-100.0, 100.0)
-            
-            # Insert data into database
-            query = """
-                INSERT INTO solar_data (
-                    timestamp, voltage, current, power, temperature, irradiance,
-                    v_deviation, i_deviation, p_deviation
-                )
-                VALUES (datetime('now', 'localtime'), ?, ?, ?, ?, ?, ?, ?, ?)
-            """
-            cursor.execute(query, (
-                voltage, current, power, temperature, irradiance,
-                v_deviation, i_deviation, p_deviation
-            ))
-            
-            # Get the ID of the inserted row
-            data_id = cursor.lastrowid
-            records.append(data_id)
-        
-        conn.commit()
-        conn.close()
-        
-        logger.info(f"Generated {count} test data records for scenario: {scenario}")
-        return records
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
     
-    except Exception as e:
-        logger.error(f"Error generating test data: {e}")
-        return []
+    # Create table if it doesn't exist
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS solar_data (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            timestamp TEXT,
+            voltage REAL,
+            current REAL,
+            power REAL,
+            temperature REAL,
+            irradiance REAL,
+            v_deviation REAL,
+            i_deviation REAL,
+            p_deviation REAL
+        )
+    """)
+    
+    # Base values
+    base_voltage = 48.0
+    base_current = 10.0
+    base_power = base_voltage * base_current
+    base_temperature = 25.0
+    base_irradiance = 1000.0
+    
+    # Generate data based on scenario
+    for i in range(count):
+        if scenario == 'healthy':
+            # Healthy scenario - normal operation with small variations
+            voltage = base_voltage + np.random.normal(0, 1)
+            current = base_current + np.random.normal(0, 0.5)
+            temperature = base_temperature + np.random.normal(0, 3)
+            irradiance = base_irradiance + np.random.normal(0, 50)
+        
+        elif scenario == 'line_line_fault':
+            # Line-Line Fault - significant drop in voltage, high current
+            voltage = base_voltage * 0.6 + np.random.normal(0, 1)
+            current = base_current * 1.5 + np.random.normal(0, 0.5)
+            temperature = base_temperature + np.random.normal(0, 3)
+            irradiance = base_irradiance + np.random.normal(0, 50)
+        
+        elif scenario == 'open_circuit':
+            # Open Circuit - high voltage, very low current
+            voltage = base_voltage * 1.2 + np.random.normal(0, 1)
+            current = base_current * 0.1 + np.random.normal(0, 0.1)
+            temperature = base_temperature + np.random.normal(0, 3)
+            irradiance = base_irradiance + np.random.normal(0, 50)
+        
+        elif scenario == 'partial_shading':
+            # Partial Shading - moderate drop in voltage and current
+            voltage = base_voltage * 0.8 + np.random.normal(0, 1)
+            current = base_current * 0.7 + np.random.normal(0, 0.5)
+            temperature = base_temperature + np.random.normal(0, 3)
+            irradiance = base_irradiance * 0.6 + np.random.normal(0, 50)
+        
+        elif scenario == 'degradation':
+            # Panel Degradation - slight drop in voltage and current
+            voltage = base_voltage * 0.9 + np.random.normal(0, 1)
+            current = base_current * 0.85 + np.random.normal(0, 0.5)
+            temperature = base_temperature + 5 + np.random.normal(0, 3)
+            irradiance = base_irradiance + np.random.normal(0, 50)
+        
+        else:  # random
+            # Random scenario
+            scenarios = ['healthy', 'line_line_fault', 'open_circuit', 'partial_shading', 'degradation']
+            weights = [0.7, 0.075, 0.075, 0.075, 0.075]  # 70% healthy, 30% faults
+            selected = np.random.choice(scenarios, p=weights)
+            return generate_test_data(selected, count)
+        
+        # Calculate power and deviations
+        power = voltage * current
+        v_deviation = (voltage - base_voltage) / base_voltage * 100
+        i_deviation = (current - base_current) / base_current * 100
+        p_deviation = (power - base_power) / base_power * 100
+        
+        # Insert into database
+        cursor.execute("""
+            INSERT INTO solar_data (
+                timestamp, voltage, current, power, temperature, irradiance,
+                v_deviation, i_deviation, p_deviation
+            ) VALUES (
+                datetime('now', 'localtime'), ?, ?, ?, ?, ?, ?, ?, ?
+            )
+        """, (
+            voltage, current, power, temperature, irradiance,
+            v_deviation, i_deviation, p_deviation
+        ))
+    
+    conn.commit()
+    conn.close()
+    
+    logger.info(f"Generated {count} test data points for scenario: {scenario}")
+    return True
 
 def main():
     """Main function"""
-    parser = argparse.ArgumentParser(description='Solar Fault Detection System')
-    parser.add_argument('--host', type=str, default='0.0.0.0', help='Host to run the server on')
-    parser.add_argument('--port', type=int, default=5000, help='Port to run the server on')
+    global monitoring_active, db_path
+    
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='Solar Panel Fault Detection System')
+    parser.add_argument('--host', type=str, default='127.0.0.1', help='Host to run the server on')
+    parser.add_argument('--port', type=int, default=8080, help='Port to run the server on')
     parser.add_argument('--debug', action='store_true', help='Run in debug mode')
     parser.add_argument('--generate-data', action='store_true', help='Generate test data')
     parser.add_argument('--scenario', type=str, default='random', 
-                        choices=['healthy', 'fault_1', 'fault_2', 'fault_3', 'fault_4', 'random'],
+                        choices=['healthy', 'line_line_fault', 'open_circuit', 'partial_shading', 'degradation', 'random'],
                         help='Scenario for test data generation')
     parser.add_argument('--count', type=int, default=10, help='Number of test data records to generate')
+    parser.add_argument('--reset-db', action='store_true', help='Reset the database')
+    parser.add_argument('--db-path', type=str, default='solar_panel.db', help='Path to the database')
+    parser.add_argument('--matlab', action='store_true', help='Enable MATLAB integration')
     
     args = parser.parse_args()
+    
+    # Set database path
+    db_path = args.db_path
+    
+    # Reset database if requested
+    if args.reset_db:
+        try:
+            if os.path.exists(db_path):
+                os.remove(db_path)
+                logger.info(f"Database reset: {db_path}")
+            else:
+                logger.info(f"Database does not exist: {db_path}")
+        except Exception as e:
+            logger.error(f"Error resetting database: {e}")
     
     # Setup database
     setup_database()
@@ -742,6 +818,17 @@ def main():
     # Generate test data if requested
     if args.generate_data:
         generate_test_data(args.scenario, args.count)
+        return
+    
+    # Initialize MATLAB interface if requested
+    if args.matlab and matlab_available:
+        global matlab_interface
+        try:
+            matlab_interface = MatlabInterface(db_path=db_path)
+            logger.info("MATLAB interface initialized for command line")
+        except Exception as e:
+            logger.error(f"Error initializing MATLAB interface: {e}")
+            matlab_interface = None
     
     # Start the server
     logger.info(f"Starting server on {args.host}:{args.port}")

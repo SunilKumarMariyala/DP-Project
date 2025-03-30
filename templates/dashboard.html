@@ -286,16 +286,75 @@
         const socket = io();
         
         // Connection status handling
-        socket.on('connect', () => {
+        socket.on('connect', function() {
+            console.log('Connected to server');
             document.getElementById('connection-status').textContent = 'Connected';
             document.getElementById('live-status').classList.remove('bg-danger');
             document.getElementById('live-status').classList.add('bg-success');
         });
         
-        socket.on('disconnect', () => {
+        socket.on('disconnect', function() {
+            console.log('Disconnected from server');
             document.getElementById('connection-status').textContent = 'Disconnected';
             document.getElementById('live-status').classList.remove('bg-success');
             document.getElementById('live-status').classList.add('bg-danger');
+        });
+        
+        // Listen for data_update events (real-time data)
+        socket.on('data_update', function(data) {
+            console.log('Received data update:', data);
+            
+            // Update real-time chart
+            if (realTimeChart) {
+                realTimeChart.data.datasets[0].data.shift();
+                realTimeChart.data.datasets[0].data.push(data.current);
+                
+                realTimeChart.data.datasets[1].data.shift();
+                realTimeChart.data.datasets[1].data.push(data.voltage);
+                
+                realTimeChart.update();
+            }
+            
+            // Update current metrics
+            document.getElementById('current-voltage').textContent = data.voltage.toFixed(2);
+            document.getElementById('current-current').textContent = data.current.toFixed(2);
+            document.getElementById('current-power').textContent = data.power.toFixed(2);
+        });
+        
+        // Listen for prediction_update events
+        socket.on('prediction_update', function(data) {
+            console.log('Received prediction update:', data);
+            
+            const statusElement = document.getElementById('current-status');
+            const confidenceElement = document.getElementById('status-confidence');
+            
+            statusElement.textContent = data.fault_type;
+            confidenceElement.textContent = `${data.confidence.toFixed(2)}%`;
+            
+            // Update status color
+            if (data.prediction === 0) {
+                statusElement.className = 'status-healthy';
+                document.getElementById('recommended-action').className = 'alert alert-success';
+                document.getElementById('recommended-action').textContent = 'No action required.';
+            } else {
+                statusElement.className = 'status-fault';
+                document.getElementById('recommended-action').className = 'alert alert-danger';
+                document.getElementById('recommended-action').textContent = 'Maintenance required. Check system.';
+            }
+            
+            // Reload latest data to update other UI elements
+            loadInitialData();
+        });
+        
+        // Listen for alert events
+        socket.on('alert', function(alert) {
+            console.log('Received alert:', alert);
+            
+            // Reload alerts
+            fetch('/api/alerts/latest?limit=5')
+                .then(response => response.json())
+                .then(alerts => updateAlertsList(alerts))
+                .catch(error => console.error('Error loading alerts:', error));
         });
         
         // Charts initialization
@@ -629,35 +688,6 @@
             // Implementation would go here
             alert(`Log maintenance for data ID: ${dataId}`);
         }
-        
-        // Socket.IO event handlers
-        socket.on('data_processed', data => {
-            // Reload latest data
-            fetch('/api/data/latest?limit=10')
-                .then(response => response.json())
-                .then(data => {
-                    updateCurrentStatus(data[0]);
-                    updatePredictionsList(data);
-                    updateHistoryTable(data);
-                })
-                .catch(error => console.error('Error loading data:', error));
-        });
-        
-        socket.on('new_alert', alert => {
-            // Reload alerts
-            fetch('/api/alerts/latest?limit=5')
-                .then(response => response.json())
-                .then(alerts => updateAlertsList(alerts))
-                .catch(error => console.error('Error loading alerts:', error));
-        });
-        
-        socket.on('alert_acknowledged', data => {
-            // Reload alerts
-            fetch('/api/alerts/latest?limit=5')
-                .then(response => response.json())
-                .then(alerts => updateAlertsList(alerts))
-                .catch(error => console.error('Error loading alerts:', error));
-        });
         
         // Control panel button handlers
         document.getElementById('start-processing').addEventListener('click', function() {
