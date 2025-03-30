@@ -1,0 +1,9 @@
+2025-03-29 23:51:24,819 - matlab_prediction - ERROR - MATLAB Engine for Python is not available
+2025-03-29 23:51:24,820 - matlab_prediction - ERROR - To install MATLAB Engine, run 'cd "matlabroot\extern\engines\python" && python setup.py install' in MATLAB Command Window
+2025-03-29 23:51:24,821 - matlab_prediction - ERROR - Failed to initialize MATLAB engine. Exiting.
+2025-03-30 00:52:55,227 - matlab_prediction - ERROR - MATLAB Engine for Python is not available
+2025-03-30 00:52:55,230 - matlab_prediction - ERROR - To install MATLAB Engine, run 'cd "matlabroot\extern\engines\python" && python setup.py install' in MATLAB Command Window
+2025-03-30 00:52:55,243 - matlab_prediction - ERROR - Failed to initialize MATLAB engine. Exiting.
+2025-03-30 01:58:00,836 - matlab_prediction - ERROR - MATLAB Engine for Python is not available
+2025-03-30 01:58:00,837 - matlab_prediction - ERROR - To install MATLAB Engine, run 'cd "matlabroot\extern\engines\python" && python setup.py install' in MATLAB Command Window
+2025-03-30 01:58:00,837 - matlab_prediction - ERROR - Failed to initialize MATLAB engine. Exiting.

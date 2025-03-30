@@ -1,0 +1,266 @@
+2025-03-30 00:22:26,957 - advanced_monitoring - WARNING - Model or scaler not found at enhanced_model_best.pth or enhanced_scaler.pkl
+2025-03-30 00:22:26,959 - advanced_monitoring - INFO - Initializing new model
+2025-03-30 00:22:26,960 - enhanced_model - INFO - Created new scaler
+2025-03-30 00:22:26,962 - advanced_monitoring - INFO - Database tables created successfully
+2025-03-30 00:22:26,964 - advanced_monitoring - INFO - Started processing thread with interval=2s and batch_size=5
+2025-03-30 00:22:27,001 - advanced_monitoring - ERROR - Error processing batch: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+2025-03-30 00:22:27,055 - advanced_monitoring - ERROR - Traceback (most recent call last):
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\advanced_monitoring.py", line 282, in _process_batch
+    predictions = self.model.predict(df)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 537, in predict
+    X = self.feature_extractor.extract_features(data)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 187, in extract_features
+    X_scaled = self.scaler.transform(X)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\_set_output.py", line 140, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\preprocessing\_data.py", line 1001, in transform
+    check_is_fitted(self)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\validation.py", line 1462, in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+
+2025-03-30 00:22:29,098 - advanced_monitoring - ERROR - Error processing batch: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+2025-03-30 00:22:29,099 - advanced_monitoring - ERROR - Traceback (most recent call last):
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\advanced_monitoring.py", line 282, in _process_batch
+    predictions = self.model.predict(df)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 537, in predict
+    X = self.feature_extractor.extract_features(data)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 187, in extract_features
+    X_scaled = self.scaler.transform(X)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\_set_output.py", line 140, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\preprocessing\_data.py", line 1001, in transform
+    check_is_fitted(self)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\validation.py", line 1462, in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+
+2025-03-30 00:22:31,132 - advanced_monitoring - ERROR - Error processing batch: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+2025-03-30 00:22:31,134 - advanced_monitoring - ERROR - Traceback (most recent call last):
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\advanced_monitoring.py", line 282, in _process_batch
+    predictions = self.model.predict(df)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 537, in predict
+    X = self.feature_extractor.extract_features(data)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 187, in extract_features
+    X_scaled = self.scaler.transform(X)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\_set_output.py", line 140, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\preprocessing\_data.py", line 1001, in transform
+    check_is_fitted(self)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\validation.py", line 1462, in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+
+2025-03-30 00:22:33,184 - advanced_monitoring - ERROR - Error processing batch: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+2025-03-30 00:22:33,185 - advanced_monitoring - ERROR - Traceback (most recent call last):
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\advanced_monitoring.py", line 282, in _process_batch
+    predictions = self.model.predict(df)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 537, in predict
+    X = self.feature_extractor.extract_features(data)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 187, in extract_features
+    X_scaled = self.scaler.transform(X)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\_set_output.py", line 140, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\preprocessing\_data.py", line 1001, in transform
+    check_is_fitted(self)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\validation.py", line 1462, in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+
+2025-03-30 00:22:35,220 - advanced_monitoring - ERROR - Error processing batch: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+2025-03-30 00:22:35,221 - advanced_monitoring - ERROR - Traceback (most recent call last):
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\advanced_monitoring.py", line 282, in _process_batch
+    predictions = self.model.predict(df)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 537, in predict
+    X = self.feature_extractor.extract_features(data)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 187, in extract_features
+    X_scaled = self.scaler.transform(X)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\_set_output.py", line 140, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\preprocessing\_data.py", line 1001, in transform
+    check_is_fitted(self)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\validation.py", line 1462, in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+
+2025-03-30 00:22:37,256 - advanced_monitoring - ERROR - Error processing batch: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+2025-03-30 00:22:37,258 - advanced_monitoring - ERROR - Traceback (most recent call last):
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\advanced_monitoring.py", line 282, in _process_batch
+    predictions = self.model.predict(df)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 537, in predict
+    X = self.feature_extractor.extract_features(data)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 187, in extract_features
+    X_scaled = self.scaler.transform(X)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\_set_output.py", line 140, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\preprocessing\_data.py", line 1001, in transform
+    check_is_fitted(self)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\validation.py", line 1462, in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+
+2025-03-30 00:22:39,291 - advanced_monitoring - ERROR - Error processing batch: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+2025-03-30 00:22:39,293 - advanced_monitoring - ERROR - Traceback (most recent call last):
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\advanced_monitoring.py", line 282, in _process_batch
+    predictions = self.model.predict(df)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 537, in predict
+    X = self.feature_extractor.extract_features(data)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 187, in extract_features
+    X_scaled = self.scaler.transform(X)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\_set_output.py", line 140, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\preprocessing\_data.py", line 1001, in transform
+    check_is_fitted(self)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\validation.py", line 1462, in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+
+2025-03-30 00:22:41,349 - advanced_monitoring - ERROR - Error processing batch: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+2025-03-30 00:22:41,350 - advanced_monitoring - ERROR - Traceback (most recent call last):
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\advanced_monitoring.py", line 282, in _process_batch
+    predictions = self.model.predict(df)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 537, in predict
+    X = self.feature_extractor.extract_features(data)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 187, in extract_features
+    X_scaled = self.scaler.transform(X)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\_set_output.py", line 140, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\preprocessing\_data.py", line 1001, in transform
+    check_is_fitted(self)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\validation.py", line 1462, in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+
+2025-03-30 00:22:43,386 - advanced_monitoring - ERROR - Error processing batch: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+2025-03-30 00:22:43,388 - advanced_monitoring - ERROR - Traceback (most recent call last):
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\advanced_monitoring.py", line 282, in _process_batch
+    predictions = self.model.predict(df)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 537, in predict
+    X = self.feature_extractor.extract_features(data)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 187, in extract_features
+    X_scaled = self.scaler.transform(X)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\_set_output.py", line 140, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\preprocessing\_data.py", line 1001, in transform
+    check_is_fitted(self)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\validation.py", line 1462, in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+
+2025-03-30 00:22:45,422 - advanced_monitoring - ERROR - Error processing batch: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+2025-03-30 00:22:45,424 - advanced_monitoring - ERROR - Traceback (most recent call last):
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\advanced_monitoring.py", line 282, in _process_batch
+    predictions = self.model.predict(df)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 537, in predict
+    X = self.feature_extractor.extract_features(data)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 187, in extract_features
+    X_scaled = self.scaler.transform(X)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\_set_output.py", line 140, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\preprocessing\_data.py", line 1001, in transform
+    check_is_fitted(self)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\validation.py", line 1462, in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+
+2025-03-30 00:22:47,466 - advanced_monitoring - ERROR - Error processing batch: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+2025-03-30 00:22:47,467 - advanced_monitoring - ERROR - Traceback (most recent call last):
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\advanced_monitoring.py", line 282, in _process_batch
+    predictions = self.model.predict(df)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 537, in predict
+    X = self.feature_extractor.extract_features(data)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 187, in extract_features
+    X_scaled = self.scaler.transform(X)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\_set_output.py", line 140, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\preprocessing\_data.py", line 1001, in transform
+    check_is_fitted(self)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\validation.py", line 1462, in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+
+2025-03-30 00:22:49,503 - advanced_monitoring - ERROR - Error processing batch: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+2025-03-30 00:22:49,505 - advanced_monitoring - ERROR - Traceback (most recent call last):
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\advanced_monitoring.py", line 282, in _process_batch
+    predictions = self.model.predict(df)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 537, in predict
+    X = self.feature_extractor.extract_features(data)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 187, in extract_features
+    X_scaled = self.scaler.transform(X)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\_set_output.py", line 140, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\preprocessing\_data.py", line 1001, in transform
+    check_is_fitted(self)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\validation.py", line 1462, in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+
+2025-03-30 00:22:51,562 - advanced_monitoring - ERROR - Error processing batch: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+2025-03-30 00:22:51,563 - advanced_monitoring - ERROR - Traceback (most recent call last):
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\advanced_monitoring.py", line 282, in _process_batch
+    predictions = self.model.predict(df)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 537, in predict
+    X = self.feature_extractor.extract_features(data)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 187, in extract_features
+    X_scaled = self.scaler.transform(X)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\_set_output.py", line 140, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\preprocessing\_data.py", line 1001, in transform
+    check_is_fitted(self)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\validation.py", line 1462, in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+
+2025-03-30 00:22:53,607 - advanced_monitoring - ERROR - Error processing batch: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+2025-03-30 00:22:53,608 - advanced_monitoring - ERROR - Traceback (most recent call last):
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\advanced_monitoring.py", line 282, in _process_batch
+    predictions = self.model.predict(df)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 537, in predict
+    X = self.feature_extractor.extract_features(data)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 187, in extract_features
+    X_scaled = self.scaler.transform(X)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\_set_output.py", line 140, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\preprocessing\_data.py", line 1001, in transform
+    check_is_fitted(self)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\validation.py", line 1462, in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+
+2025-03-30 00:22:55,659 - advanced_monitoring - ERROR - Error processing batch: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+2025-03-30 00:22:55,661 - advanced_monitoring - ERROR - Traceback (most recent call last):
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\advanced_monitoring.py", line 282, in _process_batch
+    predictions = self.model.predict(df)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 537, in predict
+    X = self.feature_extractor.extract_features(data)
+  File "C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\enhanced_model.py", line 187, in extract_features
+    X_scaled = self.scaler.transform(X)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\_set_output.py", line 140, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\preprocessing\_data.py", line 1001, in transform
+    check_is_fitted(self)
+  File "C:\Users\Sunil Kumar\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\validation.py", line 1462, in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+
+2025-03-30 00:22:57,670 - advanced_monitoring - INFO - Stopped processing thread
+2025-03-30 00:24:20,964 - enhanced_model - INFO - Loaded scaler from scaler.pkl
+2025-03-30 00:24:20,977 - advanced_monitoring - ERROR - Error loading model: 'input_size'
+2025-03-30 00:24:20,979 - advanced_monitoring - INFO - Database tables created successfully
+2025-03-30 00:24:20,982 - advanced_monitoring - INFO - Started processing thread with interval=2s and batch_size=5
+2025-03-30 00:24:20,982 - advanced_monitoring - ERROR - Model not loaded
+2025-03-30 00:24:22,995 - advanced_monitoring - ERROR - Model not loaded
+2025-03-30 00:24:25,003 - advanced_monitoring - ERROR - Model not loaded
+2025-03-30 00:24:27,017 - advanced_monitoring - ERROR - Model not loaded
+2025-03-30 00:24:29,028 - advanced_monitoring - ERROR - Model not loaded
+2025-03-30 00:24:31,034 - advanced_monitoring - ERROR - Model not loaded
+2025-03-30 00:24:33,039 - advanced_monitoring - ERROR - Model not loaded
+2025-03-30 00:24:35,053 - advanced_monitoring - ERROR - Model not loaded
+2025-03-30 00:24:37,059 - advanced_monitoring - ERROR - Model not loaded
+2025-03-30 00:24:39,064 - advanced_monitoring - ERROR - Model not loaded
+2025-03-30 00:24:41,069 - advanced_monitoring - ERROR - Model not loaded
+2025-03-30 00:24:43,076 - advanced_monitoring - ERROR - Model not loaded
+2025-03-30 00:24:45,082 - advanced_monitoring - ERROR - Model not loaded
+2025-03-30 00:24:47,098 - advanced_monitoring - ERROR - Model not loaded
+2025-03-30 00:24:49,110 - advanced_monitoring - ERROR - Model not loaded
+2025-03-30 00:24:51,124 - advanced_monitoring - INFO - Stopped processing thread

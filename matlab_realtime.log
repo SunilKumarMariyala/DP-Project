@@ -1,0 +1,43 @@
+2025-03-29 23:47:20,198 - matlab_realtime - INFO - Successfully started prediction process: {'message': 'Prediction started (interval: 2s, batch size: 5)', 'status': 'running', 'success': True}
+2025-03-29 23:47:20,199 - matlab_realtime - INFO - Starting MATLAB real-time data generation (10 iterations)
+2025-03-29 23:47:20,218 - matlab_realtime - INFO - Saved MATLAB data to C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234720.csv
+2025-03-29 23:47:20,221 - matlab_realtime - ERROR - Error inserting data into database: table solar_panel_data has no column named power
+2025-03-29 23:47:20,222 - matlab_realtime - INFO - Iteration 1/10: Generated data with fault type 0
+2025-03-29 23:47:20,223 - matlab_realtime - INFO - File: C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234720.csv, Database insert: Failed
+2025-03-29 23:47:22,235 - matlab_realtime - INFO - Saved MATLAB data to C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234722.csv
+2025-03-29 23:47:22,237 - matlab_realtime - ERROR - Error inserting data into database: table solar_panel_data has no column named power
+2025-03-29 23:47:22,237 - matlab_realtime - INFO - Iteration 2/10: Generated data with fault type 1
+2025-03-29 23:47:22,238 - matlab_realtime - INFO - File: C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234722.csv, Database insert: Failed
+2025-03-29 23:47:24,247 - matlab_realtime - INFO - Saved MATLAB data to C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234724.csv
+2025-03-29 23:47:24,249 - matlab_realtime - ERROR - Error inserting data into database: table solar_panel_data has no column named power
+2025-03-29 23:47:24,249 - matlab_realtime - INFO - Iteration 3/10: Generated data with fault type 2
+2025-03-29 23:47:24,250 - matlab_realtime - INFO - File: C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234724.csv, Database insert: Failed
+2025-03-29 23:47:26,260 - matlab_realtime - INFO - Saved MATLAB data to C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234726.csv
+2025-03-29 23:47:26,263 - matlab_realtime - ERROR - Error inserting data into database: table solar_panel_data has no column named power
+2025-03-29 23:47:26,263 - matlab_realtime - INFO - Iteration 4/10: Generated data with fault type 3
+2025-03-29 23:47:26,263 - matlab_realtime - INFO - File: C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234726.csv, Database insert: Failed
+2025-03-29 23:47:28,274 - matlab_realtime - INFO - Saved MATLAB data to C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234728.csv
+2025-03-29 23:47:28,277 - matlab_realtime - ERROR - Error inserting data into database: table solar_panel_data has no column named power
+2025-03-29 23:47:28,278 - matlab_realtime - INFO - Iteration 5/10: Generated data with fault type 4
+2025-03-29 23:47:28,279 - matlab_realtime - INFO - File: C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234728.csv, Database insert: Failed
+2025-03-29 23:47:30,291 - matlab_realtime - INFO - Saved MATLAB data to C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234730.csv
+2025-03-29 23:47:30,292 - matlab_realtime - ERROR - Error inserting data into database: table solar_panel_data has no column named power
+2025-03-29 23:47:30,293 - matlab_realtime - INFO - Iteration 6/10: Generated data with fault type 0
+2025-03-29 23:47:30,294 - matlab_realtime - INFO - File: C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234730.csv, Database insert: Failed
+2025-03-29 23:47:32,311 - matlab_realtime - INFO - Saved MATLAB data to C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234732.csv
+2025-03-29 23:47:32,313 - matlab_realtime - ERROR - Error inserting data into database: table solar_panel_data has no column named power
+2025-03-29 23:47:32,314 - matlab_realtime - INFO - Iteration 7/10: Generated data with fault type 1
+2025-03-29 23:47:32,315 - matlab_realtime - INFO - File: C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234732.csv, Database insert: Failed
+2025-03-29 23:47:34,340 - matlab_realtime - INFO - Saved MATLAB data to C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234734.csv
+2025-03-29 23:47:34,342 - matlab_realtime - ERROR - Error inserting data into database: table solar_panel_data has no column named power
+2025-03-29 23:47:34,343 - matlab_realtime - INFO - Iteration 8/10: Generated data with fault type 2
+2025-03-29 23:47:34,343 - matlab_realtime - INFO - File: C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234734.csv, Database insert: Failed
+2025-03-29 23:47:36,364 - matlab_realtime - INFO - Saved MATLAB data to C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234736.csv
+2025-03-29 23:47:36,366 - matlab_realtime - ERROR - Error inserting data into database: table solar_panel_data has no column named power
+2025-03-29 23:47:36,367 - matlab_realtime - INFO - Iteration 9/10: Generated data with fault type 3
+2025-03-29 23:47:36,368 - matlab_realtime - INFO - File: C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234736.csv, Database insert: Failed
+2025-03-29 23:47:38,376 - matlab_realtime - INFO - Saved MATLAB data to C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234738.csv
+2025-03-29 23:47:38,379 - matlab_realtime - ERROR - Error inserting data into database: table solar_panel_data has no column named power
+2025-03-29 23:47:38,380 - matlab_realtime - INFO - Iteration 10/10: Generated data with fault type 4
+2025-03-29 23:47:38,380 - matlab_realtime - INFO - File: C:\Users\Sunil Kumar\OneDrive\Documents\solar faults\maybe final model\matlab_data\matlab_data_20250329_234738.csv, Database insert: Failed
+2025-03-29 23:47:38,382 - matlab_realtime - INFO - MATLAB real-time data generation completed successfully!

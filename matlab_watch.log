@@ -1,0 +1,5 @@
+2025-03-29 23:46:18,432 - matlab_watch_setup - ERROR - Failed to set up MATLAB watch: {
+  "error": "MATLAB integration is not available"
+}
+
+2025-03-29 23:46:18,432 - matlab_watch_setup - ERROR - Failed to set up MATLAB watch
