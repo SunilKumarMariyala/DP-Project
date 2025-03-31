@@ -6,6 +6,7 @@ matplotlib==3.7.2
 seaborn==0.12.2
 imbalanced-learn==0.11.0
 flask==2.2.5
+flask-socketio==5.3.4
 sqlalchemy==2.0.20
 pymysql==1.1.0
 openpyxl==3.1.2
@@ -16,5 +17,9 @@ dash-bootstrap-components==1.5.0
 tqdm==4.66.1
 pytest==7.4.0
 gunicorn==21.2.0
+# Directory monitoring for continuous data flow
+watchdog==3.0.0
+# UUID generation for simulation tracking
+uuid==1.30
 # MATLAB integration dependencies
 matlabengine>=9.12  # MATLAB Engine for Python

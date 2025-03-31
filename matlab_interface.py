@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import logging
 import time
+import uuid
 from datetime import datetime
 from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import sessionmaker
@@ -35,14 +36,23 @@ class MatlabInterface:
             model_path: Path to the MATLAB model file
             db_connection_str: Database connection string for MySQL
         """
-        self.matlab_path = matlab_path or r"C:\Program Files\MATLAB\R2023b\bin\matlab.exe"
-        self.model_path = model_path or r"C:\Users\Sunil Kumar\OneDrive\Documents\MATLAB\GridConnectedPVFarmExample\GridConnectedPVFarmExample"
-        self.db_connection_str = db_connection_str
+        # Get paths from environment variables if not provided
+        self.matlab_path = matlab_path or os.environ.get('MATLAB_PATH')
+        self.model_path = model_path or os.environ.get('MATLAB_MODEL_PATH')
+        
+        # Get database connection from environment variables if not provided
+        if db_connection_str is None:
+            self.db_connection_str = os.environ.get('DB_CONNECTION_STR')
+            if self.db_connection_str is None:
+                logger.error("Database connection string not provided. Please set DB_CONNECTION_STR environment variable.")
+                raise ValueError("Database connection string not provided")
+        else:
+            self.db_connection_str = db_connection_str
         
         # Setup database connection
         try:
             self.engine, self.Session = setup_database(self.db_connection_str)
-            logger.info(f"Database connection established: {self.db_connection_str}")
+            logger.info(f"Database connection established with MySQL")
         except Exception as e:
             logger.error(f"Database connection error: {e}")
             raise
@@ -406,6 +416,9 @@ class MatlabInterface:
             logger.error("No simulation result to save")
             return None
         
+        # Generate a unique simulation ID
+        simulation_id = str(uuid.uuid4())
+        
         session = self.Session()
         try:
             # Extract data from simulation result
@@ -423,18 +436,28 @@ class MatlabInterface:
                 pv_fault_3_current=faults['fault_3']['pv_current'],
                 pv_fault_3_voltage=faults['fault_3']['pv_voltage'],
                 pv_fault_4_current=faults['fault_4']['pv_current'],
-                pv_fault_4_voltage=faults['fault_4']['pv_voltage']
+                pv_fault_4_voltage=faults['fault_4']['pv_voltage'],
+                # Add MATLAB-specific data
+                irradiance=normal.get('irradiance', 1000),
+                temperature=normal.get('temperature', 25),
+                pv_power=normal.get('pv_power', normal['pv_current'] * normal['pv_voltage']),
+                grid_power=normal.get('grid_power', normal.get('pv_power', normal['pv_current'] * normal['pv_voltage']) * 0.95),
+                efficiency=normal.get('efficiency', 0.95),
+                is_matlab_data=True,
+                matlab_simulation_id=simulation_id,
+                simulation_id=simulation_id,
+                timestamp=datetime.now()
             )
             
             session.add(data_entry)
             session.commit()
             
-            logger.info(f"Simulation results saved to database with ID {data_entry.id}")
+            logger.info(f"Simulation results saved to MySQL database with ID {data_entry.id}, simulation_id {simulation_id}")
             
             return data_entry.id
             
         except Exception as e:
-            logger.error(f"Error saving simulation to database: {e}")
+            logger.error(f"Error saving simulation to MySQL database: {e}")
             session.rollback()
             return None
         finally:
@@ -521,6 +544,7 @@ class MatlabInterface:
                     
                     # Get variable names in the workspace
                     var_names = self.eng.eval('who', nargout=1)
+                    logger.info(f"Variables found in MATLAB file: {var_names}")
                     
                     # Extract data from MATLAB workspace
                     data = {}
@@ -555,9 +579,27 @@ class MatlabInterface:
                 df = pd.read_csv(matlab_data_file)
                 
                 # Check required columns
-                if 'pv_current' not in df.columns or 'pv_voltage' not in df.columns:
-                    logger.error("Required columns not found in CSV file")
-                    return None
+                required_columns = ['pv_current', 'pv_voltage']
+                missing_columns = [col for col in required_columns if col not in df.columns]
+                if missing_columns:
+                    logger.error(f"Required columns not found in CSV file: {missing_columns}")
+                    # Try to map common column names
+                    column_mapping = {
+                        'current': 'pv_current',
+                        'voltage': 'pv_voltage',
+                        'i': 'pv_current',
+                        'v': 'pv_voltage'
+                    }
+                    for old_col, new_col in column_mapping.items():
+                        if old_col in df.columns and new_col in missing_columns:
+                            df[new_col] = df[old_col]
+                            logger.info(f"Mapped column {old_col} to {new_col}")
+                    
+                    # Check again after mapping
+                    missing_columns = [col for col in required_columns if col not in df.columns]
+                    if missing_columns:
+                        logger.error(f"Still missing required columns after mapping: {missing_columns}")
+                        return None
             
             else:
                 logger.error(f"Unsupported file format: {file_ext}")
@@ -566,83 +608,98 @@ class MatlabInterface:
             # Process the data
             logger.info(f"Loaded data with {len(df)} rows")
             
-            # Generate fault data based on the normal data
-            # This simulates different fault conditions for each data point
-            processed_rows = []
+            # Generate a unique simulation ID for this batch
+            simulation_id = str(uuid.uuid4())
             
             # Create session
             session = self.Session()
             
-            # Process each row
-            for _, row in df.iterrows():
-                pv_current = row['pv_current']
-                pv_voltage = row['pv_voltage']
+            try:
+                # Process each row
+                records_added = 0
+                for _, row in df.iterrows():
+                    pv_current = row['pv_current']
+                    pv_voltage = row['pv_voltage']
+                    
+                    # Calculate additional features if not available
+                    irradiance = row.get('irradiance', 1000)  # Default value if not provided
+                    temperature = row.get('temperature', 25)  # Default value if not provided
+                    pv_power = row.get('power', pv_current * pv_voltage)
+                    grid_power = pv_power * 0.95  # Assume 95% efficiency
+                    efficiency = 0.95
+                    
+                    # Generate synthetic fault data for the model
+                    # Fault 1: Line-Line Fault (Lower voltage, higher current)
+                    pv_fault_1_voltage = pv_voltage * 0.7
+                    pv_fault_1_current = pv_current * 1.3
+                    
+                    # Fault 2: Open Circuit (Higher voltage, near-zero current)
+                    pv_fault_2_voltage = pv_voltage * 1.3
+                    pv_fault_2_current = pv_current * 0.05
+                    
+                    # Fault 3: Partial Shading (Slightly lower voltage, much lower current)
+                    pv_fault_3_voltage = pv_voltage * 0.9
+                    pv_fault_3_current = pv_current * 0.6
+                    
+                    # Fault 4: Degradation (Lower voltage, lower current)
+                    pv_fault_4_voltage = pv_voltage * 0.8
+                    pv_fault_4_current = pv_current * 0.8
+                    
+                    # Create database record
+                    data_entry = SolarPanelData(
+                        pv_current=pv_current,
+                        pv_voltage=pv_voltage,
+                        pv_fault_1_current=pv_fault_1_current,
+                        pv_fault_1_voltage=pv_fault_1_voltage,
+                        pv_fault_2_current=pv_fault_2_current,
+                        pv_fault_2_voltage=pv_fault_2_voltage,
+                        pv_fault_3_current=pv_fault_3_current,
+                        pv_fault_3_voltage=pv_fault_3_voltage,
+                        pv_fault_4_current=pv_fault_4_current,
+                        pv_fault_4_voltage=pv_fault_4_voltage,
+                        irradiance=irradiance,
+                        temperature=temperature,
+                        pv_power=pv_power,
+                        grid_power=grid_power,
+                        efficiency=efficiency,
+                        is_matlab_data=True,
+                        matlab_simulation_id=simulation_id,
+                        simulation_id=simulation_id,
+                        timestamp=datetime.now()
+                    )
+                    
+                    session.add(data_entry)
+                    records_added += 1
                 
-                # Calculate additional features
-                irradiance = row.get('irradiance', pv_current * 1000 / (pv_voltage * 0.15) if pv_voltage > 0.1 else 0)
-                temperature = row.get('temperature', 25 + (pv_current * 2))
-                power = row.get('power', pv_current * pv_voltage)
+                # Commit all records at once
+                session.commit()
+                logger.info(f"Added {records_added} records to MySQL database with simulation_id {simulation_id}")
                 
-                # Generate synthetic fault data for the model
-                # Fault 1: Line-Line Fault (Lower voltage, higher current)
-                pv_fault_1_voltage = pv_voltage * 0.7
-                pv_fault_1_current = pv_current * 1.3
+                return {
+                    'status': 'success',
+                    'records_added': records_added,
+                    'simulation_id': simulation_id,
+                    'file_processed': matlab_data_file
+                }
                 
-                # Fault 2: Open Circuit (Higher voltage, near-zero current)
-                pv_fault_2_voltage = pv_voltage * 1.17
-                pv_fault_2_current = pv_current * 0.05
+            except Exception as e:
+                logger.error(f"Error processing MATLAB data: {e}")
+                session.rollback()
+                return {
+                    'status': 'error',
+                    'message': str(e),
+                    'file': matlab_data_file
+                }
+            finally:
+                session.close()
                 
-                # Fault 3: Partial Shading (Slightly lower voltage, moderately lower current)
-                pv_fault_3_voltage = pv_voltage * 0.95
-                pv_fault_3_current = pv_current * 0.95
-                
-                # Fault 4: Degradation (Higher voltage, negative current)
-                pv_fault_4_voltage = pv_voltage * 1.1
-                current_magnitude = abs(pv_current) * 1.2
-                pv_fault_4_current = -current_magnitude
-                
-                # Create new record
-                record = SolarPanelData(
-                    timestamp=datetime.now(),
-                    pv_current=pv_current,
-                    pv_voltage=pv_voltage,
-                    irradiance=irradiance,
-                    temperature=temperature,
-                    power=power,
-                    pv_fault_1_current=pv_fault_1_current,
-                    pv_fault_1_voltage=pv_fault_1_voltage,
-                    pv_fault_2_current=pv_fault_2_current,
-                    pv_fault_2_voltage=pv_fault_2_voltage,
-                    pv_fault_3_current=pv_fault_3_current,
-                    pv_fault_3_voltage=pv_fault_3_voltage,
-                    pv_fault_4_current=pv_fault_4_current,
-                    pv_fault_4_voltage=pv_fault_4_voltage,
-                    processed=False
-                )
-                
-                # Add to session
-                session.add(record)
-                processed_rows.append(record)
-            
-            # Commit to database
-            session.commit()
-            
-            # Get IDs of inserted records
-            record_ids = [record.id for record in processed_rows]
-            
-            # Close session
-            session.close()
-            
-            # Return results
-            return {
-                'processed_count': len(processed_rows),
-                'record_ids': record_ids,
-                'file_path': matlab_data_file
-            }
-            
         except Exception as e:
-            logger.error(f"Error processing MATLAB data: {e}")
-            return None
+            logger.error(f"Error processing MATLAB data file: {e}")
+            return {
+                'status': 'error',
+                'message': str(e),
+                'file': matlab_data_file
+            }
 
     def setup_matlab_data_watch(self, watch_directory, file_pattern='*.csv', check_interval=5):
         """
@@ -744,7 +801,7 @@ class MatlabInterface:
 # If running as a script
 if __name__ == "__main__":
     # Create MATLAB interface
-    interface = MatlabInterface(db_connection_str="mysql+pymysql://solar_user:your_secure_password@localhost/solar_panel_db")
+    interface = MatlabInterface(db_connection_str=os.environ.get('DB_CONNECTION_STR'))
     
     # Check if MATLAB is available
     if interface.matlab_available and interface.eng is not None:

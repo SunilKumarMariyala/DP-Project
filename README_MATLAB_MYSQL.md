@@ -1,6 +1,6 @@
 # MATLAB with MySQL Integration Guide
 
-This guide explains how to set up and use MATLAB with MySQL for the Solar Fault Detection System.
+This guide explains how to set up and use MATLAB with MySQL for the Solar Fault Detection System, enabling continuous data generation from MATLAB models and real-time processing by the Python prediction model.
 
 ## Prerequisites
 

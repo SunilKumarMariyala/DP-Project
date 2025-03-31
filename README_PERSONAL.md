@@ -17,81 +17,30 @@ Our system helps you catch problems early so you can fix them before they get wo
 ## How does it work? (The simple version)
 
 1. We measure two simple things from your solar panel:
-   - **PV Current**: How much electricity is flowing (measured in Amperes)
-   - **PV Voltage**: How strong the electricity is (measured in Volts)
+   - **PV Current**: How much electricity is flowing
+   - **PV Voltage**: How strong the electricity is
 
-2. We put these numbers into our smart computer program (called a "model")
+2. Our smart computer program (called a "machine learning model") looks at these measurements and can tell:
+   - If your panel is healthy
+   - If it has a problem, what kind of problem it is
+   - How confident it is about its diagnosis
+   - What you should do to fix it
 
-3. The model tells us if your panel is:
-   - **Healthy**: Working perfectly! 😊
-   - **Fault 1 (Connection Issues)**: There might be loose wires or bad connections
-   - **Fault 2 (Partial Shading)**: Something is blocking part of your panel from the sun
-   - **Fault 3 (Panel Degradation)**: Your panel is getting old and wearing out
-   - **Fault 4 (Severe Electrical Issues)**: There's a serious electrical problem
+3. We show you the results on a friendly website where you can:
+   - See if your panels are working well
+   - Get alerts when something goes wrong
+   - Track how your panels perform over time
+   - Get advice on how to fix problems
 
-## The Technology Behind It (A bit more detailed)
+## What can it detect?
 
-### 1. Machine Learning
+Our system can detect 5 different states:
 
-Our system uses something called "machine learning." Imagine teaching a child to recognize cats and dogs by showing them lots of pictures. After seeing enough examples, they can identify new animals they've never seen before.
-
-Similarly, we "trained" our computer by showing it thousands of examples of healthy and faulty solar panel measurements. Now it can recognize patterns and tell us when something is wrong with a panel it's never seen before.
-
-### 2. Neural Networks
-
-The specific type of machine learning we use is called a "neural network." It's inspired by how your brain works! Just like your brain has neurons that connect and communicate, our model has digital "neurons" that help it make decisions.
-
-Our neural network has these special features:
-- **Batch Normalization**: Helps the model learn more efficiently
-- **Multiple Hidden Layers**: Gives the model more "thinking power"
-- **Learning Rate Scheduling**: Helps the model learn better over time
-
-### 3. Feature Engineering
-
-Even though you only enter two measurements (current and voltage), our system creates many more "features" to help the model make better decisions. It's like how a doctor doesn't just check your temperature but also your blood pressure, heart rate, etc. to make a diagnosis.
-
-Some features we create:
-- **Power**: Current × Voltage
-- **Deviations**: How far the measurements are from what we expect
-- **Ratios**: Relationships between different measurements
-- **Z-scores**: Statistical measures of how unusual a reading is
-
-### 4. Web Interface
-
-We built a user-friendly website (using Flask, a Python web framework) so you can:
-- Enter measurements manually
-- See predictions instantly
-- Monitor your panels over time
-- Get recommendations for fixing problems
-
-## How Accurate Is It?
-
-Our system is very accurate! In testing, it correctly identified the panel condition 96.25% of the time. That's like getting an A+ on a test!
-
-For specific types of faults:
-- Healthy panels: 98.77% accuracy
-- Fault 1: 95.06% accuracy
-- Fault 2: 95.00% accuracy
-- Fault 3: 97.50% accuracy
-- Fault 4: 94.87% accuracy
-
-## The Files in Our Project
-
-Here's what each important file does:
-
-1. **app.py**: The main program that runs everything. It's like the conductor of an orchestra.
-
-2. **realtime_prediction.py**: Contains the "SolarFaultDetector" class that makes predictions about your panels.
-
-3. **preprocess_and_train.py**: The program we used to teach our model to recognize faults.
-
-4. **database_setup.py**: Sets up a database to store information about your panels over time.
-
-5. **templates/index.html**: The webpage you see when you use our system.
-
-6. **test_predictions.py**: A program that tests our model with different scenarios to make sure it works correctly.
-
-7. **requirements.txt**: A list of all the computer programs our system needs to work.
+1. **Healthy Panel**: Everything is working normally! 😊
+2. **Line-Line Fault**: Two wires that shouldn't be touching are connected
+3. **Open Circuit Fault**: There's a break in the electrical path
+4. **Partial Shading**: Something is blocking sunlight to some panels
+5. **Panel Degradation**: Panels are wearing out over time
 
 ## How to Run This Project (Step by Step for Beginners)
 
@@ -119,7 +68,7 @@ pip install -r requirements.txt
 
 ### Step 3: Set up the database
 
-Run this command to create the database and load sample data:
+Run this command to create the MySQL database and load sample data:
 
 ```bash
 python database_setup.py
@@ -127,26 +76,33 @@ python database_setup.py
 
 **Why do I need to do this?** This creates a place to store all the solar panel measurements and predictions. It also adds some example data so you can see how the system works right away.
 
+**Note:** Make sure MySQL is installed and running on your computer before running this command. The default configuration uses:
+- Username: root
+- Password: password
+- Database name: solar_panel_db
+
+If you need to use different MySQL credentials, you can specify them when running the application.
+
 ### Step 4: Start the application
 
 Run one of these commands to start the system:
 
 ```bash
-# For the full application with all features:
-python app.py
+# For basic functionality
+python app.py --host 127.0.0.1 --port 8080
 
-# OR for a simpler version:
-python solar_fault_detection.py
+# For advanced features with MATLAB integration (if available)
+python solar_fault_detection.py --host 127.0.0.1 --port 8080 --matlab
 ```
 
 **Why do I need to do this?** This starts the web server that runs the fault detection system. The system will be ready to analyze solar panel data and show you the results in a nice web page.
 
-### Step 5: Open the dashboard in your web browser
+### Step 5: Open the website
 
-After starting the application, open your web browser and go to:
+Open your web browser and go to:
 
 ```
-http://localhost:5000
+http://127.0.0.1:8080
 ```
 
 **Why do I need to do this?** This opens the control panel (dashboard) where you can see all the information about your solar panels, make predictions, and monitor performance.
@@ -180,7 +136,7 @@ If you have problems running the system:
 
 1. **Can't install requirements**: Try installing them one by one with `pip install package_name`
 2. **Database errors**: Delete the solar_panel.db file and run database_setup.py again
-3. **Web page doesn't load**: Make sure no other program is using port 5000
+3. **Web page doesn't load**: Make sure no other program is using port 8080
 4. **MATLAB errors**: These can be ignored if you don't have MATLAB installed
 5. **Prediction errors**: Check that your input values are reasonable (current: 0-15A, voltage: 0-100V)
 
@@ -236,7 +192,7 @@ This guide provides step-by-step instructions for setting up and running the Sol
    ```
    python database_setup.py
    ```
-   This will create a new SQLite database file named `solar_panel.db` in the project folder.
+   This will create a new MySQL database.
 
 ### Step 3: Configure Paths
 
@@ -326,7 +282,7 @@ Our project has several important Python files that work together:
 
 1. **app.py**: The main program that runs our web application
 2. **realtime_prediction.py**: Contains the code that makes predictions about solar panel faults
-3. **database_setup.py**: Sets up our database to store information
+3. **database_setup.py**: Sets up our MySQL database to store information
 4. **preprocess_and_train.py**: Contains the code used to train our model
 5. **test_predictions.py**: A program to test if our predictions are working correctly
 6. **templates/index.html**: The web page that users see and interact with
@@ -516,7 +472,7 @@ from sklearn.preprocessing import StandardScaler
 - `time`: Helps us measure how long things take
 - `pickle` and `joblib`: Help us save and load our model
 - `torch`: The machine learning library we use
-- `sqlalchemy`: Helps us work with our database
+- `sqlalchemy`: Helps us work with our MySQL database
 - `logging`: Helps us keep track of what's happening
 - `StandardScaler`: Helps normalize our data
 
@@ -611,7 +567,7 @@ class SolarFaultDetector:
 - We define what each fault type means (0 = Healthy, 1 = Line-Line Fault, etc.)
 - We load our trained model and other components
 - We set up counters to track how well our system is working
-- We connect to our database to store results
+- We connect to our MySQL database to store results
 
 ```python
     def load_model_components(self, model_path, scaler_path, feature_cols_path, model_class_path):
@@ -915,7 +871,7 @@ class SolarFaultDetector:
 
 ## 3. database_setup.py - Storing Our Data
 
-This file sets up our database, which is like a digital filing cabinet where we store all our solar panel measurements and predictions.
+This file sets up our MySQL database, which is like a digital filing cabinet where we store all our solar panel measurements and predictions.
 
 ```python
 from sqlalchemy import Column, Integer, Float, String, DateTime, create_engine
@@ -928,7 +884,7 @@ import os
 Base = declarative_base()
 ```
 
-**What this means:** We're importing tools to help us create and work with a database:
+**What this means:** We're importing tools to help us create and work with a MySQL database:
 - `sqlalchemy`: A tool that helps us work with databases in Python
 - `Column`, `Integer`, etc.: Different types of data we can store
 - `declarative_base()`: Creates a base class for our database tables
@@ -976,8 +932,8 @@ def setup_database():
     os.makedirs(db_dir, exist_ok=True)
     
     # Create database
-    db_path = os.path.join(db_dir, 'solar_panel_data.db')
-    engine = create_engine(f'sqlite:///{db_path}')
+    db_path = os.path.join(db_dir, 'solar_panel.db')
+    engine = create_engine(f'mysql+pymysql://root:password@localhost/solar_panel_db')
     
     # Create tables
     Base.metadata.create_all(engine)
@@ -989,9 +945,9 @@ def setup_database():
     return engine, session
 ```
 
-**What this means:** This function sets up our database:
+**What this means:** This function sets up our MySQL database:
 1. It creates a folder called 'data' if it doesn't exist
-2. It creates a SQLite database file inside that folder
+2. It creates a MySQL database
 3. It creates the tables we defined (like SolarPanelData)
 4. It creates a "session" that lets us add, update, and query data
 5. It returns the engine and session so we can use them
@@ -1006,7 +962,7 @@ import json
 import time
 
 # Base URL for the API
-BASE_URL = "http://localhost:5000"
+BASE_URL = "http://localhost:8080"
 
 def test_simple_prediction(pv_current, pv_voltage, description=""):
     """
@@ -1181,7 +1137,7 @@ The Solar Panel Fault Detection project has successfully achieved its primary go
 
 5. **Robust Testing Framework**: We've developed a testing suite that verifies the model's performance across various scenarios, including edge cases.
 
-6. **Database Integration**: We've set up a database system to store historical data and predictions for future analysis.
+6. **Database Integration**: We've set up a MySQL database system to store historical data and predictions for future analysis.
 
 ### Future Plans and Enhancements
 
@@ -1342,7 +1298,7 @@ This function:
 
 ### 3. `database_setup.py` - Database Configuration
 
-This file sets up our database:
+This file sets up our MySQL database:
 
 ```python
 class SolarPanelData(Base):
@@ -1367,7 +1323,7 @@ This creates a table in our database to store solar panel data. Each row will ha
 ```python
 def setup_database(db_path='solar_panel.db'):
     # Create database engine
-    engine = create_engine(f'sqlite:///{db_path}')
+    engine = create_engine(f'mysql+pymysql://root:password@localhost/solar_panel_db')
     
     # Create tables
     Base.metadata.create_all(engine)
@@ -1378,7 +1334,7 @@ def setup_database(db_path='solar_panel.db'):
     return engine, Session
 ```
 This function:
-1. Creates a new database (or connects to an existing one)
+1. Creates a new MySQL database (or connects to an existing one)
 2. Sets up the tables we defined
 3. Creates a way to interact with the database
 
@@ -1445,14 +1401,14 @@ This function:
 
 3. **Data Flow**:
    - Data can come from manual input or MATLAB
-   - All data is stored in the database
+   - All data is stored in the MySQL database
    - The prediction model uses this data to make predictions
 
 4. **MATLAB Integration**:
    - `matlab_interface.py` connects to MATLAB
    - It runs the GridConnectedPVFarm model
    - It gets real-time data from the model
-   - It saves this data to the database
+   - It saves this data to the MySQL database
 
 5. **Fault Detection**:
    - The machine learning model analyzes the data
@@ -1478,10 +1434,10 @@ Our web application uses:
 
 ### Database Management
 
-We use SQLite, a simple database system that:
-- Stores data in a single file
-- Doesn't require a separate server
-- Is perfect for small to medium-sized applications
+We use MySQL, a powerful database system that:
+- Stores data in a structured format
+- Allows multiple users to access the data simultaneously
+- Supports complex queries for data analysis
 
 ### Real-time Monitoring
 
@@ -1490,3 +1446,5 @@ Our system can monitor solar panels in real-time by:
 2. Analyzing this data for faults
 3. Updating the dashboard with the latest information
 4. Alerting users when faults are detected
+
+```

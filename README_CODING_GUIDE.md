@@ -183,22 +183,45 @@ cnx.close()
 ```
 
 ### MySQL and Python
-We use the `mysql-connector-python` library to connect to our MySQL database from Python.
+We use the `mysql-connector-python` library to connect to our MySQL database from Python. We also use SQLAlchemy as an ORM (Object-Relational Mapper) which provides a more Pythonic way to interact with the database:
 
-### MySQL vs SQLite
-Our project originally used SQLite but now uses MySQL. Here's the difference:
+```python
+from sqlalchemy import create_engine, Column, Integer, Float, String
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
-**SQLite**:
-- Like a simple notebook - good for one person to use
-- Stored in a single file on your computer
-- Easy to set up, no separate server needed
-- Not good for multiple users at once
+# Create a base class
+Base = declarative_base()
 
-**MySQL**:
-- Like a professional filing system - good for many people to use
-- Runs as a separate server program
-- More powerful and faster with large amounts of data
-- Better for web applications and multiple users
+# Define a model
+class SolarPanelData(Base):
+    __tablename__ = 'solar_panel_data'
+    
+    id = Column(Integer, primary_key=True)
+    pv_current = Column(Float)
+    pv_voltage = Column(Float)
+    
+# Connect to the database
+engine = create_engine('mysql+pymysql://username:password@localhost/solar_panel_db')
+
+# Create tables
+Base.metadata.create_all(engine)
+
+# Create a session
+Session = sessionmaker(bind=engine)
+session = Session()
+
+# Query data
+results = session.query(SolarPanelData).all()
+```
+
+### Why MySQL?
+We chose MySQL for our project because:
+- It's a robust, production-ready database system
+- It can handle large amounts of time-series data efficiently
+- It supports multiple simultaneous connections
+- It has good support for complex queries and data analysis
+- It's widely used in industry, making it a valuable skill to learn
 
 ## 5. Web Development
 
@@ -270,37 +293,154 @@ class SolarFaultMLP(nn.Module):
 
 ## 7. MATLAB Integration
 
-### What is MATLAB?
-MATLAB is a special software for scientific computing, especially good at simulating physical systems like solar panels.
+### MATLAB Requirement Status
 
-### How We Connect to MATLAB
-We use the MATLAB Engine for Python to connect our system with MATLAB:
+**MATLAB is OPTIONAL for the Solar Fault Detection System.**
+
+The system is designed to work in two modes:
+1. **With MATLAB** - Enables real-time simulation of solar panels
+2. **Without MATLAB** - Uses historical data and manual inputs
+
+If you don't have MATLAB installed, the system will automatically fall back to the non-MATLAB mode and continue to function with all core features available.
+
+### What is MATLAB?
+
+MATLAB is a programming platform designed for engineers and scientists. It allows you to analyze data, develop algorithms, and create models. In our project, we use MATLAB to:
+
+1. Simulate solar panel behavior under different conditions
+2. Generate realistic fault scenarios
+3. Provide real-time data for testing and demonstration
+
+### MATLAB Engine for Python
+
+We use the MATLAB Engine API for Python to connect our Python application with MATLAB. This allows us to:
+
+1. Start MATLAB from within our Python application
+2. Run MATLAB commands and scripts
+3. Exchange data between Python and MATLAB
 
 ```python
 import matlab.engine
 
-# Start MATLAB
+# Start MATLAB engine
 eng = matlab.engine.start_matlab()
 
 # Run a MATLAB function
-result = eng.run_simulation(nargout=1)
+result = eng.my_matlab_function(param1, param2)
 
-# Convert MATLAB result to Python
-pv_current = float(result['pv_current'])
-pv_voltage = float(result['pv_voltage'])
+# Stop MATLAB engine
+eng.quit()
 ```
 
-### MySQL and MATLAB Integration
-Our new MySQL database makes it easier to exchange data with MATLAB:
+### Setting Up MATLAB Integration
+
+To use the MATLAB features of our system:
+
+1. **Install MATLAB** (R2019b or later recommended)
+2. **Install MATLAB Engine API for Python**:
+   ```bash
+   # Navigate to the MATLAB folder
+   cd "C:\Program Files\MATLAB\R2023a\extern\engines\python"
+   
+   # Install the engine
+   python setup.py install
+   ```
+3. **Verify the installation**:
+   ```python
+   import matlab.engine
+   eng = matlab.engine.start_matlab()
+   print("MATLAB Engine successfully started!")
+   eng.quit()
+   ```
+
+### Troubleshooting MATLAB Integration
+
+If you encounter issues with MATLAB integration, follow these steps:
+
+#### 1. Verify MATLAB Installation
+
+```bash
+# Check if MATLAB is in your PATH
+matlab -nosplash -nodesktop -r "disp('MATLAB is working!'); exit;"
+```
+
+#### 2. Check Python-MATLAB Compatibility
+
+MATLAB Engine API requires compatible versions of Python and MATLAB:
+- Python 3.7-3.9 works with most recent MATLAB versions
+- For Python 3.10+, you need MATLAB R2022a or newer
+
+#### 3. Common Error: "No module named 'matlab'"
+
+This means the MATLAB Engine API is not installed or not in your Python path.
+
+**Solution**:
+```bash
+# Find your MATLAB installation
+# Then install the engine
+cd "C:\Program Files\MATLAB\R2023a\extern\engines\python"
+python setup.py install
+```
+
+#### 4. Common Error: "Invalid MEX-file"
+
+This usually happens when MATLAB can't find required libraries.
+
+**Solution**:
+- Reinstall MATLAB
+- Ensure your system meets MATLAB's requirements
+- Try running MATLAB as administrator
+
+#### 5. Path Issues in the Code
+
+If the system can't find your MATLAB installation:
+
+**Solution**:
+Edit the `matlab_interface.py` file and update the MATLAB path:
+```python
+self.matlab_path = "C:/Program Files/MATLAB/R2023a/bin/matlab.exe"
+```
+
+#### 6. Test MATLAB Integration Separately
+
+Create a simple test script to isolate MATLAB issues:
 
 ```python
-# In MATLAB:
-conn = database('solar_panel_db', 'username', 'password', ...
-    'Vendor', 'MySQL', ...
-    'Server', 'localhost');
+# test_matlab.py
+import matlab.engine
+import sys
 
-data = select(conn, 'SELECT * FROM solar_panel_data LIMIT 10');
+try:
+    print("Starting MATLAB Engine...")
+    eng = matlab.engine.start_matlab()
+    print("MATLAB Engine started successfully!")
+    
+    # Try a simple command
+    result = eng.sqrt(4.0)
+    print(f"MATLAB calculation result: {result}")
+    
+    eng.quit()
+    print("MATLAB Engine closed successfully!")
+except Exception as e:
+    print(f"Error: {e}")
+    print(f"Python version: {sys.version}")
+    sys.exit(1)
 ```
+
+Run this script to test your MATLAB integration:
+```bash
+python test_matlab.py
+```
+
+### Running the Application Without MATLAB
+
+If you don't have MATLAB or don't need the simulation features, you can run the application in non-MATLAB mode:
+
+```bash
+python solar_fault_detection.py --no-matlab
+```
+
+This will disable MATLAB-dependent features but allow all other functionality to work normally.
 
 ## 8. Project-Specific Concepts
 

@@ -39,6 +39,8 @@ Think of a MySQL database as a super organized digital filing cabinet where we s
 - What the measurements were
 - If the panels were healthy or sick
 
+MySQL is a powerful system that can handle lots of information at once and is used by many big websites and companies.
+
 ## How to use our Solar Panel Doctor
 
 ### Step 1: Get the stuff you need
@@ -51,9 +53,19 @@ Think of a MySQL database as a super organized digital filing cabinet where we s
 3. Run a special command to get everything ready
 
 ### Step 3: Start the doctor
-1. Run the program
+1. Open your command prompt (the black window) and type:
+   ```
+   # For basic functionality
+   python app.py --host 127.0.0.1 --port 8080
+
+   # For advanced features with MATLAB integration (if available)
+   python solar_fault_detection.py --host 127.0.0.1 --port 8080 --matlab
+   ```
 2. Open your web browser
-3. Go to the special address (like visiting the doctor's office)
+3. Go to the special address (like visiting the doctor's office):
+   ```
+   http://127.0.0.1:8080
+   ```
 
 ### Step 4: Check your panels
 1. The program will show you if your panels are healthy or sick

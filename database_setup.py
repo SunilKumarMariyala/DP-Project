@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import os
 import sys
+import logging
 from sqlalchemy import create_engine, Column, Integer, Float, DateTime, String, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -70,28 +71,34 @@ def setup_database(db_connection_str=None):
     Returns:
         Tuple of (engine, Session)
     """
-    # Default MySQL connection string if none provided
-    if db_connection_str is None:
-        DB_HOST = 'localhost'
-        DB_USER = 'root'
-        DB_PASSWORD = 'password'
-        DB_NAME = 'solar_panel_db'
-        db_connection_str = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}'
-    
-    # For backward compatibility with SQLite
-    if db_connection_str.endswith('.db'):
-        db_connection_str = f'sqlite:///{db_connection_str}'
-    
-    # Create engine
-    engine = create_engine(db_connection_str)
-    
-    # Create tables
-    Base.metadata.create_all(engine)
-    
-    # Create session factory
-    Session = sessionmaker(bind=engine)
-    
-    return engine, Session
+    try:
+        # Get database connection from environment variables if not provided
+        if db_connection_str is None:
+            DB_HOST = os.environ.get('DB_HOST', 'localhost')
+            DB_USER = os.environ.get('DB_USER', 'solar_user')
+            DB_PASSWORD = os.environ.get('DB_PASSWORD', 'your_secure_password')
+            DB_NAME = os.environ.get('DB_NAME', 'solar_panel_db')
+            db_connection_str = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}'
+        
+        # Create engine with connection pooling
+        engine = create_engine(
+            db_connection_str,
+            pool_size=10,
+            max_overflow=20,
+            pool_recycle=3600,
+            pool_pre_ping=True
+        )
+        
+        # Create all tables if they don't exist
+        Base.metadata.create_all(engine)
+        
+        # Create a session factory
+        Session = sessionmaker(bind=engine)
+        
+        return engine, Session
+    except Exception as e:
+        logging.error(f"Error setting up database: {e}")
+        raise
 
 def load_sample_data_to_db(excel_path='final_dataset.xlsx', db_connection_str=None):
     """

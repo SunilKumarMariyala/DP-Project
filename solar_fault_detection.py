@@ -50,10 +50,15 @@ model = None
 scaler = None
 
 # Database configuration
-DB_HOST = 'localhost'
-DB_USER = 'root'  # Replace with your MySQL username
-DB_PASSWORD = 'password'  # Replace with your MySQL password
-DB_NAME = 'solar_panel_db'
+DB_HOST = os.environ.get('DB_HOST')
+DB_USER = os.environ.get('DB_USER')
+DB_PASSWORD = os.environ.get('DB_PASSWORD')
+DB_NAME = os.environ.get('DB_NAME')
+
+if not all([DB_HOST, DB_USER, DB_PASSWORD, DB_NAME]):
+    logger.error("Missing database environment variables. Please set DB_HOST, DB_USER, DB_PASSWORD, and DB_NAME.")
+    sys.exit(1)
+
 db_connection_str = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}'
 
 # For backward compatibility
@@ -828,19 +833,19 @@ def main():
     parser.add_argument('--count', type=int, default=10, help='Number of test data records to generate')
     parser.add_argument('--reset-db', action='store_true', help='Reset the database')
     parser.add_argument('--db-host', type=str, default='localhost', help='MySQL database host')
-    parser.add_argument('--db-user', type=str, default='root', help='MySQL database user')
+    parser.add_argument('--db-user', type=str, default='root', help='MySQL database username')
     parser.add_argument('--db-password', type=str, default='password', help='MySQL database password')
     parser.add_argument('--db-name', type=str, default='solar_panel_db', help='MySQL database name')
     parser.add_argument('--matlab', action='store_true', help='Enable MATLAB integration')
-    
+    parser.add_argument('--no-matlab', action='store_true', help='Disable MATLAB integration')
     args = parser.parse_args()
     
     # Set database connection string
     global DB_HOST, DB_USER, DB_PASSWORD, DB_NAME
-    DB_HOST = args.db_host
-    DB_USER = args.db_user
-    DB_PASSWORD = args.db_password
-    DB_NAME = args.db_name
+    DB_HOST = os.environ.get('DB_HOST', args.db_host)
+    DB_USER = os.environ.get('DB_USER', args.db_user)
+    DB_PASSWORD = os.environ.get('DB_PASSWORD', args.db_password)
+    DB_NAME = os.environ.get('DB_NAME', args.db_name)
     db_connection_str = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}'
     
     # For backward compatibility
@@ -867,6 +872,14 @@ def main():
             logger.info(f"Database reset: {DB_NAME}")
         except Exception as e:
             logger.error(f"Error resetting database: {e}")
+    
+    # Initialize database
+    try:
+        engine, Session = setup_database(db_connection_str)
+        logger.info(f"Connected to MySQL database at {DB_HOST}")
+    except Exception as e:
+        logger.error(f"Failed to connect to MySQL database: {e}")
+        sys.exit(1)
     
     # Setup database
     from database_setup import setup_database

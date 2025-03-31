@@ -2,21 +2,20 @@
 
 This guide provides all the commands needed to run the Solar Panel Fault Detection System in various configurations.
 
-## Quick Start Commands
+## Environment Setup Commands
 
-### Basic Run Command
+### Install Required Packages
 ```powershell
-python solar_fault_detection.py --host 127.0.0.1 --port 8080
+pip install -r requirements.txt
 ```
 
-### Run with Debug Mode
+### Install MATLAB Engine for Python
 ```powershell
-python solar_fault_detection.py --host 127.0.0.1 --port 8080 --debug
-```
+# Navigate to MATLAB engine directory
+cd "C:\Program Files\MATLAB\R2023b\extern\engines\python"
 
-### Generate Test Data
-```powershell
-python solar_fault_detection.py --generate-data --count 100
+# Install the engine
+python setup.py install
 ```
 
 ## Data Generation Commands

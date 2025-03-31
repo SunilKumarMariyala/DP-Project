@@ -1,15 +1,132 @@
-# Understanding the Solar Panel Monitor App Code
+# Solar Panel Monitoring Mobile App - Code Explained
 
-This guide explains the code for our Solar Panel Monitor App in super simple terms. Even if you've never coded before, you'll understand how our app works!
+This document explains the code structure and functionality of the Solar Panel Monitoring mobile app built with Flutter.
 
-## Table of Contents
-1. [App Structure](#app-structure)
-2. [The Main App File](#the-main-app-file)
-3. [The Data Provider](#the-data-provider)
-4. [The Screens](#the-screens)
-5. [The Widgets](#the-widgets)
+## Prerequisites
 
-## App Structure
+Before you begin working with the mobile app code, ensure you have:
+
+1. **Flutter SDK** (version 2.17.0 or higher)
+   - Follow the official Flutter installation guide: https://flutter.dev/docs/get-started/install
+   - Verify installation with `flutter doctor` command
+
+2. **Android Studio** or **Xcode** (for iOS development)
+   - Android Studio (for Android development): https://developer.android.com/studio
+   - Xcode (for iOS development): Available on Mac App Store
+
+3. **Development Environment**
+   - A code editor (VS Code recommended with Flutter extension)
+   - Git for version control
+   - USB cable for device testing (optional)
+
+4. **Backend Server**
+   - The Solar Panel Fault Detection System backend must be running
+   - The backend uses MySQL for data storage
+   - Default server address is http://127.0.0.1:8080
+
+## Flutter Setup Guide
+
+### Windows
+
+1. **Download Flutter SDK**:
+   - Download from: https://flutter.dev/docs/get-started/install/windows
+   - Extract the ZIP file to a desired location (avoid paths with spaces)
+
+2. **Add Flutter to PATH**:
+   - Add the `flutter\bin` directory to your PATH environment variable
+   - Open Command Prompt and run `flutter doctor` to verify
+
+3. **Install Android Studio**:
+   - Download and install Android Studio
+   - Run Android Studio and go through the setup wizard
+   - Install Flutter and Dart plugins:
+     - Go to File > Settings > Plugins
+     - Search for "Flutter" and install
+     - The Dart plugin will be installed automatically
+
+4. **Set up Android Emulator**:
+   - In Android Studio, go to Tools > AVD Manager
+   - Create a new virtual device
+   - Choose a device definition and system image
+   - Start the emulator
+
+### macOS
+
+1. **Download Flutter SDK**:
+   - Download from: https://flutter.dev/docs/get-started/install/macos
+   - Extract to a desired location
+
+2. **Add Flutter to PATH**:
+   - Add the following to your `~/.zshrc` or `~/.bash_profile`:
+     ```bash
+     export PATH="$PATH:[PATH_TO_FLUTTER_DIRECTORY]/flutter/bin"
+     ```
+   - Run `source ~/.zshrc` or `source ~/.bash_profile`
+   - Run `flutter doctor` to verify
+
+3. **Install Xcode** (for iOS development):
+   - Install Xcode from the Mac App Store
+   - Install the Xcode command-line tools:
+     ```bash
+     sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+     sudo xcodebuild -runFirstLaunch
+     ```
+   - Accept the license:
+     ```bash
+     sudo xcodebuild -license
+     ```
+
+4. **Install Android Studio** (for Android development):
+   - Download and install Android Studio
+   - Install Flutter and Dart plugins
+   - Set up an Android emulator
+
+### Linux
+
+1. **Download Flutter SDK**:
+   - Download from: https://flutter.dev/docs/get-started/install/linux
+   - Extract to a desired location
+
+2. **Add Flutter to PATH**:
+   - Add the following to your `~/.bashrc`:
+     ```bash
+     export PATH="$PATH:[PATH_TO_FLUTTER_DIRECTORY]/flutter/bin"
+     ```
+   - Run `source ~/.bashrc`
+   - Run `flutter doctor` to verify
+
+3. **Install required dependencies**:
+   ```bash
+   sudo apt-get update
+   sudo apt-get install -y curl git unzip xz-utils zip libglu1-mesa
+   ```
+
+4. **Install Android Studio**:
+   - Download and install Android Studio
+   - Install Flutter and Dart plugins
+   - Set up an Android emulator
+
+## Project Structure
+
+The mobile app code is located in the `solar_monitor_app` directory. Here's the structure:
+
+```
+solar_monitor_app/
+├── lib/                    # Main source code
+│   ├── main.dart           # Entry point
+│   ├── screens/            # UI screens
+│   ├── models/             # Data models
+│   ├── services/           # API and backend services
+│   ├── widgets/            # Reusable UI components
+│   └── utils/              # Utility functions
+├── assets/                 # Images, fonts, etc.
+├── pubspec.yaml            # Dependencies and configuration
+└── README.md               # Documentation
+```
+
+## Key Components Explained
+
+### App Structure
 
 Our app is organized like a tree with different folders:
 
@@ -25,7 +142,7 @@ solar_monitor_app/
 └── README.md             # Instructions for developers
 ```
 
-## The Main App File
+### The Main App File
 
 Let's look at `main.dart`, which is like the "on" button for our app:
 
@@ -56,7 +173,7 @@ What this does:
 5. `?? 'http://192.168.1.100:8080'` - If it can't find one, it uses this default address
 6. `runApp(...)` - Starts the app with all the necessary pieces
 
-## The Data Provider
+### The Data Provider
 
 The `SolarDataProvider` in `providers/solar_data_provider.dart` is like a messenger that talks to the server:
 
@@ -139,7 +256,7 @@ Future<void> startMonitoring() async {
 
 This is like pressing a button on the server to start collecting data. If the server says "OK" (status code 200), we mark ourselves as "monitoring" and update the screen.
 
-## The Screens
+### The Screens
 
 Our app has three main screens:
 
@@ -282,7 +399,7 @@ This creates a page with several settings sections:
 2. MySQL Database Settings - username, password, and database name
 3. App Settings - dark mode, notifications, and update interval
 
-## The Widgets
+### The Widgets
 
 We have special reusable components called "widgets" that appear in multiple places:
 
